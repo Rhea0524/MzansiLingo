@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "370111223511",
+    "project_id": "mzansilingo-c668b",
+    "storage_bucket": "mzansilingo-c668b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370111223511:android:cd10ccf258f7df40330292",
+        "android_client_info": {
+          "package_name": "com.fake.mzansilingo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "370111223511-erq80lj9q6ui2s4p25s8dun33om91np4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fake.mzansilingo",
+            "certificate_hash": "cdbbe1a017b9e37ad2492d49cb26e65ab977b762"
+          }
+        },
+        {
+          "client_id": "370111223511-smns9as07tusftm5u1dsumn2dbrl3qub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTjSjhAZvu4orxKyVvWmGwP6ztDoXDtcU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "370111223511-smns9as07tusftm5u1dsumn2dbrl3qub.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

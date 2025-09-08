@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1a237e"
+    tools:context=".AboutActivity">
+
+    <!-- Header Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Back Button -->
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_arrow_left"
+            android:contentDescription="Back"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:tint="#FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Mascot Icon -->
+        <FrameLayout
+            android:id="@+id/logoHolder"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/rhino"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imgRhino"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rhino"
+                android:scaleType="centerInside"
+                android:contentDescription="App mascot"
+                android:padding="4dp" />
+
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Title Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/title_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="32dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_layout">
+
+        <TextView
+            android:id="@+id/tv_about_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginVertical="16dp"
+            android:gravity="center"
+            android:text="ABOUT MZANSI LINGO"
+            android:textColor="#1a237e"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- About Content -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_card">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#E8FFFFFF"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ABOUT MZANSI LINGO"
+                    android:textColor="#1a237e"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Version 1.0 • 2024"
+                    android:textColor="#666666"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center" />
+
+                <!-- App Overview -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="OUR MISSION"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mzansi Lingo is a mobile-first, interactive language-learning application that brings the joy of learning to South Africa's diverse cultural and linguistic heritage. We offer courses in seven official South African languages: isiZulu, isiXhosa, Sesotho, Setswana, Sepedi, Afrikaans, and English."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- What Makes Us Special -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="WHAT MAKES US SPECIAL"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Our app combines gamified learning, cultural immersion, and practical speaking exercises to help users master vocabulary, grammar, and conversational skills. Designed for both locals and visitors, we promote multilingualism and cross-cultural communication throughout South Africa."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Target Audience -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="WHO WE SERVE"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Our primary audience includes South African citizens, tourists, expatriates, and students interested in learning local languages for cultural enrichment, professional growth, or personal connection. We welcome anyone passionate about South African languages and culture."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Key Features -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="KEY FEATURES"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="🎮 Game-Based Learning: Fun rewards like points, badges, and streaks make learning enjoyable and addictive in a positive way.\n\n🏆 Leaderboards &amp; Rankings: Compare your progress with friends and other learners to boost motivation and community spirit.\n\n📅 Daily Targets &amp; Reminders: Set daily goals and receive reminders to build consistent learning habits despite busy schedules."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Learning Approach -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="LEARNING APPROACH"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="📚 Grammar &amp; Proficiency Levels: Lessons progress from beginner to advanced in clear steps, building confidence and making progress easy to track.\n\n🗣️ Speech-Centred Learning: Speaking tasks, pronunciation checks, and AI conversations improve real-world speaking confidence, not just vocabulary.\n\n🌍 Cultural Integration: Learn languages within their cultural context to gain deeper understanding and appreciation."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Our Mascot -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="MEET OUR MASCOT"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Our friendly cartoon green rhinoceros represents the spirit of South Africa. With large round eyes, a cheerful smile, and white horns, our rhino mascot embodies the approachable and fun nature of language learning while connecting to South African identity."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Our Vision -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="OUR VISION"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="We envision a South Africa where language barriers are bridges to understanding, where every citizen can communicate across cultural divides, and where our linguistic diversity becomes our greatest strength. Through technology and innovation, we're making language learning accessible to everyone."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Contact & Credits -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CONTACT &amp; CREDITS"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Developed with ❤️ for South Africa\n\nEmail: mzansilingo@gmail.com\nPhone: 1234567890\nAddress: 123 Smith Street\n\nSpecial thanks to the linguistic communities that preserve and share South Africa's beautiful languages."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="2dp" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

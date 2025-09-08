@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1a237e"
+    tools:context=".HelpSupportActivity">
+
+    <!-- Header Section -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Back Button -->
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_arrow_left"
+            android:contentDescription="Back"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:tint="#FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Mascot Icon -->
+        <FrameLayout
+            android:id="@+id/logoHolder"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/rhino"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imgRhino"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rhino"
+                android:scaleType="centerInside"
+                android:contentDescription="App mascot"
+                android:padding="4dp" />
+
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Title Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/title_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="32dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_layout">
+
+        <TextView
+            android:id="@+id/tv_help_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginVertical="16dp"
+            android:gravity="center"
+            android:text="HELP &amp; SUPPORT"
+            android:textColor="#1a237e"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Help & Support Content -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_card">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#E8FFFFFF"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="HELP &amp; SUPPORT"
+                    android:textColor="#1a237e"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Need assistance? We're here to help!"
+                    android:textColor="#666666"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center" />
+
+                <!-- Getting Started -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="1. GETTING STARTED"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="New to our language learning app? Start by creating your profile, selecting your target language, and taking the placement test to determine your current level. Our adaptive learning system will create a personalized learning path just for you."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Account Management -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2. ACCOUNT MANAGEMENT"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="You can update your profile information, change your password, and manage your subscription from the Settings menu. To reset your password, tap 'Forgot Password' on the login screen and follow the instructions sent to your email."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Learning Features -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3. LEARNING FEATURES"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Our app offers interactive lessons, vocabulary practice, pronunciation training, and cultural insights. Use the daily challenges to maintain your streak, and don't forget to review previously learned material to strengthen your memory retention."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Technical Issues -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="4. TECHNICAL ISSUES"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="If you're experiencing crashes, loading issues, or audio problems, try restarting the app, checking your internet connection, and ensuring you have the latest version installed. Clear the app cache if problems persist."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Subscription & Billing -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5. SUBSCRIPTION &amp; BILLING"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Manage your subscription through your device's app store (Google Play Store or Apple App Store). You can upgrade, downgrade, or cancel your subscription at any time. Refund policies are governed by the respective app store's terms."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Progress Tracking -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="6. PROGRESS TRACKING"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Track your learning journey through the Progress tab. View your daily streak, completed lessons, mastered words, and overall proficiency level. Set daily goals and receive notifications to stay motivated and consistent with your learning."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Offline Learning -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="7. OFFLINE LEARNING"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Download lessons for offline use when you have a stable internet connection. Offline lessons include text-based exercises and pre-loaded audio. Your progress will sync automatically when you reconnect to the internet."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Frequently Asked Questions -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="8. FREQUENTLY ASKED QUESTIONS"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Q: Can I learn multiple languages?\nA: Yes! You can add multiple languages to your profile and switch between them.\n\nQ: How long are the lessons?\nA: Lessons range from 5-15 minutes, perfect for daily practice.\n\nQ: Can I use the app without internet?\nA: Yes, with downloaded offline content."
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:lineSpacingExtra="2dp" />
+
+                <!-- Contact Support -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="9. CONTACT SUPPORT"
+                    android:textColor="#1a237e"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Still need help? Our support team is ready to assist you:\n\nEmail: mzansilingo@gmail.com\nPhone: 1234567890\nAddress: 123 Smith Street\n\nResponse time: Within 24 hours\nSupport hours: Monday - Friday, 9 AM - 6 PM"
+                    android:textColor="#333333"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="2dp" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

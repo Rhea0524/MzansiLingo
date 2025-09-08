@@ -1,0 +1,9 @@
+<resources>
+    <color name="mz_navy_dark">#081E80</color>
+    <color name="mz_field_fill">#BFC6E5</color>
+    <color name="mz_white">#FFFFFF</color>
+    <color name="mz_accent_green">#8BC53F</color>
+    <color name="mz_yellow">#FFD62E</color>
+    <color name="mz_label">#DDE3FF</color>
+    <color name="mz_accent_yellow">#FFD700</color>
+</resources>

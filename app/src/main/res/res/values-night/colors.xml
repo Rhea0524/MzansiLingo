@@ -1,0 +1,8 @@
+<resources>
+    <color name="mz_navy_dark">#020A33</color> <!-- darker navy -->
+    <color name="mz_field_fill">#2A2E4D</color> <!-- dark field bg -->
+    <color name="mz_white">#121212</color> <!-- near black background -->
+    <color name="mz_accent_green">#6EA02F</color> <!-- dimmed green -->
+    <color name="mz_yellow">#FFD62E</color> <!-- keep yellow same -->
+    <color name="mz_label">#9AA2C8</color> <!-- muted label -->
+</resources>

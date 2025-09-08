@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.MzansiLingo" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Dark mode overrides -->
+        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+
+        <!-- Example: darker background and lighter text -->
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+</resources>

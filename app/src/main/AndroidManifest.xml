@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.fake.mzansilingo">
+
+    <!-- Required permissions for Google Sign-In -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/rhino"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/rhino"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MzansiLingo"
+        tools:targetApi="31">
+
+        <!-- Login activity - launcher -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Main activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <!-- Home activity -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <!-- Words activity -->
+        <activity
+            android:name=".WordsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <!-- CategoryWords activity -->
+        <activity
+            android:name=".CategoryWordsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <!-- CategoryWords activity -->
+        <activity
+            android:name=".WordDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".CategoryPhrasesActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".PhrasesActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".PhrasesDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".VisibilityModesActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".NotificationActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".PrivacyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".HelpSupportActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".AboutActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".ProgressActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".LanguageSelectionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".OfflineActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <activity
+            android:name=".QuotesActivity"
+            android:exported="false" />
+
+
+    </application>
+
+</manifest>
