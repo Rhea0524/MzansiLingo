@@ -9,11 +9,11 @@ import java.util.concurrent.TimeUnit
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 
-// Enhanced data classes with better debugging
+
 data class ChatRequest(
     val message: String,
     val userId: String = "user_${System.currentTimeMillis()}",
-    val language: String = "afrikaans" // Specify target language explicitly
+    val language: String = "afrikaans"
 )
 
 data class ChatResponse(
@@ -162,7 +162,7 @@ class ApiKeyManager {
             }
         }
 
-        // Enhanced translation method
+
         suspend fun translateText(text: String, targetLanguage: String): Result<String> {
             return try {
                 Log.d(TAG, "=== TRANSLATING TEXT ===")
@@ -189,7 +189,7 @@ class ApiKeyManager {
             }
         }
 
-        // Enhanced test connection
+ 
         suspend fun testConnection(): Result<String> {
             return try {
                 Log.d(TAG, "=== TESTING API CONNECTION ===")
