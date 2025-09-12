@@ -129,16 +129,21 @@ The following resources were referenced or used during the development of **Mzan
 ----
 
 ## YouTube Demo
+## 📱 Screenshots of the App
 
-### Screenshots of the App
+### Home Screen
 ![Home Screen](Images/home.png)
+
+### AI Chat
 ![AI Chat](Images/ai_chat.png)
+
+### Leaderboard
 ![Leaderboard](Images/leaderboard.png)
 
-
+### Full Demo
 Watch the full demo [here](https://youtu.be/your-demo-link).
 
----
+----
 
 ## Contact
 
