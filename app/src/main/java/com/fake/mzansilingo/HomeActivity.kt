@@ -276,7 +276,7 @@ data class LanguageContent(
     val welcomeMessage: String
 )
 
-// Language content provider
+
 object LanguageContentProvider {
 
     fun getAfrikaansContent(): LanguageContent {
@@ -291,7 +291,7 @@ object LanguageContentProvider {
         )
     }
 
-    // You can add other languages here in the future
+
     fun getSpanishContent(): LanguageContent {
         return LanguageContent(
             languageName = "ESPAÑOL",
