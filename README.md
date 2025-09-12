@@ -107,13 +107,26 @@ git clone https://github.com/Rhea0524/MzansiLingo.git
 
 ---
 
-## Code Attribution
-Resources used in development:  
-- [Android Developer Documentation](https://developer.android.com/docs)  
-- [Kotlin Language Reference](https://kotlinlang.org/docs/reference/)  
-- [Material Design Guidelines](https://material.io/design)
+## Code Attribution / References
 
----
+The following resources were referenced or used during the development of **Mzansi Lingo**:
+
+- [Android Developer Documentation](https://developer.android.com/docs) – Official guides and tutorials for Android app development.  
+- [Kotlin Language Reference](https://kotlinlang.org/docs/reference/) – Official Kotlin language documentation.  
+- [Material Design Guidelines](https://material.io/design) – UI/UX design principles for Android apps.  
+- [REST API Integration in Android](https://developer.android.com/training/volley) – Documentation on connecting Android apps to REST APIs.  
+- [Retrofit Library for Android](https://square.github.io/retrofit/) – Used for making HTTP requests to the AI chatbot API.  
+- [Firebase Documentation](https://firebase.google.com/docs) – For optional backend features, analytics, and storage.  
+- [OpenAI / AI Chatbot Integration Tutorials](https://platform.openai.com/docs) – Guidelines for integrating AI chatbot functionality via API.  
+- [Git & GitHub Documentation](https://docs.github.com/) – Version control and repository management.  
+- [Android Studio Layouts and Empty Activity Guide](https://developer.android.com/studio/projects/create-project) – Used for structuring app screens and activities.  
+- [Android RecyclerView Guide](https://developer.android.com/guide/topics/ui/layout/recyclerview) – Used for displaying lists of words, phrases, and leaderboard items.  
+- [Glide Image Loading Library](https://github.com/bumptech/glide) – If used for loading icons or images in the app.  
+- [Stack Overflow](https://stackoverflow.com/) – Troubleshooting common Android/Kotlin issues.  
+- [YouTube Tutorials for Android Development](https://www.youtube.com/) – For examples of Android UI, navigation, and activity management.  
+- [Kotlin Coroutines Guide](https://kotlinlang.org/docs/coroutines-overview.html) – Used for asynchronous tasks like API calls.  
+
+----
 
 ## YouTube Demo
 
