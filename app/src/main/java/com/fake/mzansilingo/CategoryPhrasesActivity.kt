@@ -216,7 +216,7 @@ class CategoryPhrasesActivity : AppCompatActivity() {
 
     private fun setupCommunicationButtonClickListeners() {
         try {
-            // I need help buttons
+
             findViewById<MaterialButton>(R.id.btn_need_help_en)?.setOnClickListener {
                 navigateToPhraseDetail("I need help. Can you help me?", "Ek het hulp nodig. Kan jy my help?")
             }
@@ -224,7 +224,7 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("I need help. Can you help me?", "Ek het hulp nodig. Kan jy my help?")
             }
 
-            // I don't understand buttons
+
             findViewById<MaterialButton>(R.id.btn_dont_understand_en)?.setOnClickListener {
                 navigateToPhraseDetail("I don't understand", "Ek verstaan nie")
             }

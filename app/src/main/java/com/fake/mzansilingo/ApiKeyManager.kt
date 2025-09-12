@@ -189,7 +189,7 @@ class ApiKeyManager {
             }
         }
 
- 
+
         suspend fun testConnection(): Result<String> {
             return try {
                 Log.d(TAG, "=== TESTING API CONNECTION ===")
