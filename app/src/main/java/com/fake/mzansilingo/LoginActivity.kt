@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.Timestamp
 
 class LoginActivity : AppCompatActivity() {
 
@@ -28,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var gamificationManager: GamificationManager
+    private lateinit var firestore: FirebaseFirestore // Add Firestore instance
 
     private val googleSignInLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -48,6 +51,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance() // Initialize Firestore
         gamificationManager = GamificationManager(this)
 
         // Configure Google Sign-In
@@ -228,17 +232,18 @@ class LoginActivity : AppCompatActivity() {
                     val isNewUser = task.result?.additionalUserInfo?.isNewUser == true
                     if (isNewUser) {
                         try {
-                            saveGoogleUserInfo(user.uid, account)
+                            saveGoogleUserToFirestore(user.uid, account) // Updated method name
                         } catch (e: Exception) {
                             Log.e("LoginActivity", "Error saving Google user info", e)
                             // Continue with login even if saving user info fails
                         }
                     } else {
                         try {
-                            saveLanguagePreferencesIfSelected(user.uid)
+                            // For existing users, update language preferences and last login
+                            updateExistingUserData(user.uid, account)
                         } catch (e: Exception) {
-                            Log.e("LoginActivity", "Error saving language preferences", e)
-                            // Continue with login even if language preferences fail
+                            Log.e("LoginActivity", "Error updating user data", e)
+                            // Continue with login even if updating fails
                         }
                     }
                 }
@@ -255,33 +260,98 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveGoogleUserInfo(uid: String, account: GoogleSignInAccount) {
-        val db = FirebaseDatabase.getInstance().reference
-        val userInfo = mutableMapOf<String, Any>(
+    // New method to save Google users to Firestore
+    private fun saveGoogleUserToFirestore(uid: String, account: GoogleSignInAccount) {
+        val userInfo = hashMapOf<String, Any>(
+            "uid" to uid,
             "displayName" to (account.displayName ?: ""),
             "email" to (account.email ?: ""),
             "photoUrl" to (account.photoUrl?.toString() ?: ""),
             "provider" to "google",
-            "createdAt" to System.currentTimeMillis()
+            "createdAt" to Timestamp.now(),
+            "lastLoginAt" to Timestamp.now(),
+            "isActive" to true
         )
 
+        // Add language preferences if selected
         val homeLang = binding.actvHomeLang.text.toString().trim()
         val learnLang = binding.actvLearnLang.text.toString().trim()
         if (homeLang.isNotBlank() && learnLang.isNotBlank()) {
             userInfo["homeLanguage"] = homeLang
             userInfo["learningLanguage"] = learnLang
+            userInfo["languagePreferencesSet"] = true
+        } else {
+            userInfo["languagePreferencesSet"] = false
         }
 
-        db.child("users").child(uid).setValue(userInfo)
+        // Save to Firestore users collection
+        firestore.collection("users")
+            .document(uid)
+            .set(userInfo)
             .addOnSuccessListener {
-                Log.d("LoginActivity", "User data saved successfully")
+                Log.d("LoginActivity", "Google user data saved to Firestore successfully")
+                // Optionally initialize user stats/progress documents
+                initializeUserStats(uid)
             }
             .addOnFailureListener { e ->
-                Log.e("LoginActivity", "Failed to save user data", e)
+                Log.e("LoginActivity", "Failed to save Google user data to Firestore", e)
                 Toast.makeText(this, "Failed to save user data: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
+    // Method to update existing user data on login
+    private fun updateExistingUserData(uid: String, account: GoogleSignInAccount) {
+        val updates = hashMapOf<String, Any>(
+            "lastLoginAt" to Timestamp.now(),
+            "displayName" to (account.displayName ?: ""),
+            "photoUrl" to (account.photoUrl?.toString() ?: "")
+        )
+
+        // Add language preferences if selected during this login
+        val homeLang = binding.actvHomeLang.text.toString().trim()
+        val learnLang = binding.actvLearnLang.text.toString().trim()
+        if (homeLang.isNotBlank() && learnLang.isNotBlank()) {
+            updates["homeLanguage"] = homeLang
+            updates["learningLanguage"] = learnLang
+            updates["languagePreferencesSet"] = true
+            updates["languagePreferencesUpdatedAt"] = Timestamp.now()
+        }
+
+        firestore.collection("users")
+            .document(uid)
+            .update(updates)
+            .addOnSuccessListener {
+                Log.d("LoginActivity", "User data updated in Firestore successfully")
+            }
+            .addOnFailureListener { e ->
+                Log.e("LoginActivity", "Failed to update user data in Firestore", e)
+            }
+    }
+
+    // Optional: Initialize user stats/progress documents for new users
+    private fun initializeUserStats(uid: String) {
+        val initialStats = hashMapOf<String, Any>(
+            "totalLessonsCompleted" to 0,
+            "currentStreak" to 0,
+            "longestStreak" to 0,
+            "totalXP" to 0,
+            "level" to 1,
+            "createdAt" to Timestamp.now(),
+            "lastUpdated" to Timestamp.now()
+        )
+
+        firestore.collection("userStats")
+            .document(uid)
+            .set(initialStats)
+            .addOnSuccessListener {
+                Log.d("LoginActivity", "User stats initialized successfully")
+            }
+            .addOnFailureListener { e ->
+                Log.e("LoginActivity", "Failed to initialize user stats", e)
+            }
+    }
+
+    // Keep the existing method for email/password users (still using Realtime Database)
     private fun saveLanguagePreferencesIfSelected(uid: String) {
         val homeLang = binding.actvHomeLang.text.toString().trim()
         val learnLang = binding.actvLearnLang.text.toString().trim()

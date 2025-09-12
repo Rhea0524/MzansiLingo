@@ -16,7 +16,8 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var btnWords: Button
     private lateinit var btnPhrases: Button
-    private lateinit var btnProgress: Button
+    private lateinit var btnLeaderboard: Button
+    private lateinit var btnSetGoals: Button
     private lateinit var btnAiChat: Button
     private lateinit var btnMenu: ImageView
     private lateinit var tvLanguage: TextView
@@ -46,7 +47,8 @@ class HomeActivity : AppCompatActivity() {
     private fun initializeViews() {
         btnWords = findViewById(R.id.btn_words)
         btnPhrases = findViewById(R.id.btn_phrases)
-        btnProgress = findViewById(R.id.btn_progress)
+        btnLeaderboard = findViewById(R.id.btn_leaderboard)
+        btnSetGoals = findViewById(R.id.btn_set_goals)
         btnAiChat = findViewById(R.id.btn_ai_chat)
         btnMenu = findViewById(R.id.btn_menu)
         tvLanguage = findViewById(R.id.tv_language)
@@ -64,7 +66,8 @@ class HomeActivity : AppCompatActivity() {
         // Set button texts for Afrikaans
         btnWords.text = "WORDS / WOORDE"
         btnPhrases.text = "PHRASES / FRASES"
-        btnProgress.text = "PROGRESS / VORDERING"
+        btnLeaderboard.text = "LEADERBOARD / RANGLYS"
+        btnSetGoals.text = "SET GOALS / STEL DOELWITTE"
         btnAiChat.text = "AI CHAT / KI-KLETS"
 
         // Set mascot image (using your existing rhino drawable)
@@ -106,9 +109,9 @@ class HomeActivity : AppCompatActivity() {
             navigateToPhrasesActivity()
         }
 
-        findViewById<TextView>(R.id.nav_progress).setOnClickListener {
+        findViewById<TextView>(R.id.nav_leaderboard).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToProgressActivity()
+            navigateToLeaderboardActivity()
         }
 
         findViewById<TextView>(R.id.nav_visibility).setOnClickListener {
@@ -150,8 +153,12 @@ class HomeActivity : AppCompatActivity() {
             navigateToPhrasesActivity()
         }
 
-        btnProgress.setOnClickListener {
-            navigateToProgressActivity()
+        btnLeaderboard.setOnClickListener {
+            navigateToLeaderboardActivity()
+        }
+
+        btnSetGoals.setOnClickListener {
+            navigateToSetGoalsActivity()
         }
 
         btnAiChat.setOnClickListener {
@@ -184,8 +191,14 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun navigateToProgressActivity() {
-        val intent = Intent(this, ProgressActivity::class.java)
+    private fun navigateToLeaderboardActivity() {
+        val intent = Intent(this, LeaderboardActivity::class.java)
+        intent.putExtra("LANGUAGE", "afrikaans")
+        startActivity(intent)
+    }
+
+    private fun navigateToSetGoalsActivity() {
+        val intent = Intent(this, SetGoalsActivity::class.java)
         intent.putExtra("LANGUAGE", "afrikaans")
         startActivity(intent)
     }
@@ -257,7 +270,8 @@ data class LanguageContent(
     val languageName: String,
     val wordsText: String,
     val phrasesText: String,
-    val progressText: String,
+    val leaderboardText: String,
+    val setGoalsText: String,
     val aiChatText: String,
     val welcomeMessage: String
 )
@@ -270,7 +284,8 @@ object LanguageContentProvider {
             languageName = "AFRIKAANS",
             wordsText = "WORDS / WOORDE",
             phrasesText = "PHRASES / FRASES",
-            progressText = "PROGRESS / VORDERING",
+            leaderboardText = "LEADERBOARD / RANGLYS",
+            setGoalsText = "SET GOALS / STEL DOELWITTE",
             aiChatText = "AI CHAT / KI-KLETS",
             welcomeMessage = "Welkom terug!"
         )
@@ -282,7 +297,8 @@ object LanguageContentProvider {
             languageName = "ESPAÑOL",
             wordsText = "WORDS / PALABRAS",
             phrasesText = "PHRASES / FRASES",
-            progressText = "PROGRESS / PROGRESO",
+            leaderboardText = "LEADERBOARD / TABLA DE POSICIONES",
+            setGoalsText = "SET GOALS / ESTABLECER METAS",
             aiChatText = "AI CHAT / CHAT IA",
             welcomeMessage = "¡Bienvenido de nuevo!"
         )

@@ -24,6 +24,7 @@ class WordDetailActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private var currentUserId: String? = null
+    private var userCollectionUserId: String? = null // Store user collection userId
 
     // TTS variables
     private var mediaPlayer: MediaPlayer? = null
@@ -97,6 +98,9 @@ class WordDetailActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
         currentUserId = auth.currentUser?.uid
 
+        // Fetch the userId from user collection
+        fetchUserCollectionUserId()
+
         // Check if this is test mode to determine which layout to use
         isTestMode = intent.getBooleanExtra("TEST_MODE", false)
 
@@ -121,6 +125,113 @@ class WordDetailActivity : AppCompatActivity() {
         } else {
             setupSingleWordMode()
         }
+    }
+
+    // FIXED METHOD: Fetch userId with case-insensitive email comparison
+    private fun fetchUserCollectionUserId() {
+        val authUserId = auth.currentUser?.uid
+        val userEmail = auth.currentUser?.email?.lowercase() // Normalize to lowercase
+
+        if (authUserId == null || userEmail == null) {
+            Log.w(TAG, "No authenticated user or email")
+            return
+        }
+
+        Log.d(TAG, "Fetching user collection userId for authUserId: $authUserId, email: $userEmail")
+
+        // First, try to find document with exact lowercase email match
+        firestore.collection("users")
+            .whereEqualTo("email", userEmail)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    val userDoc = documents.first()
+                    userCollectionUserId = userDoc.id
+                    Log.d(TAG, "✅ Found user with exact email match: $userCollectionUserId")
+                } else {
+                    // If no exact match, try case-insensitive search by fetching all users and comparing
+                    Log.d(TAG, "No exact email match found, trying case-insensitive search...")
+                    findUserByCaseInsensitiveEmail(authUserId, userEmail)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "❌ Error in initial email query", e)
+                // Fallback to case-insensitive search
+                findUserByCaseInsensitiveEmail(authUserId, userEmail)
+            }
+    }
+
+    // NEW METHOD: Case-insensitive email search
+    private fun findUserByCaseInsensitiveEmail(authUserId: String, userEmail: String) {
+        Log.d(TAG, "Performing case-insensitive email search for: $userEmail")
+
+        firestore.collection("users")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                var foundUser = false
+
+                for (document in querySnapshot.documents) {
+                    val docEmail = document.getString("email")?.lowercase()
+                    if (docEmail == userEmail) {
+                        userCollectionUserId = document.id
+                        foundUser = true
+                        Log.d(TAG, "✅ Found user with case-insensitive match: $userCollectionUserId")
+                        Log.d(TAG, "Original email in doc: ${document.getString("email")}")
+
+                        // Update the document to have lowercase email for future consistency
+                        updateEmailToLowercase(document.id, userEmail)
+                        break
+                    }
+                }
+
+                if (!foundUser) {
+                    Log.w(TAG, "❌ No user found with email: $userEmail")
+                    createUserDocumentInFirestore(authUserId, userEmail)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "❌ Error in case-insensitive search", e)
+                createUserDocumentInFirestore(authUserId, userEmail)
+            }
+    }
+
+    // NEW METHOD: Update existing document to have lowercase email
+    private fun updateEmailToLowercase(documentId: String, lowercaseEmail: String) {
+        firestore.collection("users")
+            .document(documentId)
+            .update("email", lowercaseEmail)
+            .addOnSuccessListener {
+                Log.d(TAG, "✅ Updated email to lowercase in document: $documentId")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "⚠️ Could not update email to lowercase", e)
+                // This is not critical, the user is still found
+            }
+    }
+
+    // UPDATED METHOD: Create user document with lowercase email
+    private fun createUserDocumentInFirestore(authUserId: String, userEmail: String) {
+        Log.d(TAG, "Creating new user document for: $userEmail")
+
+        val userData = hashMapOf(
+            "email" to userEmail.lowercase(), // Ensure lowercase
+            "authUserId" to authUserId,
+            "createdAt" to System.currentTimeMillis()
+            // Add other user fields as needed
+        )
+
+        firestore.collection("users")
+            .add(userData)
+            .addOnSuccessListener { documentReference ->
+                userCollectionUserId = documentReference.id
+                Log.d(TAG, "✅ Created new user document with ID: $userCollectionUserId")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "❌ Error creating user document", e)
+                // As absolute fallback, could use hardcoded ID but better to handle properly
+                userCollectionUserId = "wIXIVzQuLR584L1t3xQ3" // Only as last resort
+                Log.d(TAG, "Using fallback user ID: $userCollectionUserId")
+            }
     }
 
     private fun extractIntentData() {
@@ -665,40 +776,50 @@ class WordDetailActivity : AppCompatActivity() {
         finish()
     }
 
-    // NEW METHOD: Save test results to Firebase
+    // IMPROVED METHOD: Save test results with proper userId handling
     private fun saveTestResultsToFirebase() {
-        currentUserId?.let { userId ->
-            val testEndTime = System.currentTimeMillis()
-            val testDuration = testEndTime - testStartTime
-
-            val testResultData = hashMapOf(
-                "testId" to testId,
-                "userId" to userId,
-                "testType" to "WORD_TEST",
-                "category" to category,
-                "totalQuestions" to totalWords,
-                "correctAnswers" to correctAnswers,
-                "incorrectAnswers" to (totalWords - correctAnswers),
-                "scorePercentage" to ((correctAnswers.toFloat() / totalWords * 100).toInt()),
-                "testDuration" to testDuration, // Duration in milliseconds
-                "startTime" to testStartTime,
-                "endTime" to testEndTime,
-                "timestamp" to System.currentTimeMillis()
-            )
-
-            firestore.collection("test_results")
-                .document(testId)
-                .set(testResultData)
-                .addOnSuccessListener {
-                    Log.d(TAG, "Test results saved successfully: $correctAnswers/$totalWords correct")
-                }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Error saving test results", e)
-                    // Don't show error to user as they've already seen their score
-                }
-        } ?: run {
-            Log.w(TAG, "Cannot save test results: User not authenticated")
+        // Wait for userCollectionUserId to be fetched before saving
+        if (userCollectionUserId == null) {
+            Log.w(TAG, "⚠️ userCollectionUserId not ready, retrying in 1 second...")
+            Handler(Looper.getMainLooper()).postDelayed({
+                saveTestResultsToFirebase()
+            }, 1000)
+            return
         }
+
+        val testEndTime = System.currentTimeMillis()
+        val testDuration = testEndTime - testStartTime
+
+        val testResultData = hashMapOf(
+            "testId" to testId,
+            "userId" to userCollectionUserId!!, // Use the Firestore users collection document ID
+            "authUserId" to currentUserId, // Also store the Firebase Auth ID for reference
+            "testType" to "WORD_TEST",
+            "category" to category,
+            "totalQuestions" to totalWords,
+            "correctAnswers" to correctAnswers,
+            "incorrectAnswers" to (totalWords - correctAnswers),
+            "scorePercentage" to ((correctAnswers.toFloat() / totalWords * 100).toInt()),
+            "testDuration" to testDuration,
+            "startTime" to testStartTime,
+            "endTime" to testEndTime,
+            "timestamp" to System.currentTimeMillis()
+        )
+
+        Log.d(TAG, "💾 Saving test result with:")
+        Log.d(TAG, "- Firestore users collection ID (userId): $userCollectionUserId")
+        Log.d(TAG, "- Firebase Auth ID (authUserId): $currentUserId")
+
+        firestore.collection("test_results")
+            .document(testId)
+            .set(testResultData)
+            .addOnSuccessListener {
+                Log.d(TAG, "✅ Test results saved successfully!")
+                Log.d(TAG, "Score: $correctAnswers/$totalWords correct")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "❌ Error saving test results", e)
+            }
     }
 
     // Deprecated method - replaced by specific navigation methods

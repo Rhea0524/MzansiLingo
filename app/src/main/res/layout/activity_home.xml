@@ -130,20 +130,38 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <!-- Progress Button -->
+            <!-- Leaderboard Button -->
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_progress"
+                android:id="@+id/btn_leaderboard"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/button_green_rounded"
-                android:drawableStart="@drawable/ic_trending_up"
+                android:drawableStart="@drawable/ic_trophy"
                 android:drawablePadding="12dp"
                 android:paddingHorizontal="24dp"
-                android:text="PROGRESS / VORDERING"
+                android:text="LEADERBOARD / RANGLYS"
                 android:textColor="#FFD700"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <!-- Set Goals Button -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_set_goals"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_green_rounded"
+                android:drawableStart="@drawable/ic_target"
+                android:drawablePadding="12dp"
+                android:paddingHorizontal="24dp"
+                android:text="SET GOALS / STEL DOELWITTE"
+                android:textColor="#FFD700"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+
 
             <!-- AI Chat Button -->
             <androidx.appcompat.widget.AppCompatButton
@@ -374,7 +392,7 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- Progress -->
+            <!-- Leaderboard -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
@@ -384,10 +402,10 @@
                 app:cardElevation="0dp">
 
                 <TextView
-                    android:id="@+id/nav_progress"
+                    android:id="@+id/nav_leaderboard"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PROGRESS"
+                    android:text="LEADERBOARD"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
