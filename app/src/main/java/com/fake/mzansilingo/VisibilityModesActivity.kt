@@ -20,6 +20,7 @@ class VisibilityModesActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var btnLightMode: MaterialButton
     private lateinit var btnDarkMode: MaterialButton
+    private lateinit var btnSystemMode: MaterialButton  // Add system mode button
     private lateinit var btnMenu: ImageView
 
     // Navigation drawer items
@@ -58,7 +59,7 @@ class VisibilityModesActivity : AppCompatActivity() {
 
     private fun applySavedTheme() {
         val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val savedTheme = prefs.getString(KEY_THEME_MODE, THEME_SYSTEM)
+        val savedTheme = prefs.getString(KEY_THEME_MODE, THEME_DARK) // Change default to THEME_DARK
 
         when (savedTheme) {
             THEME_LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -71,6 +72,8 @@ class VisibilityModesActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
         btnLightMode = findViewById(R.id.btn_light_mode)
         btnDarkMode = findViewById(R.id.btn_dark_mode)
+        // Add this if you have a system mode button in your layout
+        // btnSystemMode = findViewById(R.id.btn_system_mode)
         btnMenu = findViewById(R.id.btn_menu)
 
         // Initialize navigation drawer items
@@ -107,7 +110,12 @@ class VisibilityModesActivity : AppCompatActivity() {
             setThemeMode(THEME_DARK)
         }
 
-        // Navigation drawer items - matching other activities
+        // System Mode button (if you have one)
+        // btnSystemMode.setOnClickListener {
+        //     setThemeMode(THEME_SYSTEM)
+        // }
+
+        // Navigation drawer items
         setupNavigation()
     }
 
@@ -132,14 +140,16 @@ class VisibilityModesActivity : AppCompatActivity() {
         }
         Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
 
-        // Recreate activity to apply theme immediately
-        recreate()
+        // Update button states immediately without recreating
+        updateButtonStates()
     }
 
     private fun updateButtonStates() {
         val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val currentTheme = prefs.getString(KEY_THEME_MODE, THEME_SYSTEM)
+        val currentTheme = prefs.getString(KEY_THEME_MODE, THEME_DARK) // Change this too
         val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
+
 
         // Reset both buttons first
         resetButtonState(btnLightMode)
@@ -177,7 +187,7 @@ class VisibilityModesActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        // Navigation drawer click listeners - matching other activities
+        // Navigation drawer click listeners
         navHome.setOnClickListener {
             closeDrawer()
             navigateToHomeActivity()
@@ -234,7 +244,7 @@ class VisibilityModesActivity : AppCompatActivity() {
         }
     }
 
-    // Navigation methods matching other activities
+    // Navigation methods
     private fun navigateToHomeActivity() {
         val intent = Intent(this, HomeActivity::class.java)
         intent.putExtra("LANGUAGE", "afrikaans")

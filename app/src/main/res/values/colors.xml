@@ -6,6 +6,8 @@
     <color name="mz_yellow">#FFD62E</color>
     <color name="mz_label">#DDE3FF</color>
     <color name="mz_accent_yellow">#FFD700</color>
+    <color name="mz_light_gray">#E4DFDF</color>
+    <color name="mz_accent_blue">#2196F3</color>
 
 </resources>
 

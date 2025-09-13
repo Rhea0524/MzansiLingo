@@ -97,7 +97,7 @@ class CategoryPhrasesActivity : AppCompatActivity() {
     }
 
     private fun setLayoutForCategory(category: String) {
-        val normalizedCategory = category.toLowerCase().replace(" ", "").replace("&", "")
+        val normalizedCategory = category.lowercase().replace(" ", "").replace("&", "")
         Log.d("CategoryPhrases", "Normalized category: '$normalizedCategory'")
 
         when (normalizedCategory) {
@@ -151,7 +151,7 @@ class CategoryPhrasesActivity : AppCompatActivity() {
             }
 
             // Update category subtitle based on current category
-            tvCategorySubtitle.text = when (currentCategory.toLowerCase().replace(" ", "").replace("&", "")) {
+            tvCategorySubtitle.text = when (currentCategory.lowercase().replace(" ", "").replace("&", "")) {
                 "communicationandinformation", "communicationinformation", "communication" ->
                     "Communication & Information/\nKommunikasie & Inligting"
                 "personalinformation", "personal" ->
@@ -196,7 +196,7 @@ class CategoryPhrasesActivity : AppCompatActivity() {
     }
 
     private fun setupPhraseButtonClickListeners() {
-        val normalizedCategory = currentCategory.toLowerCase().replace(" ", "").replace("&", "")
+        val normalizedCategory = currentCategory.lowercase().replace(" ", "").replace("&", "")
 
         when (normalizedCategory) {
             "communicationandinformation", "communicationinformation", "communication" -> {
@@ -216,14 +216,12 @@ class CategoryPhrasesActivity : AppCompatActivity() {
 
     private fun setupCommunicationButtonClickListeners() {
         try {
-
             findViewById<MaterialButton>(R.id.btn_need_help_en)?.setOnClickListener {
                 navigateToPhraseDetail("I need help. Can you help me?", "Ek het hulp nodig. Kan jy my help?")
             }
             findViewById<MaterialButton>(R.id.btn_need_help_af)?.setOnClickListener {
                 navigateToPhraseDetail("I need help. Can you help me?", "Ek het hulp nodig. Kan jy my help?")
             }
-
 
             findViewById<MaterialButton>(R.id.btn_dont_understand_en)?.setOnClickListener {
                 navigateToPhraseDetail("I don't understand", "Ek verstaan nie")
@@ -458,7 +456,7 @@ class CategoryPhrasesActivity : AppCompatActivity() {
 
     private fun navigateToTestActivity() {
         try {
-            val phraseList = when (currentCategory.toLowerCase().replace(" ", "").replace("&", "")) {
+            val phraseList = when (currentCategory.lowercase().replace(" ", "").replace("&", "")) {
                 "polite", "politeandessential", "politeessential", "politeness" -> politePhrases
                 "communication", "communicationandinformation", "communicationinformation" -> communicationPhrases
                 "personal", "personalinformation" -> personalPhrases

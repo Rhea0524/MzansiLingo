@@ -7,6 +7,9 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,6 +26,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.Timestamp
+import java.util.concurrent.Executor
 
 class LoginActivity : AppCompatActivity() {
 
@@ -30,7 +34,11 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var gamificationManager: GamificationManager
-    private lateinit var firestore: FirebaseFirestore // Add Firestore instance
+    private lateinit var firestore: FirebaseFirestore
+    private lateinit var biometricPrompt: BiometricPrompt
+    private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private lateinit var executor: Executor
+    private lateinit var biometricManager: BiometricCredentialManager
 
     private val googleSignInLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -51,8 +59,9 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance() // Initialize Firestore
+        firestore = FirebaseFirestore.getInstance()
         gamificationManager = GamificationManager(this)
+        biometricManager = BiometricCredentialManager(this)
 
         // Configure Google Sign-In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -61,8 +70,166 @@ class LoginActivity : AppCompatActivity() {
             .build()
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
+        setupBiometric()
         setupLanguageDropdowns()
         setupClickListeners()
+
+        // Only call checkBiometricAvailability once
+        checkBiometricAvailability()
+    }
+
+    private fun setupBiometric() {
+        executor = ContextCompat.getMainExecutor(this)
+        biometricPrompt = BiometricPrompt(this, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    Log.e("LoginActivity", "Biometric authentication error: $errString")
+                    if (errorCode != BiometricPrompt.ERROR_USER_CANCELED &&
+                        errorCode != BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
+                        Toast.makeText(this@LoginActivity,
+                            "Authentication error: $errString", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    Log.d("LoginActivity", "Biometric authentication succeeded")
+                    handleBiometricSuccess()
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    Log.d("LoginActivity", "Biometric authentication failed")
+                    Toast.makeText(this@LoginActivity,
+                        "Authentication failed", Toast.LENGTH_SHORT).show()
+                }
+            })
+
+        promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometric Login")
+            .setSubtitle("Use your fingerprint or face to log in")
+            .setNegativeButtonText("Use Password")
+            .build()
+    }
+
+    private fun checkBiometricAvailability() {
+        val biometricManager = BiometricManager.from(this)
+        val result = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
+
+        Log.d("LoginActivity", "=== BIOMETRIC DEBUG START ===")
+        Log.d("LoginActivity", "Biometric check result: $result")
+        Log.d("LoginActivity", "Has stored credentials: ${this.biometricManager.hasStoredCredentials()}")
+        Log.d("LoginActivity", "Should auto prompt: ${this.biometricManager.shouldAutoPrompt()}")
+        Log.d("LoginActivity", "Credential debug info: ${this.biometricManager.getDebugInfo()}")
+
+        when (result) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                Log.d("LoginActivity", "Biometric SUCCESS - showing button")
+                binding.btnBiometricLogin.visibility = android.view.View.VISIBLE
+                binding.dividerLayout.visibility = android.view.View.VISIBLE
+
+                // Check stored credentials AFTER making button visible
+                checkForStoredCredentials()
+            }
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+                Log.d("LoginActivity", "No biometric hardware available")
+                binding.btnBiometricLogin.visibility = android.view.View.GONE
+                binding.dividerLayout.visibility = android.view.View.GONE
+            }
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                Log.d("LoginActivity", "Biometric hardware unavailable")
+                binding.btnBiometricLogin.visibility = android.view.View.GONE
+                binding.dividerLayout.visibility = android.view.View.GONE
+            }
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                Log.d("LoginActivity", "No biometric enrolled")
+                binding.btnBiometricLogin.visibility = android.view.View.GONE
+                binding.dividerLayout.visibility = android.view.View.GONE
+            }
+            else -> {
+                Log.d("LoginActivity", "Other biometric error: $result")
+                binding.btnBiometricLogin.visibility = android.view.View.GONE
+                binding.dividerLayout.visibility = android.view.View.GONE
+            }
+        }
+
+        Log.d("LoginActivity", "Final button visibility: ${binding.btnBiometricLogin.visibility}")
+        Log.d("LoginActivity", "Final divider visibility: ${binding.dividerLayout.visibility}")
+        Log.d("LoginActivity", "=== BIOMETRIC DEBUG END ===")
+    }
+
+    private fun checkForStoredCredentials() {
+        Log.d("LoginActivity", "Checking for stored credentials...")
+
+        if (biometricManager.hasStoredCredentials()) {
+            Log.d("LoginActivity", "Found stored credentials")
+            // Keep button visible since we have credentials
+            binding.btnBiometricLogin.visibility = android.view.View.VISIBLE
+            binding.dividerLayout.visibility = android.view.View.VISIBLE
+
+            if (biometricManager.shouldAutoPrompt()) {
+                Log.d("LoginActivity", "Auto-prompting biometric authentication")
+                lifecycleScope.launch {
+                    delay(500)
+                    showBiometricPrompt()
+                }
+            }
+        } else {
+            Log.d("LoginActivity", "No stored credentials - but keeping button visible for setup")
+            // KEEP the button visible even without stored credentials
+            // Users need to be able to set up biometric login after successful login
+            binding.btnBiometricLogin.visibility = android.view.View.VISIBLE
+            binding.dividerLayout.visibility = android.view.View.VISIBLE
+
+            // Update button text to indicate setup is needed
+            binding.btnBiometricLogin.text = "Setup Biometric Login"
+        }
+    }
+
+    private fun showBiometricPrompt() {
+        try {
+            biometricPrompt.authenticate(promptInfo)
+        } catch (e: Exception) {
+            Log.e("LoginActivity", "Error showing biometric prompt", e)
+            Toast.makeText(this, "Error showing biometric authentication", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun handleBiometricSuccess() {
+        try {
+            val credentials = biometricManager.getStoredCredentials()
+            if (credentials != null) {
+                when (credentials.type) {
+                    BiometricCredentialManager.CredentialType.EMAIL_PASSWORD -> {
+                        if (!credentials.email.isNullOrBlank() && !credentials.password.isNullOrBlank()) {
+                            loginWithEmailPassword(credentials.email, credentials.password, false)
+                        } else {
+                            Toast.makeText(this, "Invalid stored credentials", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    BiometricCredentialManager.CredentialType.GOOGLE -> {
+                        // For Google sign-in, we'll try silent sign-in
+                        attemptSilentGoogleSignIn()
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Please login first to setup biometric authentication", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            Log.e("LoginActivity", "Error handling biometric success", e)
+            Toast.makeText(this, "Error retrieving stored credentials", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun attemptSilentGoogleSignIn() {
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+        if (account != null) {
+            firebaseAuthWithGoogle(account)
+        } else {
+            // If no cached account, fall back to regular Google sign-in
+            signInWithGoogle()
+        }
     }
 
     private fun setupLanguageDropdowns() {
@@ -86,7 +253,7 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.etPassword.text?.toString().orEmpty()
 
             if (validateInput(email, password)) {
-                loginWithEmailPassword(email, password)
+                loginWithEmailPassword(email, password, true)
             }
         }
 
@@ -95,9 +262,17 @@ class LoginActivity : AppCompatActivity() {
             signInWithGoogle()
         }
 
-        // Sign up link - This should probably go to a SignUp activity, not MainActivity
+        // Biometric Login
+        binding.btnBiometricLogin.setOnClickListener {
+            if (biometricManager.hasStoredCredentials()) {
+                showBiometricPrompt()
+            } else {
+                Toast.makeText(this, "Please login with email/password or Google first to setup biometric authentication", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        // Sign up link
         binding.tvSignUpLink.setOnClickListener {
-            // Consider creating a SignUpActivity instead
             startActivity(Intent(this, MainActivity::class.java))
         }
     }
@@ -125,7 +300,6 @@ class LoginActivity : AppCompatActivity() {
                 return false
             }
             else -> {
-                // Clear any previous errors
                 binding.tilEmail.error = null
                 binding.tilPassword.error = null
                 return true
@@ -133,8 +307,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun loginWithEmailPassword(email: String, password: String) {
-        // Clear any previous errors
+    // Updated method with biometric credential saving option
+    private fun loginWithEmailPassword(email: String, password: String, shouldOfferBiometric: Boolean) {
         binding.tilEmail.error = null
         binding.tilPassword.error = null
 
@@ -145,7 +319,6 @@ class LoginActivity : AppCompatActivity() {
 
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
-                // Re-enable button regardless of result
                 binding.btnLogin.isEnabled = true
                 binding.btnLogin.text = "Login"
 
@@ -157,21 +330,23 @@ class LoginActivity : AppCompatActivity() {
                             saveLanguagePreferencesIfSelected(user.uid)
                         } catch (e: Exception) {
                             Log.e("LoginActivity", "Error saving language preferences", e)
-                            // Continue with login even if language preferences fail
                         }
                     }
-                    Toast.makeText(this, "Welcome back!", Toast.LENGTH_SHORT).show()
-                    navigateToHomeActivity()
+
+                    // Offer biometric storage for successful email/password login
+                    if (shouldOfferBiometric && canUseBiometric()) {
+                        offerBiometricStorage(email, password, BiometricCredentialManager.CredentialType.EMAIL_PASSWORD)
+                    } else {
+                        Toast.makeText(this, "Welcome back!", Toast.LENGTH_SHORT).show()
+                        navigateToHomeActivity()
+                    }
                 } else {
                     val errorMessage = task.exception?.message ?: "Login failed"
                     Log.e("LoginActivity", "Login failed: $errorMessage", task.exception)
-
-                    // Handle specific Firebase Auth errors
                     handleLoginError(task.exception)
                 }
             }
             .addOnFailureListener { exception ->
-                // Additional safety net for failures
                 binding.btnLogin.isEnabled = true
                 binding.btnLogin.text = "Login"
                 Log.e("LoginActivity", "Login failure listener triggered", exception)
@@ -179,8 +354,50 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    private fun canUseBiometric(): Boolean {
+        val biometricManager = BiometricManager.from(this)
+        return biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS
+    }
+
+    private fun offerBiometricStorage(email: String, password: String, type: BiometricCredentialManager.CredentialType) {
+        if (biometricManager.hasStoredCredentials()) {
+            // User already has biometric login set up
+            Toast.makeText(this, "Welcome back!", Toast.LENGTH_SHORT).show()
+            navigateToHomeActivity()
+            return
+        }
+
+        // Show dialog to ask user if they want to enable biometric login
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("Enable Biometric Login")
+            .setMessage("Would you like to use your fingerprint or face to log in next time?")
+            .setPositiveButton("Enable") { _, _ ->
+                try {
+                    val credentials = when (type) {
+                        BiometricCredentialManager.CredentialType.EMAIL_PASSWORD ->
+                            BiometricCredentialManager.StoredCredentials(type, email, password)
+                        BiometricCredentialManager.CredentialType.GOOGLE ->
+                            BiometricCredentialManager.StoredCredentials(type, email, null)
+                    }
+                    biometricManager.storeCredentials(credentials)
+
+                    // Update button text after successful storage
+                    binding.btnBiometricLogin.text = "Login with Biometric"
+                    Toast.makeText(this, "Biometric login enabled!", Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    Log.e("LoginActivity", "Error storing biometric credentials", e)
+                    Toast.makeText(this, "Failed to enable biometric login", Toast.LENGTH_SHORT).show()
+                }
+                navigateToHomeActivity()
+            }
+            .setNegativeButton("Not Now") { _, _ ->
+                Toast.makeText(this, "Welcome back!", Toast.LENGTH_SHORT).show()
+                navigateToHomeActivity()
+            }
+            .show()
+    }
+
     private fun handleLoginError(exception: Exception?) {
-        // Check error message for specific cases
         val errorMessage = exception?.message ?: "Login failed"
 
         when {
@@ -232,23 +449,27 @@ class LoginActivity : AppCompatActivity() {
                     val isNewUser = task.result?.additionalUserInfo?.isNewUser == true
                     if (isNewUser) {
                         try {
-                            saveGoogleUserToFirestore(user.uid, account) // Updated method name
+                            saveGoogleUserToFirestore(user.uid, account)
                         } catch (e: Exception) {
                             Log.e("LoginActivity", "Error saving Google user info", e)
-                            // Continue with login even if saving user info fails
+                        }
+                        // Offer biometric for new Google users
+                        if (canUseBiometric()) {
+                            offerBiometricStorage(account.email ?: "", "", BiometricCredentialManager.CredentialType.GOOGLE)
+                        } else {
+                            Toast.makeText(this, "Google login successful!", Toast.LENGTH_SHORT).show()
+                            navigateToHomeActivity()
                         }
                     } else {
                         try {
-                            // For existing users, update language preferences and last login
                             updateExistingUserData(user.uid, account)
                         } catch (e: Exception) {
                             Log.e("LoginActivity", "Error updating user data", e)
-                            // Continue with login even if updating fails
                         }
+                        Toast.makeText(this, "Google login successful!", Toast.LENGTH_SHORT).show()
+                        navigateToHomeActivity()
                     }
                 }
-                Toast.makeText(this, "Google login successful!", Toast.LENGTH_SHORT).show()
-                navigateToHomeActivity()
             } else {
                 Log.w("LoginActivity", "signInWithCredential:failure", task.exception)
                 Toast.makeText(
@@ -260,7 +481,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // New method to save Google users to Firestore
     private fun saveGoogleUserToFirestore(uid: String, account: GoogleSignInAccount) {
         val userInfo = hashMapOf<String, Any>(
             "uid" to uid,
@@ -273,7 +493,6 @@ class LoginActivity : AppCompatActivity() {
             "isActive" to true
         )
 
-        // Add language preferences if selected
         val homeLang = binding.actvHomeLang.text.toString().trim()
         val learnLang = binding.actvLearnLang.text.toString().trim()
         if (homeLang.isNotBlank() && learnLang.isNotBlank()) {
@@ -284,13 +503,11 @@ class LoginActivity : AppCompatActivity() {
             userInfo["languagePreferencesSet"] = false
         }
 
-        // Save to Firestore users collection
         firestore.collection("users")
             .document(uid)
             .set(userInfo)
             .addOnSuccessListener {
                 Log.d("LoginActivity", "Google user data saved to Firestore successfully")
-                // Optionally initialize user stats/progress documents
                 initializeUserStats(uid)
             }
             .addOnFailureListener { e ->
@@ -299,7 +516,6 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    // Method to update existing user data on login
     private fun updateExistingUserData(uid: String, account: GoogleSignInAccount) {
         val updates = hashMapOf<String, Any>(
             "lastLoginAt" to Timestamp.now(),
@@ -307,7 +523,6 @@ class LoginActivity : AppCompatActivity() {
             "photoUrl" to (account.photoUrl?.toString() ?: "")
         )
 
-        // Add language preferences if selected during this login
         val homeLang = binding.actvHomeLang.text.toString().trim()
         val learnLang = binding.actvLearnLang.text.toString().trim()
         if (homeLang.isNotBlank() && learnLang.isNotBlank()) {
@@ -328,7 +543,6 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    // Optional: Initialize user stats/progress documents for new users
     private fun initializeUserStats(uid: String) {
         val initialStats = hashMapOf<String, Any>(
             "totalLessonsCompleted" to 0,
@@ -351,7 +565,6 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    // Keep the existing method for email/password users (still using Realtime Database)
     private fun saveLanguagePreferencesIfSelected(uid: String) {
         val homeLang = binding.actvHomeLang.text.toString().trim()
         val learnLang = binding.actvLearnLang.text.toString().trim()
@@ -372,10 +585,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // Updated navigateToHomeActivity method with gamification for both new and returning users
     private fun navigateToHomeActivity() {
         try {
-            // Check for gamification before navigating
             gamificationManager.checkDailyLogin(object : GamificationManager.GamificationCallback {
                 override fun onStreakDataLoaded(streakData: GamificationManager.StreakData) {
                     handleStreakData(streakData)
@@ -387,7 +598,6 @@ class LoginActivity : AppCompatActivity() {
 
                 override fun onError(error: String) {
                     Log.e("LoginActivity", "Gamification error: $error")
-                    // Continue to home even if gamification fails
                     proceedToHome()
                 }
             })
@@ -397,13 +607,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // Add these new methods to handle gamification
     private fun handleStreakData(streakData: GamificationManager.StreakData) {
         if (streakData.shouldShowWelcome && streakData.isNewDay) {
-            // Show welcome back dialog
             showWelcomeBackDialog(streakData)
         } else {
-            // Proceed directly to home
             proceedToHome()
         }
     }
@@ -411,11 +618,9 @@ class LoginActivity : AppCompatActivity() {
     private fun showWelcomeBackDialog(streakData: GamificationManager.StreakData) {
         try {
             val dialog = WelcomeBackDialogFragment.newInstance(streakData) {
-                // This callback is called when dialog is dismissed
                 proceedToHome()
             }
 
-            // Small delay to ensure smooth transition
             lifecycleScope.launch {
                 delay(200)
                 if (!isFinishing && !isDestroyed) {
@@ -424,7 +629,6 @@ class LoginActivity : AppCompatActivity() {
             }
         } catch (e: Exception) {
             Log.e("LoginActivity", "Error showing welcome dialog", e)
-            // Fallback to direct navigation
             proceedToHome()
         }
     }

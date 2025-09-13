@@ -66,6 +66,10 @@ dependencies {
     // Google Play Services Base (required for Google Sign-In)
     implementation("com.google.android.gms:play-services-base:18.5.0")
 
+    // 🔐 Biometric Authentication Dependencies
+    implementation("androidx.biometric:biometric:1.1.0")
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+
     // OkHttp for TTS API calls
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")

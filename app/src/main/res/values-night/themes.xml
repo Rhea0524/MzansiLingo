@@ -1,11 +1,19 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.MzansiLingo" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Dark mode overrides -->
-        <item name="android:statusBarColor">@android:color/black</item>
-        <item name="android:navigationBarColor">@android:color/black</item>
+<resources>
+    <style name="Theme.MzansiLingo" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- System bars -->
+        <item name="android:statusBarColor">@color/mz_navy_dark</item>
+        <item name="android:navigationBarColor">@color/mz_navy_dark</item>
 
-        <!-- Example: darker background and lighter text -->
-        <item name="android:windowBackground">@android:color/black</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
+        <!-- Material 3 color tokens -->
+        <item name="colorPrimary">@color/mz_accent_green</item>
+        <item name="colorOnPrimary">@color/mz_navy_dark</item>
+        <item name="colorSecondary">@color/mz_accent_yellow</item>
+        <item name="colorOnSecondary">@color/mz_navy_dark</item>
+
+        <!-- Surface colors -->
+        <item name="colorSurface">@color/mz_navy_dark</item>
+        <item name="colorOnSurface">@color/mz_white</item>
+        <item name="colorSurfaceVariant">@color/mz_field_fill</item>
+        <item name="colorOnSurfaceVariant">@color/mz_navy_dark</item>
     </style>
 </resources>
