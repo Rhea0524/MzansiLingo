@@ -54,12 +54,11 @@ This app is designed for individual learners and emphasizes **consistency, pronu
 - View points, goals and leaderboards.  
 
 ### App Features
-- **Navigation Bar**: Home, Language, Words, Phrases, Leaderboard, Visibility Modes, Settings, Profile.  
-- **Settings**: Manage profile, notifications, privacy & security, help & support, visibility modes, about, and logout.  
 - **Gamification**: Pop-ups triggered after completing daily goals for words, phrases, or both.  
 - **Speech-Based Learning**: Built-in speakers pronounce words, phrases, and quotes.  
 - **AI Chat Support**: Users can ask for correct pronunciation and spelling guidance.
 - **Set goals**: Users can set daily goals for the words and phrases to get right.
+- **Leaderboards**: Users can earn points from completing tests and move their way up the leaderboard.
 
 ---
 
