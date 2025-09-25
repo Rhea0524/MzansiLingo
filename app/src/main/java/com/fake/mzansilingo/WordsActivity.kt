@@ -27,7 +27,7 @@ class WordsActivity : AppCompatActivity() {
     private lateinit var navWords: TextView
     private lateinit var navPhrases: TextView
     private lateinit var navProgress: TextView
-    private lateinit var navVisibility: TextView
+
     private lateinit var navSettings: TextView
     private lateinit var navProfile: TextView
     private lateinit var navBack: ImageView
@@ -59,7 +59,7 @@ class WordsActivity : AppCompatActivity() {
         navWords = findViewById(R.id.nav_words)
         navPhrases = findViewById(R.id.nav_phrases)
         navProgress = findViewById(R.id.nav_progress)
-        navVisibility = findViewById(R.id.nav_visibility)
+
         navSettings = findViewById(R.id.nav_settings)
         navProfile = findViewById(R.id.nav_profile)
         navBack = findViewById(R.id.nav_back)
@@ -116,9 +116,7 @@ class WordsActivity : AppCompatActivity() {
             navigateToProgressActivity()
         }
 
-        navVisibility.setOnClickListener {
-            navigateToVisibilityModes()
-        }
+
 
         navSettings.setOnClickListener {
             navigateToSettings()
@@ -182,12 +180,7 @@ class WordsActivity : AppCompatActivity() {
         closeDrawer()
     }
 
-    private fun navigateToVisibilityModes() {
-        val intent = Intent(this, VisibilityModesActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-        closeDrawer()
-    }
+
 
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)

@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 
+
+
 class OfflineActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
@@ -109,11 +111,7 @@ class OfflineActivity : AppCompatActivity() {
             navigateToProgressActivity()
         }
 
-        // Visibility modes navigation
-        findViewById<TextView>(R.id.nav_visibility).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToVisibilityModes()
-        }
+
 
         // Settings navigation
         findViewById<TextView>(R.id.nav_settings).setOnClickListener {
@@ -211,11 +209,7 @@ class OfflineActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun navigateToVisibilityModes() {
-        val intent = Intent(this, VisibilityModesActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-    }
+
 
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)

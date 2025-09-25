@@ -73,10 +73,18 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setupPasswordField() {
-        // Set password field to be a password input type
+        // Make password field non-editable
+        etPassword.isEnabled = false
+        etPassword.isFocusable = false
+        etPassword.isFocusableInTouchMode = false
+
+        // Set a placeholder to indicate passwords can't be changed here
+        etPassword.hint = "Password cannot be changed from profile"
+        etPassword.setText("") // Keep it empty for security
+
+        // Set input type (though it won't be editable)
         etPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-        // Set placeholder text to indicate this is for changing password
-        etPassword.hint = "Enter new password (leave blank to keep current)"
+        etPassword.setBackgroundResource(R.drawable.profile_input_disabled_background)
     }
 
     private fun setupLanguageSpinner() {
@@ -143,11 +151,7 @@ class ProfileActivity : AppCompatActivity() {
             navigateToProgressActivity()
         }
 
-        // Visibility navigation
-        findViewById<TextView>(R.id.nav_visibility).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToVisibilityModes()
-        }
+
 
         // Settings navigation
         findViewById<TextView>(R.id.nav_settings).setOnClickListener {
@@ -207,11 +211,7 @@ class ProfileActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun navigateToVisibilityModes() {
-        val intent = Intent(this, VisibilityModesActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-    }
+
 
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
@@ -247,9 +247,7 @@ class ProfileActivity : AppCompatActivity() {
             // Load additional data from SharedPreferences
             loadAdditionalDataFromPrefs()
 
-            // Don't load password - leave it empty for security
-            etPassword.setText("")
-
+            // Password field is disabled, so we don't need to set anything
             Log.d("ProfileActivity", "User data loading completed")
         } ?: run {
             Log.e("ProfileActivity", "No current user found")
@@ -282,12 +280,11 @@ class ProfileActivity : AppCompatActivity() {
         val fullName = etFullName.text.toString().trim()
         val email = etEmail.text.toString().trim()
         val username = etUsername.text.toString().trim()
-        val password = etPassword.text.toString().trim()
         val language = spinnerLanguage.selectedItem.toString()
 
         Log.d("ProfileActivity", "Saving profile - Name: $fullName, Email: $email, Username: $username")
 
-        // Validate input
+        // Validate input (removed password validation since it's not editable)
         when {
             fullName.isEmpty() -> {
                 etFullName.error = "Full name is required"
@@ -309,11 +306,6 @@ class ProfileActivity : AppCompatActivity() {
                 etUsername.requestFocus()
                 return
             }
-            password.isNotEmpty() && password.length < 6 -> {
-                etPassword.error = "Password must be at least 6 characters"
-                etPassword.requestFocus()
-                return
-            }
         }
 
         // Show saving state
@@ -333,12 +325,9 @@ class ProfileActivity : AppCompatActivity() {
                     // Update email if changed
                     val currentEmail = user.email
                     if (currentEmail != email) {
-                        updateEmailInAuth(email, username, language, password)
+                        updateEmailInAuth(email, username, language)
                     } else {
-                        // If email didn't change, just update password and save additional data
-                        if (password.isNotEmpty()) {
-                            updatePasswordInAuth(password)
-                        }
+                        // If email didn't change, just save additional data
                         saveAdditionalDataToPrefs(username, language)
                         showSaveSuccess()
                     }
@@ -351,15 +340,10 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateEmailInAuth(newEmail: String, username: String, language: String, password: String) {
+    private fun updateEmailInAuth(newEmail: String, username: String, language: String) {
         auth.currentUser?.updateEmail(newEmail)
             ?.addOnSuccessListener {
                 Log.d("ProfileActivity", "Email updated successfully")
-
-                // Update password if provided
-                if (password.isNotEmpty()) {
-                    updatePasswordInAuth(password)
-                }
 
                 // Save additional data
                 saveAdditionalDataToPrefs(username, language)
@@ -370,23 +354,8 @@ class ProfileActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error updating email: ${exception.message}. You may need to re-authenticate.", Toast.LENGTH_LONG).show()
 
                 // Still save other data even if email update failed
-                if (password.isNotEmpty()) {
-                    updatePasswordInAuth(password)
-                }
                 saveAdditionalDataToPrefs(username, language)
                 resetSaveButton()
-            }
-    }
-
-    private fun updatePasswordInAuth(newPassword: String) {
-        auth.currentUser?.updatePassword(newPassword)
-            ?.addOnSuccessListener {
-                Log.d("ProfileActivity", "Password updated successfully")
-                etPassword.setText("") // Clear password field for security
-            }
-            ?.addOnFailureListener { exception ->
-                Log.e("ProfileActivity", "Error updating password", exception)
-                Toast.makeText(this, "Error updating password: ${exception.message}", Toast.LENGTH_LONG).show()
             }
     }
 
@@ -403,7 +372,6 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun showSaveSuccess() {
         Toast.makeText(this, "Profile saved successfully!", Toast.LENGTH_SHORT).show()
-        etPassword.setText("") // Clear password field for security
         resetSaveButton()
     }
 

@@ -77,7 +77,7 @@ class SetGoalsActivity : AppCompatActivity() {
     private lateinit var navWords: TextView
     private lateinit var navPhrases: TextView
     private lateinit var navLeaderboard: TextView
-    private lateinit var navVisibility: TextView
+
     private lateinit var navSettings: TextView
     private lateinit var navProfile: TextView
     private lateinit var navBack: ImageView
@@ -212,7 +212,7 @@ class SetGoalsActivity : AppCompatActivity() {
         navWords = findViewById(R.id.nav_words)
         navPhrases = findViewById(R.id.nav_phrases)
         navLeaderboard = findViewById(R.id.nav_leaderboard)
-        navVisibility = findViewById(R.id.nav_visibility)
+
         navSettings = findViewById(R.id.nav_settings)
         navProfile = findViewById(R.id.nav_profile)
         navBack = findViewById(R.id.nav_back)
@@ -636,10 +636,7 @@ class SetGoalsActivity : AppCompatActivity() {
             navigateToLeaderboardActivity()
         }
 
-        navVisibility.setOnClickListener {
-            closeDrawer()
-            navigateToVisibilityModes()
-        }
+
 
         navSettings.setOnClickListener {
             closeDrawer()

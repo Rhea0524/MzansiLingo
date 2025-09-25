@@ -1,40 +1,112 @@
 package com.fake.mzansilingo
 
+import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import java.util.*
 
 class NotificationActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var btnMenu: ImageView
     private lateinit var tvTitle: TextView
-    private lateinit var tvMessage: TextView
+    private lateinit var switchMorningReminder: Switch
+    private lateinit var switchEveningReminder: Switch
+    private lateinit var btnTestNotification: Button
+
+    companion object {
+        const val MORNING_NOTIFICATION_ID = 1001
+        const val EVENING_NOTIFICATION_ID = 1002
+        const val CHANNEL_ID = "MZANSILINGO_REMINDERS"
+        const val MORNING_HOUR = 7
+        const val EVENING_HOUR = 18
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification)
 
         initViews()
+        setupNotificationChannel()
         setupClickListeners()
         setupNavigationDrawer()
-        setupBottomNavigation()
+        setupNotifications()
     }
 
     private fun initViews() {
         drawerLayout = findViewById(R.id.drawer_layout)
         btnMenu = findViewById(R.id.btn_menu)
         tvTitle = findViewById(R.id.tv_title)
-        tvMessage = findViewById(R.id.tv_message)
+        switchMorningReminder = findViewById(R.id.switch_morning_reminder)
+        switchEveningReminder = findViewById(R.id.switch_evening_reminder)
+        btnTestNotification = findViewById(R.id.btn_test_notification)
 
         tvTitle.text = "NOTIFICATIONS"
-        tvMessage.text = "To be implemented in part 3"
+    }
+
+    private fun setupNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                "Learning Reminders",
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Daily reminders for language learning"
+                enableVibration(true)
+                setShowBadge(true)
+            }
+
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun setupNotifications() {
+        val sharedPrefs = getSharedPreferences("notification_prefs", Context.MODE_PRIVATE)
+
+        // Load saved preferences
+        switchMorningReminder.isChecked = sharedPrefs.getBoolean("morning_enabled", true)
+        switchEveningReminder.isChecked = sharedPrefs.getBoolean("evening_enabled", true)
+
+        // Set up listeners
+        switchMorningReminder.setOnCheckedChangeListener { _, isChecked ->
+            sharedPrefs.edit().putBoolean("morning_enabled", isChecked).apply()
+            if (isChecked) {
+                scheduleMorningNotification()
+                Toast.makeText(this, "Morning reminders enabled at 7:00 AM", Toast.LENGTH_SHORT).show()
+            } else {
+                cancelNotification(MORNING_NOTIFICATION_ID)
+                Toast.makeText(this, "Morning reminders disabled", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        switchEveningReminder.setOnCheckedChangeListener { _, isChecked ->
+            sharedPrefs.edit().putBoolean("evening_enabled", isChecked).apply()
+            if (isChecked) {
+                scheduleEveningNotification()
+                Toast.makeText(this, "Evening reminders enabled at 6:00 PM", Toast.LENGTH_SHORT).show()
+            } else {
+                cancelNotification(EVENING_NOTIFICATION_ID)
+                Toast.makeText(this, "Evening reminders disabled", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Schedule initial notifications if switches are enabled
+        if (switchMorningReminder.isChecked) {
+            scheduleMorningNotification()
+        }
+        if (switchEveningReminder.isChecked) {
+            scheduleEveningNotification()
+        }
     }
 
     private fun setupClickListeners() {
@@ -45,167 +117,115 @@ class NotificationActivity : AppCompatActivity() {
                 drawerLayout.openDrawer(GravityCompat.END)
             }
         }
-    }
 
-    private fun setupNavigationDrawer() {
-        // Home navigation
-        findViewById<TextView>(R.id.nav_home).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToHome()
-        }
 
-        // Language navigation
-        findViewById<TextView>(R.id.nav_language).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToLanguageSelection()
-        }
-
-        // Words navigation
-        findViewById<TextView>(R.id.nav_words).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToWordsActivity()
-        }
-
-        // Phrases navigation
-        findViewById<TextView>(R.id.nav_phrases).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToPhrasesActivity()
-        }
-
-        // Progress navigation
-        findViewById<TextView>(R.id.nav_progress).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToProgressActivity()
-        }
-
-        // Visibility modes navigation
-        findViewById<TextView>(R.id.nav_visibility).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToVisibilityModes()
-        }
-
-        // Settings navigation
-        findViewById<TextView>(R.id.nav_settings).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToSettings()
-        }
-
-        // Profile navigation
-        findViewById<TextView>(R.id.nav_profile).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToProfile()
-        }
-
-        // Navigation drawer bottom icons
-        findViewById<ImageView>(R.id.nav_dictionary).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToOfflineQuiz()
-        }
 
         findViewById<ImageView>(R.id.nav_back).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            onBackPressed()
-        }
-
-        findViewById<ImageView>(R.id.nav_chat).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToAiChatActivity()
+            finish()
         }
     }
 
-    private fun setupBottomNavigation() {
-        // Bottom book/dictionary button - navigate to OfflineActivity
-        findViewById<ImageView>(R.id.btn_bottom_dict)?.setOnClickListener {
-            navigateToOfflineQuiz()
+    private fun scheduleMorningNotification() {
+        scheduleRepeatingNotification(
+            MORNING_NOTIFICATION_ID,
+            MORNING_HOUR,
+            0,
+            "morning"
+        )
+    }
+
+    private fun scheduleEveningNotification() {
+        scheduleRepeatingNotification(
+            EVENING_NOTIFICATION_ID,
+            EVENING_HOUR,
+            0,
+            "evening"
+        )
+    }
+
+    private fun scheduleRepeatingNotification(id: Int, hour: Int, minute: Int, type: String) {
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, NotificationReceiver::class.java).apply {
+            putExtra("type", type)
         }
 
-        // Bottom quotes button - navigate to QuotesActivity
-        findViewById<ImageView>(R.id.btn_bottom_quotes)?.setOnClickListener {
-            navigateToQuotes()
+        val pendingIntent = PendingIntent.getBroadcast(
+            this, id, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, hour)
+            set(Calendar.MINUTE, minute)
+            set(Calendar.SECOND, 0)
+
+            // If the time has already passed today, schedule for tomorrow
+            if (before(Calendar.getInstance())) {
+                add(Calendar.DATE, 1)
+            }
         }
-
-        // Bottom bars/statistics button - navigate to ProgressActivity
-        findViewById<ImageView>(R.id.btn_bottom_stats)?.setOnClickListener {
-            navigateToStatistics()
-        }
-    }
-
-    // Navigation methods matching HomeActivity functionality
-    private fun navigateToHome() {
-        val intent = Intent(this, HomeActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun navigateToLanguageSelection() {
-        val intent = Intent(this, LanguageSelectionActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun navigateToWordsActivity() {
-        val intent = Intent(this, WordsActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-    }
-
-    private fun navigateToPhrasesActivity() {
-        val intent = Intent(this, PhrasesActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-    }
-
-    private fun navigateToProgressActivity() {
-        val intent = Intent(this, ProgressActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-    }
-
-    private fun navigateToVisibilityModes() {
-        val intent = Intent(this, VisibilityModesActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-    }
-
-    private fun navigateToSettings() {
-        val intent = Intent(this, SettingsActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun navigateToProfile() {
-        val intent = Intent(this, ProfileActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun navigateToAiChatActivity() {
-        val intent = Intent(this, AiChatActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-    }
-
-    private fun navigateToOfflineQuiz() {
-        val intent = Intent(this, OfflineActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-    }
-
-    private fun navigateToQuotes() {
-        Toast.makeText(this, "Starting QuotesActivity...", Toast.LENGTH_SHORT).show()
 
         try {
-            val intent = Intent(this, QuotesActivity::class.java)
-            intent.putExtra("LANGUAGE", "afrikaans")
-            startActivity(intent)
-            Toast.makeText(this, "Intent sent successfully", Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
-            Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_LONG).show()
-            Log.e("NotificationActivity", "Navigation error", e)
+            alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.timeInMillis,
+                AlarmManager.INTERVAL_DAY,
+                pendingIntent
+            )
+        } catch (e: SecurityException) {
+            Toast.makeText(this, "Permission needed for exact alarms", Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun navigateToStatistics() {
-        val intent = Intent(this, ProgressActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
+    private fun cancelNotification(id: Int) {
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, NotificationReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+            this, id, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        alarmManager.cancel(pendingIntent)
+    }
+
+
+
+    // Simplified navigation - keep only essential methods
+    private fun setupNavigationDrawer() {
+        findViewById<TextView>(R.id.nav_home).setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+
+        findViewById<TextView>(R.id.nav_words).setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            val intent = Intent(this, WordsActivity::class.java)
+            intent.putExtra("LANGUAGE", "afrikaans")
+            startActivity(intent)
+        }
+
+        findViewById<TextView>(R.id.nav_phrases).setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            val intent = Intent(this, PhrasesActivity::class.java)
+            intent.putExtra("LANGUAGE", "afrikaans")
+            startActivity(intent)
+        }
+
+        findViewById<TextView>(R.id.nav_progress).setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            val intent = Intent(this, ProgressActivity::class.java)
+            intent.putExtra("LANGUAGE", "afrikaans")
+            startActivity(intent)
+        }
+
+        findViewById<TextView>(R.id.nav_settings).setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
+        findViewById<TextView>(R.id.nav_profile).setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
     }
 
     override fun onBackPressed() {

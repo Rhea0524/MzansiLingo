@@ -114,10 +114,7 @@ class HomeActivity : AppCompatActivity() {
             navigateToLeaderboardActivity()
         }
 
-        findViewById<TextView>(R.id.nav_visibility).setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToVisibilityModes()
-        }
+
 
         findViewById<TextView>(R.id.nav_settings).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
@@ -214,11 +211,7 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun navigateToVisibilityModes() {
-        val intent = Intent(this, VisibilityModesActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-    }
+
 
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)

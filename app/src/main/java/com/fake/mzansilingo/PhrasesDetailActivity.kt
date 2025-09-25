@@ -51,7 +51,7 @@ class PhrasesDetailActivity : AppCompatActivity() {
     private lateinit var navWords: TextView
     private lateinit var navPhrases: TextView
     private lateinit var navProgress: TextView
-    private lateinit var navVisibility: TextView
+
     private lateinit var navSettings: TextView
     private lateinit var navProfile: TextView
     private lateinit var navBack: ImageView
@@ -270,7 +270,7 @@ class PhrasesDetailActivity : AppCompatActivity() {
         navWords = findViewById(R.id.nav_words)
         navPhrases = findViewById(R.id.nav_phrases)
         navProgress = findViewById(R.id.nav_progress)
-        navVisibility = findViewById(R.id.nav_visibility)
+
         navSettings = findViewById(R.id.nav_settings)
         navProfile = findViewById(R.id.nav_profile)
         navBack = findViewById(R.id.nav_back)
@@ -314,10 +314,6 @@ class PhrasesDetailActivity : AppCompatActivity() {
             navigateToProgressActivity()
         }
 
-        navVisibility.setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            navigateToVisibilityModes()
-        }
 
         navSettings.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)

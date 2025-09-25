@@ -153,13 +153,15 @@
                     app:strokeColor="@android:color/white"
                     app:strokeWidth="3dp" />
 
-                <!-- Visibility Modes -->
+
+
+                <!-- Export Test Data -->
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_visibility_modes"
+                    android:id="@+id/btn_export_test_data"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Visibility Modes"
+                    android:text="Export Test Data"
                     android:textColor="#FFD700"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -366,29 +368,7 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- Visibility Modes -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="66dp"
-                android:layout_marginBottom="8dp"
-                app:cardCornerRadius="33dp"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardElevation="0dp">
 
-                <TextView
-                    android:id="@+id/nav_visibility"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="VISIBILITY\nMODES"
-                    android:textColor="@color/mz_navy_dark"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?android:attr/selectableItemBackground" />
-
-            </androidx.cardview.widget.CardView>
 
             <!-- Settings (highlighted since we're on this page) -->
             <androidx.cardview.widget.CardView

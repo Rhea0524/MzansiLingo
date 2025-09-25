@@ -25,12 +25,12 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var navWords: TextView
     private lateinit var navPhrases: TextView
     private lateinit var navProgress: TextView
-    private lateinit var navVisibility: TextView
     private lateinit var navSettings: TextView
     private lateinit var navProfile: TextView
     private lateinit var navBack: ImageView
     private lateinit var navChat: ImageView
     private lateinit var navDictionary: ImageView
+
 
     companion object {
         private const val TAG = "SettingsActivity"
@@ -54,7 +54,6 @@ class SettingsActivity : AppCompatActivity() {
         navWords = findViewById(R.id.nav_words)
         navPhrases = findViewById(R.id.nav_phrases)
         navProgress = findViewById(R.id.nav_progress)
-        navVisibility = findViewById(R.id.nav_visibility)
         navSettings = findViewById(R.id.nav_settings)
         navProfile = findViewById(R.id.nav_profile)
         navBack = findViewById(R.id.nav_back)
@@ -89,12 +88,14 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(Intent(this, HelpSupportActivity::class.java))
         }
 
-        findViewById<MaterialButton>(R.id.btn_visibility_modes).setOnClickListener {
-            navigateToVisibilityModes()
-        }
 
         findViewById<MaterialButton>(R.id.btn_about).setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
+        }
+
+        // New Export Test Data button
+        findViewById<MaterialButton>(R.id.btn_export_test_data).setOnClickListener {
+            navigateToExportTestData()
         }
 
         findViewById<MaterialButton>(R.id.btn_log_out).setOnClickListener {
@@ -130,10 +131,6 @@ class SettingsActivity : AppCompatActivity() {
             navigateToProgressActivity()
         }
 
-        navVisibility.setOnClickListener {
-            closeDrawer()
-            navigateToVisibilityModes()
-        }
 
         navSettings.setOnClickListener {
             // Already in Settings, just close drawer
@@ -197,11 +194,7 @@ class SettingsActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun navigateToVisibilityModes() {
-        val intent = Intent(this, VisibilityModesActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-    }
+
 
     private fun navigateToProfile() {
         val intent = Intent(this, ProfileActivity::class.java)
@@ -211,6 +204,12 @@ class SettingsActivity : AppCompatActivity() {
     private fun navigateToOfflineQuiz() {
         val intent = Intent(this, OfflineActivity::class.java)
         intent.putExtra("LANGUAGE", "afrikaans")
+        startActivity(intent)
+    }
+
+    // New navigation method for Export Test Data
+    private fun navigateToExportTestData() {
+        val intent = Intent(this, ExportTestDataActivity::class.java)
         startActivity(intent)
     }
 
