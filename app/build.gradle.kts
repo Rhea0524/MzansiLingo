@@ -129,6 +129,10 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")
 
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:5.1.1")
+    testImplementation("org.mockito:mockito-inline:5.1.1")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
