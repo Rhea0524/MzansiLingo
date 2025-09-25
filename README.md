@@ -141,7 +141,7 @@ The following resources were referenced or used during the development of **Mzan
 ![Leaderboard](Images/leaderboard.png)
 
 ### Full Demo
-Watch the full demo [here](https://youtu.be/your-demo-link).
+Watch the full demo [here](https://youtu.be/tdpTbJ-aL0g).
 
 ----
 
