@@ -358,7 +358,7 @@ class LeaderboardActivityTest {
         assertTrue("Should contain specific dates", uniqueDates.contains("2024-01-19"))
         assertFalse("Should not contain empty string", uniqueDates.contains(""))
     }
-    
+
 
     @Test
     fun multipleScoreTypes_shouldAccumulateCorrectly() {
