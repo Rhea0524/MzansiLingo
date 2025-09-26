@@ -305,7 +305,7 @@ class PhrasesDetailActivityTest {
         assertEquals("Travel should translate correctly",
             "Reis & Daaglikse Behoeftes", translated)
     }
-    
+
 
     @Test
     fun categoryTranslation_unknownCategory_shouldDefaultToFrases() {
