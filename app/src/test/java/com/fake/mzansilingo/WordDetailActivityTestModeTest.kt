@@ -7,10 +7,7 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import java.util.*
 
-/**
- * Unit tests for WordDetailActivity Test Mode functionality
- * Tests multiple choice quiz logic without UI dependencies
- */
+
 class WordDetailActivityTestModeTest {
 
     @Before

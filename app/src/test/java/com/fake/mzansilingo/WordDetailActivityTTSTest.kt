@@ -6,10 +6,6 @@ import org.junit.Before
 import org.mockito.MockitoAnnotations
 import java.net.URLEncoder
 
-/**
- * Unit tests for WordDetailActivity Text-to-Speech functionality
- * Tests TTS logic and URL generation patterns without UI dependencies
- */
 class WordDetailActivityTTSTest {
 
     @Before

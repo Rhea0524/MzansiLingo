@@ -7,10 +7,7 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import java.util.*
 
-/**
- * Unit tests for ProgressActivity
- * Tests core functionality without UI dependencies
- */
+
 class ProgressActivityTest {
 
     @Before
