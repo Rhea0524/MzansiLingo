@@ -227,7 +227,7 @@ class ExportTestDataActivityTest {
         val emptyTotal = emptyResults.size
         assertEquals("Empty list total should be 0", 0, emptyTotal)
     }
-    
+
 
     @Test
     fun dateFormatting_shouldFormatCorrectly() {
