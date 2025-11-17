@@ -401,5 +401,258 @@
     <string name="error_save_user_data">Failed to save user data: %s</string>
     <string name="error_navigate_home">Error navigating to home screen</string>
 
+    <!-- Registration/Sign Up Activity -->
+    <string name="btn_sign_up">Sign Up</string>
+    <string name="btn_creating_account">Creating Account...</string>
+    <string name="label_full_name">FULL NAME</string>
+    <string name="hint_enter_full_name">Enter full name</string>
+    <string name="label_username">USERNAME</string>
+    <string name="hint_enter_username">Enter Username</string>
+
+    <!-- Registration Errors -->
+    <string name="error_full_name_required">Full name is required</string>
+    <string name="error_username_required">Username is required</string>
+    <string name="error_unable_get_user_id">Error: Unable to get user ID</string>
+    <string name="error_signup_failed">Sign Up failed</string>
+    <string name="error_signup_failed_with_message">Sign Up failed: %s</string>
+    <string name="error_email_already_registered">This email is already registered</string>
+    <string name="error_email_already_registered_long">Email already registered. Try logging in instead.</string>
+    <string name="error_weak_password">Password is too weak</string>
+    <string name="error_weak_password_long">Please choose a stronger password</string>
+    <string name="error_firestore_save_failed">Account created, but Firestore failed</string>
+    <string name="error_navigate_home_with_message">Error navigating to home screen: %s</string>
+
+    <!-- Success Messages -->
+    <string name="msg_account_created_success">Account created successfully!</string>
+
+    <!-- Language Array for Registration -->
+    <string-array name="signup_languages">
+        <item>isiZulu</item>
+        <item>isiXhosa</item>
+        <item>Afrikaans</item>
+        <item>English</item>
+        <item>Sepedi</item>
+        <item>Setswana</item>
+        <item>Sesotho</item>
+        <item>Xitsonga</item>
+        <item>Tshivenda</item>
+        <item>isiNdebele</item>
+        <item>Other</item>
+    </string-array>
+    <!-- Notification Activity -->
+    <string name="notifications_title">NOTIFICATIONS</string>
+    <string name="morning_reminder_label">Morning Reminder (7:00 AM)</string>
+    <string name="evening_reminder_label">Evening Reminder (6:00 PM)</string>
+    <string name="btn_test_notification">Test Notification</string>
+
+    <!-- Notification Messages -->
+    <string name="notification_channel_name">Learning Reminders</string>
+    <string name="notification_channel_description">Daily reminders for language learning</string>
+    <string name="morning_reminder_enabled">Morning reminders enabled at 7:00 AM</string>
+    <string name="morning_reminder_disabled">Morning reminders disabled</string>
+    <string name="evening_reminder_enabled">Evening reminders enabled at 6:00 PM</string>
+    <string name="evening_reminder_disabled">Evening reminders disabled</string>
+    <string name="test_notification_sent">Test notification sent!</string>
+
+    <!-- Notification Errors -->
+    <string name="error_exact_alarm_permission">Exact alarm permission required for notifications to work properly</string>
+    <string name="error_enable_exact_alarm">Please enable exact alarm permission in settings</string>
+    <string name="error_permission_exact_alarms">Permission needed for exact alarms</string>
+
+
+
+    <!-- Offline Activity -->
+    <string name="offline_quiz_title">OFFLINE QUIZ</string>
+    <string name="offline_quiz_description">Test your knowledge with 10 multiple-choice questions. No internet required!</string>
+    <string name="offline_quiz_description_afrikaans">Toets jou kennis met 10 veelvuldige keuse vrae. Geen internet nodig nie!</string>
+    <string name="start_quiz">START QUIZ</string>
+    <string name="already_on_offline_quiz">Already on Offline Quiz screen</string>
+    <string name="starting_quotes">Starting QuotesActivity...</string>
+
+    <!-- Offline Quiz Activity -->
+    <string name="offline_quiz">OFFLINE QUIZ</string>
+    <string name="question_format">Question %1$d/%2$d</string>
+    <string name="correct_count">%d correct</string>
+    <string name="translate_this_word">Translate this word:</string>
+    <string name="next_question">NEXT QUESTION</string>
+    <string name="exit_quiz">Exit Quiz?</string>
+    <string name="exit_quiz_message">Your progress will be lost. Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="correct_toast">Correct! ✓</string>
+    <string name="wrong_toast">Wrong! The correct answer was: %s</string>
+    <string name="quiz_complete">Quiz Complete!</string>
+    <string name="excellent_result">Excellent! 🌟\n\nYou scored %1$d out of %2$d\n\nAccuracy: %3$d%%</string>
+    <string name="great_result">Great job! 👍\n\nYou scored %1$d out of %2$d\n\nAccuracy: %3$d%%</string>
+    <string name="good_result">Good effort! 💪\n\nYou scored %1$d out of %2$d\n\nAccuracy: %3$d%%</string>
+    <string name="practice_result">Keep practicing! 📚\n\nYou scored %1$d out of %2$d\n\nAccuracy: %3$d%%</string>
+    <string name="try_again">Try Again</string>
+    <string name="exit">Exit</string>
+    <string name="quiz_synced">Quiz results synced successfully! ✓</string>
+
+    <string name="back">Back</string>
+    <string name="menu">Menu</string>
+
+    <!-- Phrases Categories - English (top line) -->
+    <string name="category_communication_en">Communication &amp;\nInformation</string>
+    <string name="category_polite_en">Polite and\nEssential</string>
+    <string name="category_personal_en">Personal\nInformation</string>
+    <string name="category_travel_en">Travel &amp; Daily\nNeeds</string>
+
+    <!-- Phrases Categories - Afrikaans (bottom line - always same) -->
+    <string name="category_communication_af">Kommunikasie &amp;\nInligting</string>
+    <string name="category_polite_af">Beleefd en\nNoodsaaklik</string>
+    <string name="category_personal_af">Persoonlike\nInligting</string>
+    <string name="category_travel_af">Reis &amp; Daaglikse\nBehoeftes</string>
+
+    <!-- Phrases Detail Activity -->
+    <string name="phrase_test_title">PHRASE TEST / FRASE TOETS</string>
+    <string name="sound_disabled_test">Sound disabled during test</string>
+    <string name="no_phrase_pronounce">No phrase to pronounce</string>
+    <string name="loading_pronunciation">Loading pronunciation...</string>
+    <string name="pronunciation_unavailable">Pronunciation unavailable</string>
+    <string name="audio_playback_error">Audio playback error</string>
+    <string name="pronunciation_service_unavailable">Pronunciation service unavailable</string>
+    <string name="playing_pronunciation">Playing pronunciation</string>
+    <string name="audio_playback_failed">Audio playback failed</string>
+    <string name="media_player_error">Media player error: %s</string>
+    <string name="practice_phrase">Practice Phrase</string>
+    <string name="error_no_phrases">Error: No phrases to test</string>
+    <string name="correct_well_done">Correct! Well done!</string>
+    <string name="incorrect_answer">Incorrect. The correct answer is: %s</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_finish_test">Finish Test</string>
+    <string name="btn_submit">Submit</string>
+    <string name="phrase_practiced">Great! You practiced: %1$s = %2$s</string>
+    <string name="phrase_test_complete">Phrase Test Complete!\nScore: %1$d/%2$d (%3$d%%)</string>
+
+    <!-- Privacy Activity -->
+    <string name="privacy_security_title">PRIVACY &amp; SECURITY</string>
+    <string name="privacy_policy_title">PRIVACY POLICY</string>
+    <string name="privacy_last_updated">Last updated: 2025-09-05</string>
+
+    <string name="privacy_section1_title">1. INFORMATION WE COLLECT</string>
+    <string name="privacy_section1_content">We collect information you provide directly to us, such as when you create an account, use our language learning features, or contact us for support. This may include your name, email address, learning progress, and preferences.</string>
+
+    <string name="privacy_section2_title">2. HOW WE USE YOUR INFORMATION</string>
+    <string name="privacy_section2_content">We use the information we collect to provide, maintain, and improve our language learning services, track your learning progress, personalize your experience, and communicate with you about your account and our services.</string>
+
+    <string name="privacy_section3_title">3. DATA SECURITY</string>
+    <string name="privacy_section3_content">We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. Your data is encrypted both in transit and at rest using industry-standard protocols.</string>
+
+    <string name="privacy_section4_title">4. INFORMATION SHARING</string>
+    <string name="privacy_section4_content">We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy. We may share information with service providers who assist us in operating our app and providing services to you.</string>
+
+    <string name="privacy_section5_title">5. DATA RETENTION</string>
+    <string name="privacy_section5_content">We retain your information for as long as necessary to provide you with our services and as described in this policy. You may request deletion of your account and associated data at any time by contacting us.</string>
+
+    <string name="privacy_section6_title">6. YOUR RIGHTS</string>
+    <string name="privacy_section6_content">You have the right to access, update, or delete your personal information. You may also opt out of certain communications from us. If you have any questions about your privacy rights, please contact us.</string>
+
+    <string name="privacy_section7_title">7. CHILDREN\'S PRIVACY</string>
+    <string name="privacy_section7_content">Our service is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If we become aware that we have collected personal information from a child under 13, we will take steps to remove such information.</string>
+
+    <string name="privacy_section8_title">8. CHANGES TO THIS POLICY</string>
+    <string name="privacy_section8_content">We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the \'Last updated\' date. Your continued use of our service after any changes constitutes acceptance of the new policy.</string>
+
+    <string name="privacy_section9_title">9. CONTACT US</string>
+    <string name="privacy_section9_content">If you have any questions about this Privacy Policy or our practices, please contact us at:\n\nEmail: mzansilingo@gmail.com\nPhone: 1234567890\nAddress: 123 Smith Street</string>
+
+    <!-- Profile Activity -->
+    <string name="profile_title">USER PROFILE</string>
+    <string name="profile_label_full_name">FULL NAME</string>
+    <string name="profile_label_email">EMAIL</string>
+    <string name="profile_label_username">USERNAME</string>
+    <string name="profile_label_password">PASSWORD</string>
+    <string name="profile_label_home_language">HOME LANGUAGE</string>
+    <string name="profile_hint_full_name">Jane Doe</string>
+    <string name="profile_hint_email">janedoe@gmail.com</string>
+    <string name="profile_hint_username">JD123</string>
+    <string name="profile_hint_password">••••••••</string>
+    <string name="profile_password_disabled">Password cannot be changed from profile</string>
+    <string name="btn_save_profile">Save</string>
+    <string name="profile_saving">Saving...</string>
+    <string name="profile_login_required">Please log in to access your profile</string>
+    <string name="profile_saved_success">Profile saved successfully!</string>
+    <string name="profile_error_updating">Error updating profile: %s</string>
+    <string name="profile_error_email_update">Error updating email: %s. You may need to re-authenticate.</string>
+
+    <string-array name="profile_languages">
+        <item>English</item>
+        <item>Afrikaans</item>
+        <item>Zulu</item>
+        <item>Xhosa</item>
+        <item>Sotho</item>
+        <item>Tswana</item>
+        <item>Tsonga</item>
+        <item>Venda</item>
+        <item>Ndebele</item>
+        <item>Swati</item>
+        <item>Pedi</item>
+    </string-array>
+
+
+    <!-- Progress Activity -->
+    <string name="progress_header_title">PROGRESS /\nVORDERING</string>
+    <string name="progress_words_right">%d WORDS RIGHT</string>
+    <string name="progress_phrases_right">%d PHRASES RIGHT</string>
+    <string name="progress_days_practice">%d DAYS PRACTICE</string>
+    <string name="progress_words_placeholder">0 WORDS RIGHT</string>
+    <string name="progress_phrases_placeholder">0 PHRASES RIGHT</string>
+    <string name="progress_days_placeholder">0 DAYS PRACTICE</string>
+
+    <!-- Days of the week -->
+    <string name="day_mon">MON</string>
+    <string name="day_tues">TUES</string>
+    <string name="day_wed">WED</string>
+    <string name="day_thurs">THURS</string>
+    <string name="day_fri">FRI</string>
+    <string name="day_sat">SAT</string>
+    <string name="day_sun">SUN</string>
+
+    <!-- Progress descriptions -->
+    <string name="day_monday_progress">Monday Progress</string>
+    <string name="day_tuesday_progress">Tuesday Progress</string>
+    <string name="day_wednesday_progress">Wednesday Progress</string>
+    <string name="day_thursday_progress">Thursday Progress</string>
+    <string name="day_friday_progress">Friday Progress</string>
+    <string name="day_saturday_progress">Saturday Progress</string>
+    <string name="day_sunday_progress">Sunday Progress</string>
+
+    <!-- Icons -->
+    <string name="icon_words">Words Icon</string>
+    <string name="icon_phrases">Phrases Icon</string>
+    <string name="icon_calendar">Calendar Icon</string>
+    <string name="icon_quotes">Quotes Icon</string>
+    <string name="icon_statistics">Statistics Icon</string>
+
+    <!-- Quotes Activity -->
+    <string name="quotes_title">QUOTES / AANHALINGS</string>
+    <string name="quotes_subtitle">Inspirational &amp; Motivational / Inspirerende &amp; Motiverende</string>
+    <string name="nav_quotes">QUOTES</string>
+    <string name="language_english">English</string>
+    <string name="language_afrikaans">Afrikaans</string>
+    <string name="playing_quote">Playing quote</string>
+
+    <!-- Quotes Content (English version) -->
+    <string name="quote_journey">The journey of a thousand miles begins with a single step</string>
+    <string name="quote_believe">Believe you can and you\'re halfway there</string>
+    <string name="quote_success">Success is not final, failure is not fatal</string>
+    <string name="quote_great_work">The only way to do great work is to love what you do</string>
+    <string name="quote_education">Education is the most powerful weapon which you can use to change the world</string>
+    <string name="quote_slowly">It does not matter how slowly you go as long as you do not stop</string>
+
+    <!-- Quotes Content (Afrikaans - always displayed) -->
+    <string name="quote_journey_af">Die reis van \'n duisend myl begin met \'n enkele tree</string>
+    <string name="quote_believe_af">Glo jy kan en jy is halfpad daar</string>
+    <string name="quote_success_af">Sukses is nie finaal nie, mislukking is nie fataal nie</string>
+    <string name="quote_great_work_af">Die enigste manier om groot werk te doen is om lief te hê wat jy doen</string>
+    <string name="quote_education_af">Onderwys is die kragtigste wapen wat jy kan gebruik om die wêreld te verander</string>
+    <string name="quote_slowly_af">Dit maak nie saak hoe stadig jy gaan nie, solank jy nie stop nie</string>
+    <!-- Messages -->
+    <string name="already_on_stats">Already viewing statistics</string>
+    <string name="intent_sent_success">Intent sent successfully</string>
+    <string name="error_saving_progress">Failed to save progress</string>
 
 </resources>
+

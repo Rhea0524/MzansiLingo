@@ -41,7 +41,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/rhino"
                     android:scaleType="centerInside"
-                    android:contentDescription="App mascot"
+                    android:contentDescription="@string/cd_mascot"
                     android:padding="4dp" />
 
             </FrameLayout>
@@ -52,7 +52,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_menu_lines"
-                android:contentDescription="Menu"
+                android:contentDescription="@string/cd_menu"
                 android:clickable="true"
                 android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,7 @@
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginVertical="16dp"
                 android:gravity="center"
-                android:text="PROGRESS /\nVORDERING"
+                android:text="@string/progress_header_title"
                 android:textColor="#1a237e"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -123,14 +123,13 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/ic_check_circle"
-                        android:contentDescription="Monday Progress"
-                         />
+                        android:contentDescription="@string/day_monday_progress" />
 
                     <TextView
                         android:id="@+id/tv_day_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="MON"
+                        android:text="@string/day_mon"
                         android:textColor="#FFFFFF"
                         android:textSize="10sp"
                         android:layout_marginTop="4dp" />
@@ -150,14 +149,13 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/ic_check_circle"
-                        android:contentDescription="Tuesday Progress"
-                       />
+                        android:contentDescription="@string/day_tuesday_progress" />
 
                     <TextView
                         android:id="@+id/tv_day_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TUES"
+                        android:text="@string/day_tues"
                         android:textColor="#FFFFFF"
                         android:textSize="10sp"
                         android:layout_marginTop="4dp" />
@@ -177,14 +175,13 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/ic_check_circle"
-                        android:contentDescription="Wednesday Progress"
-                        />
+                        android:contentDescription="@string/day_wednesday_progress" />
 
                     <TextView
                         android:id="@+id/tv_day_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="WED"
+                        android:text="@string/day_wed"
                         android:textColor="#FFFFFF"
                         android:textSize="10sp"
                         android:layout_marginTop="4dp" />
@@ -204,14 +201,13 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/ic_circle_outline"
-                        android:contentDescription="Thursday Progress"
-                        />
+                        android:contentDescription="@string/day_thursday_progress" />
 
                     <TextView
                         android:id="@+id/tv_day_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="THURS"
+                        android:text="@string/day_thurs"
                         android:textColor="#FFFFFF"
                         android:textSize="10sp"
                         android:layout_marginTop="4dp" />
@@ -231,14 +227,13 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/ic_check_circle"
-                        android:contentDescription="Friday Progress"
-                        />
+                        android:contentDescription="@string/day_friday_progress" />
 
                     <TextView
                         android:id="@+id/tv_day_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="FRI"
+                        android:text="@string/day_fri"
                         android:textColor="#FFFFFF"
                         android:textSize="10sp"
                         android:layout_marginTop="4dp" />
@@ -258,14 +253,13 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/ic_circle_outline"
-                        android:contentDescription="Saturday Progress"
-                        />
+                        android:contentDescription="@string/day_saturday_progress" />
 
                     <TextView
                         android:id="@+id/tv_day_6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SAT"
+                        android:text="@string/day_sat"
                         android:textColor="#FFFFFF"
                         android:textSize="10sp"
                         android:layout_marginTop="4dp" />
@@ -284,14 +278,13 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:src="@drawable/ic_circle_outline"
-                        android:contentDescription="Sunday Progress"
-                        />
+                        android:contentDescription="@string/day_sunday_progress" />
 
                     <TextView
                         android:id="@+id/tv_day_7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SUN"
+                        android:text="@string/day_sun"
                         android:textColor="#FFFFFF"
                         android:textSize="10sp"
                         android:layout_marginTop="4dp" />
@@ -336,6 +329,7 @@
                         android:src="@drawable/ic_book"
                         android:padding="12dp"
                         android:scaleType="fitCenter"
+                        android:contentDescription="@string/icon_words"
                         app:tint="#1a237e" />
 
                 </androidx.cardview.widget.CardView>
@@ -351,7 +345,7 @@
                         android:id="@+id/tv_words_spoken"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="2 WORDS SPOKEN"
+                        android:text="@string/progress_words_placeholder"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -383,6 +377,7 @@
                         android:src="@drawable/ic_message_circle"
                         android:padding="12dp"
                         android:scaleType="fitCenter"
+                        android:contentDescription="@string/icon_phrases"
                         app:tint="#1a237e" />
 
                 </androidx.cardview.widget.CardView>
@@ -398,7 +393,7 @@
                         android:id="@+id/tv_phrases_spoken"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="1 PHRASES SPOKEN"
+                        android:text="@string/progress_phrases_placeholder"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -408,8 +403,6 @@
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>
-
-
 
             <!-- Days Practice Progress -->
             <LinearLayout
@@ -432,6 +425,7 @@
                         android:src="@drawable/ic_calendar"
                         android:padding="12dp"
                         android:scaleType="fitCenter"
+                        android:contentDescription="@string/icon_calendar"
                         app:tint="#1a237e" />
 
                 </androidx.cardview.widget.CardView>
@@ -447,7 +441,7 @@
                         android:id="@+id/tv_days_practiced"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="3 DAYS PRACTICE"
+                        android:text="@string/progress_days_placeholder"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -486,7 +480,7 @@
                     android:src="@drawable/ic_book_open"
                     android:padding="16dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Dictionary"
+                    android:contentDescription="@string/cd_dictionary"
                     app:tint="#FFFFFF" />
 
             </androidx.cardview.widget.CardView>
@@ -506,7 +500,7 @@
                     android:src="@drawable/ic_quote"
                     android:padding="16dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Quotes"
+                    android:contentDescription="@string/icon_quotes"
                     app:tint="#FFFFFF" />
 
             </androidx.cardview.widget.CardView>
@@ -525,7 +519,7 @@
                     android:src="@drawable/ic_bar_chart"
                     android:padding="16dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Statistics"
+                    android:contentDescription="@string/icon_statistics"
                     app:tint="#1a237e" />
 
             </androidx.cardview.widget.CardView>
@@ -564,6 +558,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/rhino"
                     android:padding="8dp"
+                    android:contentDescription="@string/cd_mascot"
                     android:scaleType="fitCenter" />
 
             </androidx.cardview.widget.CardView>
@@ -590,7 +585,7 @@
                     android:id="@+id/nav_home"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="HOME"
+                    android:text="@string/nav_home"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -614,7 +609,7 @@
                     android:id="@+id/nav_language"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="LANGUAGE"
+                    android:text="@string/nav_language"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -638,7 +633,7 @@
                     android:id="@+id/nav_words"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="WORDS"
+                    android:text="@string/nav_words"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -662,7 +657,7 @@
                     android:id="@+id/nav_phrases"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PHRASES"
+                    android:text="@string/nav_phrases"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -686,7 +681,7 @@
                     android:id="@+id/nav_progress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PROGRESS"
+                    android:text="@string/nav_progress"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -696,8 +691,6 @@
                     android:background="?android:attr/selectableItemBackground" />
 
             </androidx.cardview.widget.CardView>
-
-
 
             <!-- Settings -->
             <androidx.cardview.widget.CardView
@@ -712,7 +705,7 @@
                     android:id="@+id/nav_settings"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="SETTINGS"
+                    android:text="@string/nav_settings"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -736,7 +729,7 @@
                     android:id="@+id/nav_profile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PROFILE"
+                    android:text="@string/nav_profile"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -774,7 +767,7 @@
                     android:src="@drawable/ic_book_open"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Dictionary"
+                    android:contentDescription="@string/cd_dictionary"
                     android:clickable="true"
                     android:focusable="true" />
 
@@ -796,7 +789,7 @@
                     android:src="@drawable/ic_arrow_left"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Back"
+                    android:contentDescription="@string/cd_back"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />
@@ -818,7 +811,7 @@
                     android:src="@drawable/ic_message_circle"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Chat"
+                    android:contentDescription="@string/cd_chat"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />

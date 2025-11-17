@@ -38,7 +38,7 @@
                     android:id="@+id/imgRhino"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="App mascot"
+                    android:contentDescription="@string/cd_mascot"
                     android:padding="4dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/rhino" />
@@ -50,9 +50,9 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:clickable="true"
-                android:contentDescription="Back"
+                android:contentDescription="@string/cd_back"
                 android:focusable="true"
-
+                android:src="@drawable/ic_arrow_left"
                 app:tint="@android:color/white"
                 app:layout_constraintBottom_toBottomOf="@id/logoHolder"
                 app:layout_constraintEnd_toStartOf="@id/btn_close"
@@ -64,7 +64,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:clickable="true"
-                android:contentDescription="Close"
+                android:contentDescription="@string/cd_back"
                 android:focusable="true"
                 android:src="@drawable/ic_cross"
                 app:tint="@android:color/white"
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:gravity="center"
-            android:text="OFFLINE QUIZ"
+            android:text="@string/offline_quiz"
             android:textColor="@android:color/white"
             android:textSize="28sp"
             android:textStyle="bold"
@@ -132,7 +132,8 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/progress_bar" />
+            app:layout_constraintTop_toBottomOf="@id/progress_bar" /><!-- Score Display -->
+
 
         <!-- Quiz Content ScrollView -->
         <ScrollView
@@ -173,7 +174,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Translate this word:"
+                            android:text="@string/translate_this_word"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:layout_marginBottom="12dp" />
@@ -324,7 +325,7 @@
                         android:id="@+id/btn_next"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:text="NEXT QUESTION"
+                        android:text="@string/next_question"
                         android:textColor="@android:color/white"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -339,7 +340,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Navigation Drawer (same as your reference) -->
+    <!-- Navigation Drawer -->
     <LinearLayout
         android:id="@+id/nav_drawer"
         android:layout_width="280dp"
@@ -395,7 +396,7 @@
                     android:id="@+id/nav_home"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="HOME"
+                    android:text="@string/nav_home"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -419,7 +420,7 @@
                     android:id="@+id/nav_language"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="LANGUAGE"
+                    android:text="@string/nav_language"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -443,7 +444,7 @@
                     android:id="@+id/nav_words"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="WORDS"
+                    android:text="@string/nav_words"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -467,7 +468,7 @@
                     android:id="@+id/nav_phrases"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PHRASES"
+                    android:text="@string/nav_phrases"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -491,7 +492,7 @@
                     android:id="@+id/nav_progress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PROGRESS"
+                    android:text="@string/nav_progress"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -515,7 +516,7 @@
                     android:id="@+id/nav_settings"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="SETTINGS"
+                    android:text="@string/nav_settings"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -539,7 +540,7 @@
                     android:id="@+id/nav_profile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PROFILE"
+                    android:text="@string/nav_profile"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -577,7 +578,7 @@
                     android:src="@drawable/ic_book_open"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Dictionary"
+                    android:contentDescription="@string/offline_quiz_title"
                     android:clickable="true"
                     android:focusable="true" />
 
@@ -596,9 +597,10 @@
                     android:id="@+id/nav_back"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrow_left"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Back"
+                    android:contentDescription="@string/back"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />
@@ -620,7 +622,7 @@
                     android:src="@drawable/ic_message_circle"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Chat"
+                    android:contentDescription="@string/cd_chat"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />

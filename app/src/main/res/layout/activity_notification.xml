@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -5,7 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LanguageSelectionActivity">
+    tools:context=".NotificationActivity">
 
     <!-- Main Content -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -75,9 +76,9 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Language Selection Header -->
+        <!-- Title Card -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/language_header_card"
+            android:id="@+id/title_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -88,22 +89,22 @@
             app:layout_constraintTop_toBottomOf="@id/header_layout">
 
             <TextView
-                android:id="@+id/tv_language_header"
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginVertical="16dp"
                 android:gravity="center"
-                android:text="@string/select_language_header"
+                android:text="@string/notifications_title"
                 android:textColor="#1a237e"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
         </androidx.cardview.widget.CardView>
 
-        <!-- Language Selection Form -->
+        <!-- Notification Settings Form -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/language_form_card"
+            android:id="@+id/notification_form_card"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -114,7 +115,7 @@
             app:cardElevation="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/language_header_card">
+            app:layout_constraintTop_toBottomOf="@id/title_card">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -122,48 +123,47 @@
                 android:orientation="vertical"
                 android:padding="24dp">
 
-                <!-- Home Language Section -->
+                <!-- Morning Reminder Section -->
                 <TextView
-                    android:id="@+id/tv_home_lang_title"
+                    android:id="@+id/tv_morning_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/home_language_title"
+                    android:text="@string/morning_reminder_label"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="8dp"
-                    android:gravity="center" />
+                    android:layout_marginBottom="12dp" />
 
-                <TextView
-                    android:id="@+id/tv_home_lang_subtitle"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/home_language_subtitle"
-                    android:textColor="#757575"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="12dp"
-                    android:gravity="center" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="24dp">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_home_lang"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
-                    app:boxBackgroundColor="#F5F5F5"
-                    app:boxStrokeColor="#FFD700"
-                    app:hintTextColor="#1a237e">
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_check"
+                        android:layout_marginEnd="12dp"
+                        app:tint="#1a237e"
+                        android:contentDescription="@string/morning_reminder_label" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/actv_home_lang"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:hint="@string/select_home_language_hint"
-                        android:inputType="none"
-                        android:textColor="#1a237e"
-                        android:textSize="16sp" />
+                        android:layout_weight="1"
+                        android:text="7:00 AM"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <Switch
+                        android:id="@+id/switch_morning_reminder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true" />
+
+                </LinearLayout>
 
                 <!-- Divider -->
                 <View
@@ -172,72 +172,69 @@
                     android:background="#E0E0E0"
                     android:layout_marginVertical="16dp" />
 
-                <!-- Learn Language Section (Fixed) -->
+                <!-- Evening Reminder Section -->
                 <TextView
-                    android:id="@+id/tv_learn_lang_title"
+                    android:id="@+id/tv_evening_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/learning_language_title"
+                    android:text="@string/evening_reminder_label"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:layout_marginBottom="12dp"
-                    android:gravity="center" />
+                    android:layout_marginBottom="12dp" />
 
-                <androidx.cardview.widget.CardView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="8dp"
-                    app:cardBackgroundColor="#E8F5E9"
-                    app:cardElevation="0dp">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="24dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_check"
+                        android:layout_marginEnd="12dp"
+                        app:tint="#1a237e"
+                        android:contentDescription="@string/evening_reminder_label" />
+
+                    <TextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center">
+                        android:layout_weight="1"
+                        android:text="6:00 PM"
+                        android:textColor="#757575"
+                        android:textSize="14sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/afrikaans"
-                            android:textColor="#1a237e"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                    <Switch
+                        android:id="@+id/switch_evening_reminder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="@string/app_teaches_afrikaans"
-                            android:textColor="#757575"
-                            android:textSize="14sp" />
+                </LinearLayout>
 
-                    </LinearLayout>
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E0E0E0"
+                    android:layout_marginBottom="16dp" />
 
-                </androidx.cardview.widget.CardView>
+                <!-- Test Notification Button -->
+                <Button
+                    android:id="@+id/btn_test_notification"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="@string/btn_test_notification"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:backgroundTint="#1a237e" />
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <!-- Save Button -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_save"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="48dp"
-            android:layout_marginEnd="48dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/button_green_rounded"
-            android:text="@string/save_language"
-            android:textColor="#FFD700"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -502,6 +499,8 @@
                     android:padding="12dp"
                     android:scaleType="fitCenter"
                     android:contentDescription="@string/cd_back"
+                    android:clickable="true"
+                    android:focusable="true"
                     app:tint="@color/mz_navy_dark" />
 
             </androidx.cardview.widget.CardView>

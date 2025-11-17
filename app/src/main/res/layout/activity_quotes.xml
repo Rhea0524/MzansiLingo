@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:background="#1a237e">
 
-        <!-- Header Section - CONSISTENT WITH FOOD PAGE -->
+        <!-- Header Section -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/header_layout"
             android:layout_width="0dp"
@@ -25,7 +25,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <!-- Mascot Icon - MATCHING FOOD PAGE -->
+            <!-- Mascot Icon -->
             <FrameLayout
                 android:id="@+id/logoHolder"
                 android:layout_width="80dp"
@@ -38,19 +38,19 @@
                     android:id="@+id/imgRhino"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="App mascot"
+                    android:contentDescription="@string/cd_mascot"
                     android:padding="4dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/rhino" />
             </FrameLayout>
 
-            <!-- Menu Button - MATCHING FOOD PAGE -->
+            <!-- Menu Button -->
             <ImageView
                 android:id="@+id/btn_menu"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:clickable="true"
-                android:contentDescription="Menu"
+                android:contentDescription="@string/cd_menu"
                 android:focusable="true"
                 android:src="@drawable/ic_menu_lines"
                 app:layout_constraintBottom_toBottomOf="@id/logoHolder"
@@ -58,14 +58,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Page Title - CONSISTENT STYLING -->
+        <!-- Page Title -->
         <TextView
             android:id="@+id/tv_quotes_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:gravity="center"
-            android:text="QUOTES / AANHALINGS"
+            android:text="@string/quotes_title"
             android:textColor="@android:color/white"
             android:textSize="28sp"
             android:textStyle="bold"
@@ -73,14 +73,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_layout" />
 
-        <!-- Category Title - CONSISTENT STYLING -->
+        <!-- Category Title -->
         <TextView
             android:id="@+id/tv_category_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Inspirational &amp; Motivational / Inspirerende &amp; Motiverende"
+            android:text="@string/quotes_subtitle"
             android:textColor="#FFD700"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -88,7 +88,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_quotes_title" />
 
-        <!-- Quotes ScrollView - SIMPLIFIED CONTAINER -->
+        <!-- Quotes ScrollView -->
         <ScrollView
             android:id="@+id/quotes_scroll"
             android:layout_width="0dp"
@@ -130,7 +130,7 @@
                             android:layout_height="wrap_content"
                             android:minHeight="70dp"
                             android:padding="16dp"
-                            android:text="The journey of a thousand miles begins with a single step"
+                            android:text="@string/quote_journey"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -152,7 +152,7 @@
                             android:layout_height="wrap_content"
                             android:minHeight="70dp"
                             android:padding="16dp"
-                            android:text="Die reis van 'n duisend myl begin met 'n enkele tree"
+                            android:text="@string/quote_journey_af"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -183,7 +183,7 @@
                             android:layout_height="wrap_content"
                             android:minHeight="70dp"
                             android:padding="16dp"
-                            android:text="Believe you can and you're halfway there"
+                            android:text="@string/quote_believe"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -205,7 +205,7 @@
                             android:layout_height="wrap_content"
                             android:minHeight="70dp"
                             android:padding="16dp"
-                            android:text="Glo jy kan en jy is halfpad daar"
+                            android:text="@string/quote_believe_af"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -236,7 +236,7 @@
                             android:layout_height="wrap_content"
                             android:minHeight="70dp"
                             android:padding="16dp"
-                            android:text="Success is not final, failure is not fatal"
+                            android:text="@string/quote_success"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -258,7 +258,7 @@
                             android:layout_height="wrap_content"
                             android:minHeight="70dp"
                             android:padding="16dp"
-                            android:text="Sukses is nie finaal nie, mislukking is nie fataal nie"
+                            android:text="@string/quote_success_af"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -289,7 +289,7 @@
                             android:layout_height="wrap_content"
                             android:minHeight="70dp"
                             android:padding="16dp"
-                            android:text="The only way to do great work is to love what you do"
+                            android:text="@string/quote_great_work"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -311,7 +311,7 @@
                             android:layout_height="wrap_content"
                             android:minHeight="70dp"
                             android:padding="16dp"
-                            android:text="Die enigste manier om groot werk te doen is om lief te hê wat jy doen"
+                            android:text="@string/quote_great_work_af"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -342,7 +342,7 @@
                             android:layout_height="wrap_content"
                             android:minHeight="70dp"
                             android:padding="16dp"
-                            android:text="Education is the most powerful weapon which you can use to change the world"
+                            android:text="@string/quote_education"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -364,7 +364,7 @@
                             android:layout_height="wrap_content"
                             android:minHeight="70dp"
                             android:padding="16dp"
-                            android:text="Onderwys is die kragtigste wapen wat jy kan gebruik om die wêreld te verander"
+                            android:text="@string/quote_education_af"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -395,7 +395,7 @@
                             android:layout_height="wrap_content"
                             android:minHeight="70dp"
                             android:padding="16dp"
-                            android:text="It does not matter how slowly you go as long as you do not stop"
+                            android:text="@string/quote_slowly"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -417,7 +417,7 @@
                             android:layout_height="wrap_content"
                             android:minHeight="70dp"
                             android:padding="16dp"
-                            android:text="Dit maak nie saak hoe stadig jy gaan nie, solank jy nie stop nie"
+                            android:text="@string/quote_slowly_af"
                             android:textColor="@android:color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -430,7 +430,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Navigation Drawer - SIMPLIFIED TO MATCH FOOD PAGE STYLE -->
+    <!-- Navigation Drawer -->
     <LinearLayout
         android:id="@+id/nav_drawer"
         android:layout_width="280dp"
@@ -460,6 +460,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/rhino"
                     android:padding="8dp"
+                    android:contentDescription="@string/cd_mascot"
                     android:scaleType="fitCenter" />
 
             </androidx.cardview.widget.CardView>
@@ -486,7 +487,7 @@
                     android:id="@+id/nav_home"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="HOME"
+                    android:text="@string/nav_home"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -510,7 +511,7 @@
                     android:id="@+id/nav_language"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="LANGUAGE"
+                    android:text="@string/nav_language"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -534,7 +535,7 @@
                     android:id="@+id/nav_words"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="WORDS"
+                    android:text="@string/nav_words"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -558,7 +559,7 @@
                     android:id="@+id/nav_phrases"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PHRASES"
+                    android:text="@string/nav_phrases"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -582,7 +583,7 @@
                     android:id="@+id/nav_quotes"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="QUOTES"
+                    android:text="@string/nav_quotes"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -606,7 +607,7 @@
                     android:id="@+id/nav_progress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PROGRESS"
+                    android:text="@string/nav_progress"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -616,8 +617,6 @@
                     android:background="?android:attr/selectableItemBackground" />
 
             </androidx.cardview.widget.CardView>
-
-
 
             <!-- Settings -->
             <androidx.cardview.widget.CardView
@@ -632,7 +631,7 @@
                     android:id="@+id/nav_settings"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="SETTINGS"
+                    android:text="@string/nav_settings"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -656,7 +655,7 @@
                     android:id="@+id/nav_profile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PROFILE"
+                    android:text="@string/nav_profile"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -694,7 +693,7 @@
                     android:src="@drawable/ic_book_open"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Dictionary"
+                    android:contentDescription="@string/cd_dictionary"
                     android:clickable="true"
                     android:focusable="true" />
 
@@ -716,7 +715,7 @@
                     android:src="@drawable/ic_arrow_left"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Back"
+                    android:contentDescription="@string/cd_back"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />
@@ -738,7 +737,7 @@
                     android:src="@drawable/ic_message_circle"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Chat"
+                    android:contentDescription="@string/cd_chat"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />

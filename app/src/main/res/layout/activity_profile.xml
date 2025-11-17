@@ -95,6 +95,7 @@
 
                 <!-- Full Name Field -->
                 <TextView
+                    android:id="@+id/tv_label_full_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="FULL NAME"
@@ -120,6 +121,7 @@
 
                 <!-- Email Field -->
                 <TextView
+                    android:id="@+id/tv_label_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="EMAIL"
@@ -145,6 +147,7 @@
 
                 <!-- Username Field -->
                 <TextView
+                    android:id="@+id/tv_label_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="USERNAME"
@@ -170,6 +173,7 @@
 
                 <!-- Password Field -->
                 <TextView
+                    android:id="@+id/tv_label_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="PASSWORD"
@@ -195,6 +199,7 @@
 
                 <!-- Home Language Field -->
                 <TextView
+                    android:id="@+id/tv_label_home_language"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="HOME LANGUAGE"
@@ -232,7 +237,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Navigation Drawer (Same as Settings) -->
+    <!-- Navigation Drawer -->
     <LinearLayout
         android:id="@+id/nav_drawer"
         android:layout_width="280dp"
@@ -394,7 +399,6 @@
                     android:background="?android:attr/selectableItemBackground" />
 
             </androidx.cardview.widget.CardView>
-
 
             <!-- Settings -->
             <androidx.cardview.widget.CardView

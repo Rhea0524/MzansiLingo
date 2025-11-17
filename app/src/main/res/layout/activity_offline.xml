@@ -32,7 +32,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_arrow_left"
-                android:contentDescription="Back"
+                android:contentDescription="@string/cd_back"
                 android:clickable="true"
                 android:focusable="true"
                 app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/rhino"
                     android:scaleType="centerInside"
-                    android:contentDescription="App mascot"
+                    android:contentDescription="@string/cd_mascot"
                     android:padding="4dp" />
 
             </FrameLayout>
@@ -66,7 +66,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_menu_lines"
-                android:contentDescription="Menu"
+                android:contentDescription="@string/cd_menu"
                 android:clickable="true"
                 android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -86,9 +86,6 @@
             app:cardCornerRadius="24dp"
             app:cardBackgroundColor="#FFFFFF"
             app:cardElevation="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header_layout">
@@ -120,54 +117,57 @@
 
                 <!-- Title -->
                 <TextView
+                    android:id="@+id/tv_offline_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="OFFLINE QUIZ"
+                    android:text="@string/offline_quiz_title"
                     android:textColor="#1a237e"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="16dp"
                     android:gravity="center" />
 
-                <!-- Description -->
+                <!-- Message (English) -->
                 <TextView
+                    android:id="@+id/tv_offline_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Test your knowledge with 10 multiple-choice questions. No internet required!"
+                    android:text="@string/offline_quiz_description"
                     android:textColor="#333333"
                     android:textSize="16sp"
                     android:gravity="center"
                     android:layout_marginBottom="16dp"
                     android:lineSpacingExtra="4dp" />
 
-                <!-- Afrikaans Description -->
+                <!-- Afrikaans Message -->
                 <TextView
+                    android:id="@+id/tv_offline_description_afrikaans"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Toets jou kennis met 10 veelvuldige keuse vrae. Geen internet nodig nie!"
+                    android:text="@string/offline_quiz_description_afrikaans"
                     android:textColor="#666666"
                     android:textSize="14sp"
                     android:gravity="center"
                     android:layout_marginBottom="32dp"
                     android:lineSpacingExtra="4dp" />
 
-                <!-- Start Button -->
+                <!-- Coming Soon Badge -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="20dp"
-                    app:cardBackgroundColor="#8BC34A"
-                    app:cardElevation="4dp">
+                    app:cardBackgroundColor="#FFD700">
 
                     <TextView
+                        android:id="@+id/tv_coming_soon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="START QUIZ"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
+                        android:text="@string/start_quiz"
+                        android:textColor="#1a237e"
+                        android:textSize="14sp"
                         android:textStyle="bold"
-                        android:paddingHorizontal="40dp"
-                        android:paddingVertical="14dp" />
+                        android:paddingHorizontal="24dp"
+                        android:paddingVertical="12dp" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -201,7 +201,7 @@
                     android:src="@drawable/ic_book_open"
                     android:padding="16dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Dictionary"
+                    android:contentDescription="@string/cd_dictionary"
                     app:tint="#1a237e" />
 
             </androidx.cardview.widget.CardView>
@@ -249,7 +249,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Navigation Drawer (Same as before) -->
+    <!-- Navigation Drawer -->
     <LinearLayout
         android:id="@+id/nav_drawer"
         android:layout_width="280dp"
@@ -305,7 +305,7 @@
                     android:id="@+id/nav_home"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="HOME"
+                    android:text="@string/nav_home"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -329,7 +329,7 @@
                     android:id="@+id/nav_language"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="LANGUAGE"
+                    android:text="@string/nav_language"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -353,7 +353,7 @@
                     android:id="@+id/nav_words"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="WORDS"
+                    android:text="@string/nav_words"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -377,7 +377,7 @@
                     android:id="@+id/nav_phrases"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PHRASES"
+                    android:text="@string/nav_phrases"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -401,7 +401,7 @@
                     android:id="@+id/nav_progress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PROGRESS"
+                    android:text="@string/nav_progress"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -425,7 +425,7 @@
                     android:id="@+id/nav_settings"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="SETTINGS"
+                    android:text="@string/nav_settings"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -449,7 +449,7 @@
                     android:id="@+id/nav_profile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PROFILE"
+                    android:text="@string/nav_profile"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -487,7 +487,7 @@
                     android:src="@drawable/ic_book_open"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Offline Quiz"
+                    android:contentDescription="@string/offline_quiz_title"
                     android:clickable="true"
                     android:focusable="true" />
 
@@ -509,7 +509,7 @@
                     android:src="@drawable/ic_arrow_left"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Back"
+                    android:contentDescription="@string/back"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />
@@ -531,7 +531,7 @@
                     android:src="@drawable/ic_message_circle"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Chat"
+                    android:contentDescription="@string/cd_chat"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />
