@@ -17,4 +17,6 @@
 
     <!-- Documents folder -->
     <external-path name="documents" path="Documents/" />
+
+        <cache-path name="shared_images" path="images/" />
 </paths>

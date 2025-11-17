@@ -46,6 +46,22 @@
 
             </FrameLayout>
 
+            <!-- Share Button (NEW) -->
+            <ImageView
+                android:id="@+id/btn_share"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_share"
+                android:contentDescription="Share"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@id/btn_menu"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/logoHolder"
+                app:tint="#FFFFFF" />
+
+
             <!-- Menu Button -->
             <ImageView
                 android:id="@+id/btn_menu"

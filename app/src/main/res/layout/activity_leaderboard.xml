@@ -23,8 +23,8 @@
         <!-- Back Button -->
         <ImageView
             android:id="@+id/btn_back"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_arrow_left"
             android:contentDescription="Back"
             android:clickable="true"
@@ -42,19 +42,36 @@
             android:layout_height="wrap_content"
             android:text="LEADERBOARD"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
             app:layout_constraintStart_toEndOf="@id/btn_back"
-            app:layout_constraintEnd_toStartOf="@id/iv_trophy_header"
+            app:layout_constraintEnd_toStartOf="@id/btn_share"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Share Button -->
+        <ImageView
+            android:id="@+id/btn_share"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_share"
+            android:contentDescription="Share"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="8dp"
+            app:layout_constraintEnd_toStartOf="@id/iv_trophy_header"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tint="#FFFFFF" />
 
         <!-- Trophy Icon -->
         <ImageView
             android:id="@+id/iv_trophy_header"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_trophy"
             android:contentDescription="Trophy"
             android:padding="8dp"
