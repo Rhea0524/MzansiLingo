@@ -32,7 +32,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_arrow_left"
-                android:contentDescription="Back"
+                android:contentDescription="@string/cd_back"
                 android:clickable="true"
                 android:focusable="true"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
                 android:id="@+id/tv_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="EXPORT TEST DATA"
+                android:text="@string/export_data_title"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -62,7 +62,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_menu_lines"
-                android:contentDescription="Menu"
+                android:contentDescription="@string/cd_menu"
                 android:clickable="true"
                 android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -111,7 +111,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="DATE RANGE:"
+                        android:text="@string/filter_date_range"
                         android:textColor="#1a237e"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -122,7 +122,7 @@
                         android:layout_height="32dp"
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/button_green_rounded"
-                        android:text="FROM"
+                        android:text="@string/btn_date_from"
                         android:textColor="#FFD700"
                         android:textSize="12sp"
                         android:textStyle="bold"
@@ -133,7 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="32dp"
                         android:background="@drawable/button_green_rounded"
-                        android:text="TO"
+                        android:text="@string/btn_date_to"
                         android:textColor="#FFD700"
                         android:textSize="12sp"
                         android:textStyle="bold"
@@ -152,7 +152,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="CATEGORY:"
+                        android:text="@string/filter_category"
                         android:textColor="#1a237e"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -177,7 +177,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TEST TYPE:"
+                        android:text="@string/filter_test_type"
                         android:textColor="#1a237e"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -201,7 +201,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="EXPORT FORMAT:"
+                        android:text="@string/filter_export_format"
                         android:textColor="#1a237e"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -246,7 +246,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="EXPORT SUMMARY"
+                    android:text="@string/export_summary_label"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -319,7 +319,7 @@
                         android:id="@+id/tv_date_range"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="All Time"
+                        android:text="@string/date_range_all_time"
                         android:textColor="#8BC34A"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -353,7 +353,7 @@
                 android:drawableStart="@drawable/ic_eye"
                 android:drawablePadding="12dp"
                 android:paddingHorizontal="24dp"
-                android:text="PREVIEW DATA / VOORSKOU DATA"
+                android:text="@string/btn_preview_data"
                 android:textColor="#FFD700"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -368,7 +368,7 @@
                 android:drawableStart="@drawable/ic_file_pdf"
                 android:drawablePadding="12dp"
                 android:paddingHorizontal="24dp"
-                android:text="EXPORT TO PDF / UITVOER NA PDF"
+                android:text="@string/btn_export_pdf"
                 android:textColor="#FFD700"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -382,7 +382,7 @@
                 android:drawableStart="@drawable/ic_share"
                 android:drawablePadding="12dp"
                 android:paddingHorizontal="24dp"
-                android:text="SHARE RESULTS / DEEL RESULTATE"
+                android:text="@string/btn_share_results"
                 android:textColor="#FFD700"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -402,7 +402,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Navigation Drawer (Same as home activity) -->
+    <!-- Navigation Drawer -->
     <LinearLayout
         android:id="@+id/nav_drawer"
         android:layout_width="280dp"
@@ -431,6 +431,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/rhino"
+                    android:contentDescription="@string/cd_mascot"
                     android:padding="8dp"
                     android:scaleType="fitCenter" />
 
@@ -458,7 +459,7 @@
                     android:id="@+id/nav_home"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="HOME"
+                    android:text="@string/nav_home"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -469,21 +470,117 @@
 
             </androidx.cardview.widget.CardView>
 
-            <!-- Export Data (highlighted since we're on this page) -->
+            <!-- Language -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="66dp"
+                android:layout_height="56dp"
                 android:layout_marginBottom="8dp"
-                app:cardCornerRadius="33dp"
-                app:cardBackgroundColor="#8BC34A"
+                app:cardCornerRadius="28dp"
+                app:cardBackgroundColor="#FFFFFF"
                 app:cardElevation="0dp">
 
                 <TextView
-                    android:id="@+id/nav_export"
+                    android:id="@+id/nav_language"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="EXPORT\nDATA"
-                    android:textColor="#FFFFFF"
+                    android:text="@string/nav_language"
+                    android:textColor="@color/mz_navy_dark"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Words -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="28dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:id="@+id/nav_words"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/nav_words"
+                    android:textColor="@color/mz_navy_dark"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Phrases -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="28dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:id="@+id/nav_phrases"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/nav_phrases"
+                    android:textColor="@color/mz_navy_dark"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Settings -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="28dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:id="@+id/nav_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/nav_settings"
+                    android:textColor="@color/mz_navy_dark"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:background="?android:attr/selectableItemBackground" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Profile -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="28dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:id="@+id/nav_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/nav_profile"
+                    android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:gravity="center"
@@ -518,9 +615,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_book_open"
+                    android:contentDescription="@string/cd_dictionary"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Dictionary"
                     android:clickable="true"
                     android:focusable="true" />
 
@@ -540,9 +637,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_arrow_left"
+                    android:contentDescription="@string/cd_back"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Back"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />
@@ -562,9 +659,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/ic_message_circle"
+                    android:contentDescription="@string/cd_chat"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Chat"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />

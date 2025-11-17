@@ -71,4 +71,335 @@
     <string name="error_prefix">⚠️ Error:</string>
     <string name="network_error">⚠️ Network error:</string>
 
+    <!-- Phrases Activity -->
+    <string name="phrases_title">PHRASES / FRASES</string>
+    <string name="category_polite">Polite and Essential/\nBeleefd en Noodsaaklik</string>
+    <string name="category_communication">Communication &amp; Information/\nKommunikasie &amp; Inligting</string>
+    <string name="category_personal">Personal Information/\nPersoonlike Inligting</string>
+    <string name="category_travel">Travel &amp; Daily Needs/\nReis &amp; Daaglikse Behoeftes</string>
+    <string name="btn_test_yourself">TEST YOURSELF / TOETS JOUSELF</string>
+    <string name="starting_test_for">Starting test for category:</string>
+
+    <!-- Politeness Phrases -->
+    <string name="phrase_please_en">Please</string>
+    <string name="phrase_please_af">Asseblief</string>
+    <string name="phrase_thank_you_en">Thank you</string>
+    <string name="phrase_thank_you_af">Dankie</string>
+    <string name="phrase_excuse_me_en">Excuse me</string>
+    <string name="phrase_excuse_me_af">Verskoon my</string>
+    <string name="phrase_sorry_en">I\'m sorry</string>
+    <string name="phrase_sorry_af">Ek is jammer</string>
+    <string name="phrase_welcome_en">You\'re welcome</string>
+    <string name="phrase_welcome_af">Dis \'n plesier</string>
+    <string name="phrase_may_i_have_en">May I have...</string>
+    <string name="phrase_may_i_have_af">Mag ek asseblief he...</string>
+
+    <!-- Communication Phrases -->
+    <string name="phrase_need_help_en">I need help. Can you help me?</string>
+    <string name="phrase_need_help_af">Ek het hulp nodig. Kan jy my help?</string>
+    <string name="phrase_dont_understand_en">I don\'t understand</string>
+    <string name="phrase_dont_understand_af">Ek verstaan nie</string>
+    <string name="phrase_what_time_en">What time is it?</string>
+    <string name="phrase_what_time_af">Hoe laat is dit?</string>
+    <string name="phrase_how_much_cost_en">How much does this cost?</string>
+    <string name="phrase_how_much_cost_af">Hoeveel kos dit?</string>
+    <string name="phrase_bathroom_en">Where is the bathroom?</string>
+    <string name="phrase_bathroom_af">Waar is die badkamer?</string>
+    <string name="phrase_speak_english_en">Can you speak English?</string>
+    <string name="phrase_speak_english_af">Kan jy Engels praat?</string>
+
+    <!-- Personal Information Phrases -->
+    <string name="phrase_my_name_en">My name is...</string>
+    <string name="phrase_my_name_af">My naam is...</string>
+    <string name="phrase_i_am_from_en">I am from...</string>
+    <string name="phrase_i_am_from_af">Ek kom van...</string>
+    <string name="phrase_how_old_en">How old are you?</string>
+    <string name="phrase_how_old_af">Hoe oud is jy?</string>
+    <string name="phrase_where_live_en">Where do you live?</string>
+    <string name="phrase_where_live_af">Waar bly jy?</string>
+    <string name="phrase_phone_number_en">What is your phone number?</string>
+    <string name="phrase_phone_number_af">Wat is jou foonnommer?</string>
+    <string name="phrase_what_work_en">What do you do for work?</string>
+    <string name="phrase_what_work_af">Wat doen jy vir werk?</string>
+
+    <!-- Travel Phrases -->
+    <string name="phrase_train_station_en">Where is the train station?</string>
+    <string name="phrase_train_station_af">Waar is die treinstasie?</string>
+    <string name="phrase_need_taxi_en">I need a taxi</string>
+    <string name="phrase_need_taxi_af">Ek het \'n taxi nodig</string>
+    <string name="phrase_buy_food_en">Where can I buy food?</string>
+    <string name="phrase_buy_food_af">Waar kan ek kos koop?</string>
+    <string name="phrase_hospital_nearby_en">Is there a hospital nearby?</string>
+    <string name="phrase_hospital_nearby_af">Is daar \'n hospitaal naby?</string>
+    <string name="phrase_nearest_atm_en">Where is the nearest ATM?</string>
+    <string name="phrase_nearest_atm_af">Waar is die naaste OTM?</string>
+    <string name="phrase_i_am_lost_en">I am lost. Can you help me?</string>
+    <string name="phrase_i_am_lost_af">Ek is verlore. Kan jy my help?</string>
+
+    <!-- Words/Category Activity -->
+    <string name="words_title">WORDS / WOORDE</string>
+    <string name="category_emotions">Emotions / Emosies</string>
+    <string name="category_colors">Colours / Kleure</string>
+    <string name="category_animals">Animals / Diere</string>
+    <string name="category_food">Food / Kos</string>
+
+    <!-- Emotion Words -->
+    <string name="word_happy">Happy</string>
+    <string name="word_sad">Sad</string>
+    <string name="word_fear">Fear</string>
+    <string name="word_shock">Shock</string>
+    <string name="word_anger">Anger</string>
+    <string name="word_silly">Silly</string>
+
+    <!-- Color Words -->
+    <string name="word_red">Red</string>
+    <string name="word_blue">Blue</string>
+    <string name="word_green">Green</string>
+    <string name="word_yellow">Yellow</string>
+    <string name="word_purple">Purple</string>
+    <string name="word_pink">Pink</string>
+
+    <!-- Animal Words -->
+    <string name="word_lion">Lion</string>
+    <string name="word_elephant">Elephant</string>
+    <string name="word_giraffe">Giraffe</string>
+    <string name="word_zebra">Zebra</string>
+    <string name="word_hippo">Hippo</string>
+
+    <!-- Food Words -->
+    <string name="word_apple">Apple</string>
+    <string name="word_banana">Banana</string>
+    <string name="word_bread">Bread</string>
+    <string name="word_milk">Milk</string>
+    <string name="word_meat">Meat</string>
+    <string name="word_rice">Rice</string>
+
+    <!-- Afrikaans translations (always shown) -->
+    <string name="word_happy_af">Gelukkig</string>
+    <string name="word_sad_af">Hartseer</string>
+    <string name="word_fear_af">Vrees</string>
+    <string name="word_shock_af">Skok</string>
+    <string name="word_anger_af">Woede</string>
+    <string name="word_silly_af">Snaaks</string>
+
+    <string name="word_red_af">Rooi</string>
+    <string name="word_blue_af">Blou</string>
+    <string name="word_green_af">Groen</string>
+    <string name="word_yellow_af">Geel</string>
+    <string name="word_purple_af">Pers</string>
+    <string name="word_pink_af">Pienk</string>
+
+    <string name="word_lion_af">Leeu</string>
+    <string name="word_elephant_af">Olifant</string>
+    <string name="word_giraffe_af">Kameelperd</string>
+    <string name="word_zebra_af">Zebra</string>
+    <string name="word_hippo_af">Seekoei</string>
+
+    <string name="word_apple_af">Appel</string>
+    <string name="word_banana_af">Piesang</string>
+    <string name="word_bread_af">Brood</string>
+    <string name="word_milk_af">Melk</string>
+    <string name="word_meat_af">Vleis</string>
+    <string name="word_rice_af">Rys</string>
+
+    <!-- Export Test Data Activity -->
+    <string name="export_data_title">THUMELA IDATHA YOKUHLOLA</string>
+    <string name="btn_date_from">KUSUKELA</string>
+    <string name="btn_date_to">KUYA</string>
+    <string name="btn_preview_data">BUKA IDATHA / VOORSKOU DATA</string>
+    <string name="btn_export_pdf">THUMELA KU-PDF / UITVOER NA PDF</string>
+    <string name="btn_share_results">YABELANA NGOMIPHUMELA / DEEL RESULTATE</string>
+    <string name="btn_ok">KULUNGILE</string>
+    <string name="btn_export_pdf_short">Thumela i-PDF</string>
+
+    <!-- Filter Labels -->
+    <string name="filter_category">ISIGABA:</string>
+    <string name="filter_test_type">UHLOBO LOKUHLOLA:</string>
+    <string name="filter_date_range">IBANGA LOSUKU:</string>
+    <string name="filter_export_format">IFOMETHI YOKUTHUMELA:</string>
+
+    <!-- Summary Labels -->
+    <string name="export_summary_label">Isifinyezo Sokuthumela:</string>
+    <string name="total_tests_label">Izivivinyo Eziphelele: %d</string>
+    <string name="average_score_label">Amaphuzu Avamile: %s%%</string>
+    <string name="date_range_label">Ibanga Losuku: %s</string>
+    <string name="export_format_label">Ifomethi Yokuthumela: PDF</string>
+    <string name="export_date_label">Usuku Lokuthumela: %s</string>
+
+    <!-- Date Range Options -->
+    <string name="date_range_all_time">Isikhathi Sonke</string>
+    <string name="date_range_from">Kusukela %s</string>
+    <string name="date_range_until">Kuze %s</string>
+
+    <!-- Preview Dialog -->
+    <string name="data_preview_title">Ukubuka Idatha</string>
+    <string name="preview_title">UKUBUKA KWANGAPHAMBILI KWEMIPHUMELA YOKUHLOLA</string>
+    <string name="sample_results_label">Imiphumela Yesampula (Okuqala 5):</string>
+
+    <!-- Result Details -->
+    <string name="result_date_label">Usuku: %s</string>
+    <string name="result_language_label">Ulimi: %s</string>
+    <string name="result_test_type_label">Uhlobo Lokuhlola: %s</string>
+    <string name="result_score_label">Amaphuzu: %.0f%% (%d/%d)</string>
+    <string name="result_time_label">Isikhathi: %ds</string>
+    <string name="result_category_label">Isigaba: %s</string>
+
+    <!-- PDF Export -->
+    <string name="pdf_title">UMBIKO WOKUTHUMELA IMIPHUMELA YOKUHLOLA</string>
+    <string name="pdf_export_success">I-PDF ithunyelwe ngempumelelo: %s</string>
+
+    <!-- Table Headers -->
+    <string name="table_header_date">Usuku</string>
+    <string name="table_header_language">Ulimi</string>
+    <string name="table_header_test_type">Uhlobo Lokuhlola</string>
+    <string name="table_header_score">Amaphuzu</string>
+    <string name="table_header_questions">Imibuzo</string>
+    <string name="table_header_time">Isikhathi (s)</string>
+    <string name="table_header_category">Isigaba</string>
+
+    <!-- Share -->
+    <string name="share_subject">Ukuthumela Imiphumela Yokuhlola</string>
+    <string name="share_chooser_title">Yabelana Ngomiphumela</string>
+    <string name="share_summary_title">ISIFINYEZO SEMIPHUMELA YOKUHLOLA</string>
+    <string name="top_performances_label">UKUSEBENZA OKUPHEZULU:</string>
+    <string name="generated_by_app">Ikhiqizwe nge-Mzansi Lingo App</string>
+
+    <!-- Error Messages -->
+    <string name="error_user_not_authenticated">Umsebenzisi akagunyaziwe</string>
+    <string name="error_loading_data">Iphutha ekulayisheni idatha: %s</string>
+    <string name="error_exporting_pdf">Iphutha ekuthumeleni i-PDF: %s</string>
+    <string name="error_no_pdf_app">Ayikho i-app etholakele yokuvula amafayela e-PDF</string>
+    <string name="no_test_results_found">Ayikho imiphumela yokuhlola etholakele komsebenzisi wamanje</string>
+    <string name="loaded_test_results">Kulayishwe imiphumela yokuhlola engu-%d komsebenzisi wamanje</string>
+    <string name="no_data_to_preview">Ayikho idatha yokubuka</string>
+    <string name="no_data_to_export">Ayikho idatha yokuthumela</string>
+    <string name="no_data_to_share">Ayikho idatha yokwabelana</string>
+
+    <!-- String Arrays for Spinners -->
+    <string-array name="export_languages">
+        <item>Zonke Izilimi</item>
+        <item>IsiNgisi</item>
+        <item>Isi-Afrikaans</item>
+        <item>IsiZulu</item>
+        <item>IsiXhosa</item>
+        <item>Sesotho</item>
+    </string-array>
+
+    <string-array name="export_test_types">
+        <item>Zonke Izinhlobo</item>
+        <item>UKUHLOLA_AMAGAMA</item>
+        <item>UKUHLOLA_IMISHO</item>
+        <item>Kuxubene</item>
+        <item>Amagama</item>
+        <item>Uhlelo Lolimi</item>
+    </string-array>
+
+    <!-- Help & Support Activity -->
+    <string name="help_support_title">HELP &amp; SUPPORT</string>
+    <string name="help_support_subtitle">Need assistance? We\'re here to help!</string>
+
+    <!-- Getting Started -->
+    <string name="help_getting_started_title">1. GETTING STARTED</string>
+    <string name="help_getting_started_text">New to our language learning app? Start by creating your profile, selecting your target language, and taking the placement test to determine your current level. Our adaptive learning system will create a personalized learning path just for you.</string>
+
+    <!-- Account Management -->
+    <string name="help_account_title">2. ACCOUNT MANAGEMENT</string>
+    <string name="help_account_text">You can update your profile information, change your password, and manage your subscription from the Settings menu. To reset your password, tap \'Forgot Password\' on the login screen and follow the instructions sent to your email.</string>
+
+    <!-- Learning Features -->
+    <string name="help_learning_title">3. LEARNING FEATURES</string>
+    <string name="help_learning_text">Our app offers interactive lessons, vocabulary practice, pronunciation training, and cultural insights. Use the daily challenges to maintain your streak, and don\'t forget to review previously learned material to strengthen your memory retention.</string>
+
+    <!-- Technical Issues -->
+    <string name="help_technical_title">4. TECHNICAL ISSUES</string>
+    <string name="help_technical_text">If you\'re experiencing crashes, loading issues, or audio problems, try restarting the app, checking your internet connection, and ensuring you have the latest version installed. Clear the app cache if problems persist.</string>
+
+    <!-- Subscription & Billing -->
+    <string name="help_subscription_title">5. SUBSCRIPTION &amp; BILLING</string>
+    <string name="help_subscription_text">Manage your subscription through your device\'s app store (Google Play Store or Apple App Store). You can upgrade, downgrade, or cancel your subscription at any time. Refund policies are governed by the respective app store\'s terms.</string>
+
+    <!-- Progress Tracking -->
+    <string name="help_progress_title">6. PROGRESS TRACKING</string>
+    <string name="help_progress_text">Track your learning journey through the Progress tab. View your daily streak, completed lessons, mastered words, and overall proficiency level. Set daily goals and receive notifications to stay motivated and consistent with your learning.</string>
+
+    <!-- Offline Learning -->
+    <string name="help_offline_title">7. OFFLINE LEARNING</string>
+    <string name="help_offline_text">Download lessons for offline use when you have a stable internet connection. Offline lessons include text-based exercises and pre-loaded audio. Your progress will sync automatically when you reconnect to the internet.</string>
+
+    <!-- FAQs -->
+    <string name="help_faq_title">8. FREQUENTLY ASKED QUESTIONS</string>
+    <string name="help_faq_text">Q: Can I learn multiple languages?\nA: Yes! You can add multiple languages to your profile and switch between them.\n\nQ: How long are the lessons?\nA: Lessons range from 5-15 minutes, perfect for daily practice.\n\nQ: Can I use the app without internet?\nA: Yes, with downloaded offline content.</string>
+
+    <!-- Contact Support -->
+    <string name="help_contact_title">9. CONTACT SUPPORT</string>
+    <string name="help_contact_text">Still need help? Our support team is ready to assist you:\n\nEmail: mzansilingo@gmail.com\nPhone: 1234567890\nAddress: 123 Smith Street\n\nResponse time: Within 24 hours\nSupport hours: Monday - Friday, 9 AM - 6 PM</string>
+
+    <!-- Leaderboard Activity -->
+    <string name="leaderboard_title">LEADERBOARD / RANGLYS</string>
+    <string name="leaderboard_no_data">No data available / Geen data beskikbaar nie</string>
+    <string name="error_loading_leaderboard">Error loading leaderboard data</string>
+    <string name="leaderboard_header_rank">Rank</string>
+    <string name="leaderboard_header_player">Player</string>
+    <string name="leaderboard_header_score">Score</string>
+    <string name="leaderboard_header_accuracy">Accuracy</string>
+
+    <!-- Login Activity -->
+    <string name="label_email">EMAIL</string>
+    <string name="hint_enter_email">Enter email</string>
+    <string name="label_password">PASSWORD</string>
+    <string name="hint_enter_password">Enter password</string>
+    <string name="label_home_language">HOME LANGUAGE</string>
+    <string name="hint_home_language">Home Language</string>
+    <string name="label_language_to_learn">LANGUAGE I WANT TO LEARN</string>
+    <string name="hint_language">Language</string>
+
+    <string name="btn_login_with_google">Login with Google</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_signing_in">Signing in...</string>
+    <string name="btn_login_with_biometric">Login with Biometric</string>
+    <string name="btn_setup_biometric_login">Setup Biometric Login</string>
+    <string name="btn_enable">Enable</string>
+    <string name="btn_not_now">Not Now</string>
+    <string name="link_sign_up">Don\'t have an account? Sign up</string>
+
+    <!-- Biometric -->
+    <string name="biometric_login_title">Biometric Login</string>
+    <string name="biometric_login_subtitle">Use your fingerprint or face to log in</string>
+    <string name="biometric_use_password">Use Password</string>
+
+    <!-- Dialog -->
+    <string name="dialog_enable_biometric_title">Enable Biometric Login</string>
+    <string name="dialog_enable_biometric_message">Would you like to use your fingerprint or face to log in next time?</string>
+
+    <!-- Messages -->
+    <string name="msg_welcome_back">Welcome back!</string>
+    <string name="msg_google_login_success">Google login successful!</string>
+    <string name="msg_biometric_enabled">Biometric login enabled!</string>
+    <string name="msg_login_first_setup">Please login first to setup biometric authentication</string>
+    <string name="msg_login_first_setup_long">Please login with email/password or Google first to setup biometric authentication</string>
+
+    <!-- Errors -->
+    <string name="error_email_required">Email is required</string>
+    <string name="error_valid_email">Please enter a valid email address</string>
+    <string name="error_password_required">Password is required</string>
+    <string name="error_password_length">Password must be at least 6 characters</string>
+    <string name="error_incorrect_password">Incorrect password</string>
+    <string name="error_no_account_found">No account found with this email</string>
+    <string name="error_invalid_email_format">Invalid email format</string>
+    <string name="error_account_disabled">This account has been disabled</string>
+    <string name="error_too_many_attempts">Too many failed attempts. Please try again later.</string>
+    <string name="error_network">Network error. Please check your connection.</string>
+    <string name="error_login_failed">Login failed: %s</string>
+    <string name="error_google_sign_in_failed">Google sign in failed</string>
+    <string name="error_authentication">Authentication error: %s</string>
+    <string name="error_authentication_failed">Authentication failed</string>
+    <string name="error_authentication_failed_message">Authentication failed: %s</string>
+    <string name="error_showing_biometric">Error showing biometric authentication</string>
+    <string name="error_invalid_stored_credentials">Invalid stored credentials</string>
+    <string name="error_retrieving_credentials">Error retrieving stored credentials</string>
+    <string name="error_enable_biometric_failed">Failed to enable biometric login</string>
+    <string name="error_save_user_data">Failed to save user data: %s</string>
+    <string name="error_navigate_home">Error navigating to home screen</string>
+
+
 </resources>

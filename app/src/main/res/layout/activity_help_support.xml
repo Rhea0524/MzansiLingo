@@ -26,7 +26,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_arrow_left"
-            android:contentDescription="Back"
+            android:contentDescription="@string/cd_back"
             android:clickable="true"
             android:focusable="true"
             android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/rhino"
                 android:scaleType="centerInside"
-                android:contentDescription="App mascot"
+                android:contentDescription="@string/cd_mascot"
                 android:padding="4dp" />
 
         </FrameLayout>
@@ -77,7 +77,7 @@
             android:layout_marginHorizontal="32dp"
             android:layout_marginVertical="16dp"
             android:gravity="center"
-            android:text="HELP &amp; SUPPORT"
+            android:text="@string/help_support_title"
             android:textColor="#1a237e"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -111,9 +111,10 @@
                 android:padding="24dp">
 
                 <TextView
+                    android:id="@+id/tv_help_title_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="HELP &amp; SUPPORT"
+                    android:text="@string/help_support_title"
                     android:textColor="#1a237e"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -121,9 +122,10 @@
                     android:gravity="center" />
 
                 <TextView
+                    android:id="@+id/tv_help_subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Need assistance? We're here to help!"
+                    android:text="@string/help_support_subtitle"
                     android:textColor="#666666"
                     android:textSize="14sp"
                     android:layout_marginBottom="20dp"
@@ -131,18 +133,20 @@
 
                 <!-- Getting Started -->
                 <TextView
+                    android:id="@+id/tv_getting_started_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="1. GETTING STARTED"
+                    android:text="@string/help_getting_started_title"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
+                    android:id="@+id/tv_getting_started_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="New to our language learning app? Start by creating your profile, selecting your target language, and taking the placement test to determine your current level. Our adaptive learning system will create a personalized learning path just for you."
+                    android:text="@string/help_getting_started_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -150,18 +154,20 @@
 
                 <!-- Account Management -->
                 <TextView
+                    android:id="@+id/tv_account_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="2. ACCOUNT MANAGEMENT"
+                    android:text="@string/help_account_title"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
+                    android:id="@+id/tv_account_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="You can update your profile information, change your password, and manage your subscription from the Settings menu. To reset your password, tap 'Forgot Password' on the login screen and follow the instructions sent to your email."
+                    android:text="@string/help_account_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -169,18 +175,20 @@
 
                 <!-- Learning Features -->
                 <TextView
+                    android:id="@+id/tv_learning_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="3. LEARNING FEATURES"
+                    android:text="@string/help_learning_title"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
+                    android:id="@+id/tv_learning_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Our app offers interactive lessons, vocabulary practice, pronunciation training, and cultural insights. Use the daily challenges to maintain your streak, and don't forget to review previously learned material to strengthen your memory retention."
+                    android:text="@string/help_learning_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -188,18 +196,20 @@
 
                 <!-- Technical Issues -->
                 <TextView
+                    android:id="@+id/tv_technical_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="4. TECHNICAL ISSUES"
+                    android:text="@string/help_technical_title"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
+                    android:id="@+id/tv_technical_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="If you're experiencing crashes, loading issues, or audio problems, try restarting the app, checking your internet connection, and ensuring you have the latest version installed. Clear the app cache if problems persist."
+                    android:text="@string/help_technical_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -207,18 +217,20 @@
 
                 <!-- Subscription & Billing -->
                 <TextView
+                    android:id="@+id/tv_subscription_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="5. SUBSCRIPTION &amp; BILLING"
+                    android:text="@string/help_subscription_title"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
+                    android:id="@+id/tv_subscription_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Manage your subscription through your device's app store (Google Play Store or Apple App Store). You can upgrade, downgrade, or cancel your subscription at any time. Refund policies are governed by the respective app store's terms."
+                    android:text="@string/help_subscription_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -226,18 +238,20 @@
 
                 <!-- Progress Tracking -->
                 <TextView
+                    android:id="@+id/tv_progress_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="6. PROGRESS TRACKING"
+                    android:text="@string/help_progress_title"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
+                    android:id="@+id/tv_progress_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Track your learning journey through the Progress tab. View your daily streak, completed lessons, mastered words, and overall proficiency level. Set daily goals and receive notifications to stay motivated and consistent with your learning."
+                    android:text="@string/help_progress_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -245,18 +259,20 @@
 
                 <!-- Offline Learning -->
                 <TextView
+                    android:id="@+id/tv_offline_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="7. OFFLINE LEARNING"
+                    android:text="@string/help_offline_title"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
+                    android:id="@+id/tv_offline_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Download lessons for offline use when you have a stable internet connection. Offline lessons include text-based exercises and pre-loaded audio. Your progress will sync automatically when you reconnect to the internet."
+                    android:text="@string/help_offline_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -264,18 +280,20 @@
 
                 <!-- Frequently Asked Questions -->
                 <TextView
+                    android:id="@+id/tv_faq_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="8. FREQUENTLY ASKED QUESTIONS"
+                    android:text="@string/help_faq_title"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
+                    android:id="@+id/tv_faq_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Q: Can I learn multiple languages?\nA: Yes! You can add multiple languages to your profile and switch between them.\n\nQ: How long are the lessons?\nA: Lessons range from 5-15 minutes, perfect for daily practice.\n\nQ: Can I use the app without internet?\nA: Yes, with downloaded offline content."
+                    android:text="@string/help_faq_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -283,18 +301,20 @@
 
                 <!-- Contact Support -->
                 <TextView
+                    android:id="@+id/tv_contact_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="9. CONTACT SUPPORT"
+                    android:text="@string/help_contact_title"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
+                    android:id="@+id/tv_contact_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Still need help? Our support team is ready to assist you:\n\nEmail: mzansilingo@gmail.com\nPhone: 1234567890\nAddress: 123 Smith Street\n\nResponse time: Within 24 hours\nSupport hours: Monday - Friday, 9 AM - 6 PM"
+                    android:text="@string/help_contact_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:lineSpacingExtra="2dp" />
