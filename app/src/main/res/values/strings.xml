@@ -654,5 +654,105 @@
     <string name="intent_sent_success">Intent sent successfully</string>
     <string name="error_saving_progress">Failed to save progress</string>
 
+    <!-- Set Goals Activity -->
+    <string name="set_goals_title">SET GOALS / STEL DOELWITTE</string>
+    <string name="goals_todays_progress">TODAY\'S PROGRESS</string>
+    <string name="goals_progress_placeholder">TODAY: 0 words, 0 phrases correct</string>
+    <string name="goals_progress_percentage_placeholder">PROGRESS: Words 0% | Phrases 0%</string>
+    <string name="goals_daily_words">DAILY WORDS GOAL</string>
+    <string name="goals_daily_phrases">DAILY PHRASES GOAL</string>
+    <string name="goals_save_button">SAVE GOALS</string>
+    <string name="goals_reset_button">RESET TO DEFAULT</string>
+
+    <!-- Progress messages -->
+    <string name="goals_today_progress">TODAY: %1$d words, %2$d phrases correct</string>
+    <string name="goals_progress_format">PROGRESS: Words %1$d%% | Phrases %2$d%%</string>
+    <string name="goals_all_achieved">🎉 DAILY GOALS ACHIEVED! 🎉</string>
+    <string name="goals_words_achieved">✅ Words goal achieved!</string>
+    <string name="goals_phrases_achieved">✅ Phrases goal achieved!</string>
+
+    <!-- Achievement messages -->
+    <string name="achievement_words_master">WORDS MASTER!</string>
+    <string name="achievement_words_message">Daily words goal achieved!\nYou\'re building your vocabulary!</string>
+    <string name="achievement_phrase_champion">PHRASE CHAMPION!</string>
+    <string name="achievement_phrase_message">Daily phrases goal achieved!\nYour communication skills are growing!</string>
+    <string name="achievement_daily_legend">DAILY LEGEND!</string>
+    <string name="achievement_both_message">INCREDIBLE! Both goals achieved!\nYou\'re unstoppable today!</string>
+    <string name="achievement_on_fire">ON FIRE!</string>
+    <string name="achievement_streak_message">Amazing streak!\nKeep the momentum going!</string>
+    <string name="achievement_tap_dismiss">Tap to dismiss</string>
+
+    <!-- Toast messages -->
+    <string name="goals_reset_default">Goals reset to default values</string>
+    <string name="goals_saved_success">Goals saved successfully!</string>
+    <string name="goals_save_failed">Failed to save goals. Please try again.</string>
+    <string name="error_loading_goals">Failed to load goals</string>
+    <!-- Settings Activity -->
+    <string name="settings_title">SETTINGS</string>
+    <string name="settings_user_profile">User Profile</string>
+    <string name="settings_notifications">Notifications</string>
+    <string name="settings_privacy_security">Privacy &amp; Security</string>
+    <string name="settings_help_support">Help &amp; Support</string>
+    <string name="settings_export_data">Export Test Data</string>
+    <string name="settings_about">About</string>
+    <string name="settings_log_out">Log out</string>
+
+    <!-- Logout Dialog -->
+    <string name="logout_dialog_title">Log Out</string>
+    <string name="logout_dialog_message">Are you sure you want to log out?</string>
+    <string name="logout_dialog_confirm">Log Out</string>
+    <string name="logout_dialog_cancel">Cancel</string>
+    <string name="logout_error">Error during logout: %s</string>
+
+
+    <!-- Word Detail Activity -->
+    <string name="word_detail_title">WORDS / WOORDE</string>
+    <string name="word_detail_test_mode">TEST MODE / TOETS MODUS</string>
+    <string name="word_detail_submit">Submit</string>
+    <string name="word_detail_next">Next</string>
+    <string name="word_detail_finish_test">Finish Test</string>
+    <string name="word_detail_check_answer">Check Answer</string>
+
+    <!-- Word Detail Messages -->
+    <string name="word_sound_disabled_test">Sound disabled during test</string>
+    <string name="word_no_pronounce">No word to pronounce</string>
+    <string name="word_loading_pronunciation">Loading pronunciation...</string>
+    <string name="word_pronunciation_unavailable">Pronunciation unavailable</string>
+    <string name="word_audio_playback_error">Audio playback error</string>
+    <string name="word_pronunciation_service_unavailable">Pronunciation service unavailable</string>
+    <string name="word_playing_pronunciation">Playing pronunciation</string>
+    <string name="word_audio_playback_failed">Audio playback failed</string>
+    <string name="word_media_player_error">Media player error: %s</string>
+
+    <!-- Word Test Messages -->
+    <string name="word_test_error_no_words">Error: No words to test</string>
+    <string name="word_test_correct">Correct! Well done!</string>
+    <string name="word_test_incorrect">Incorrect. The correct answer is: %s</string>
+    <string name="word_test_complete">Test Complete!\nScore: %1$d/%2$d (%3$d%%)</string>
+    <string name="word_answer_is">The answer is: %1$s = %2$s</string>
+
+    <!-- Category Names (English) -->
+    <string name="category_emotions_af">Emosies</string>
+    <string name="category_animals_af">Diere</string>
+    <string name="category_colors_af">Kleure</string>
+    <string name="category_food_af">Kos</string>
+
+    <!-- Leaderboard Item Placeholders -->
+    <string name="leaderboard_rank_placeholder">#1</string>
+    <string name="leaderboard_username_placeholder">Username</string>
+    <string name="leaderboard_words_placeholder">Words: 0</string>
+    <string name="leaderboard_phrases_placeholder">Phrases: 0</string>
+    <string name="leaderboard_score_placeholder">0 pts</string>
+    <string name="leaderboard_accuracy_placeholder">0.0%</string>
+    <string name="leaderboard_trophy_description">Trophy icon</string>
+    <string name="leaderboard_medal_description">Medal icon</string>
+
+    <!-- Leaderboard Dynamic Text (used in adapter) -->
+    <string name="leaderboard_rank_format">#%d</string>
+    <string name="leaderboard_words_format">Words: %d</string>
+    <string name="leaderboard_phrases_format">Phrases: %d</string>
+    <string name="leaderboard_score_format">%d pts</string>
+    <string name="leaderboard_accuracy_format">%.1f%%</string>
+
 </resources>
 

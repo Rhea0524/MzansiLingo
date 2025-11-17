@@ -38,7 +38,7 @@
                     android:id="@+id/imgRhino"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="App mascot"
+                    android:contentDescription="@string/cd_mascot"
                     android:padding="4dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/rhino" />
@@ -50,7 +50,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:clickable="true"
-                android:contentDescription="Menu"
+                android:contentDescription="@string/cd_menu"
                 android:focusable="true"
                 android:src="@drawable/ic_menu_lines"
                 app:layout_constraintBottom_toBottomOf="@id/logoHolder"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:gravity="center"
-            android:text="SETTINGS"
+            android:text="@string/settings_title"
             android:textColor="@android:color/white"
             android:textSize="32sp"
             android:textStyle="bold"
@@ -99,7 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginBottom="16dp"
-                    android:text="User Profile"
+                    android:text="@string/settings_user_profile"
                     android:textColor="#FFD700"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -114,7 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Notifications"
+                    android:text="@string/settings_notifications"
                     android:textColor="#FFD700"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -129,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Privacy &amp; Security"
+                    android:text="@string/settings_privacy_security"
                     android:textColor="#FFD700"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -144,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Help &amp; Support"
+                    android:text="@string/settings_help_support"
                     android:textColor="#FFD700"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -153,15 +153,13 @@
                     app:strokeColor="@android:color/white"
                     app:strokeWidth="3dp" />
 
-
-
                 <!-- Export Test Data -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_export_test_data"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginBottom="16dp"
-                    android:text="Export Test Data"
+                    android:text="@string/settings_export_data"
                     android:textColor="#FFD700"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -176,7 +174,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginBottom="16dp"
-                    android:text="About"
+                    android:text="@string/settings_about"
                     android:textColor="#FFD700"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -191,7 +189,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginBottom="32dp"
-                    android:text="Log out"
+                    android:text="@string/settings_log_out"
                     android:textColor="#FFD700"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -234,6 +232,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/rhino"
+                    android:contentDescription="@string/cd_mascot"
                     android:padding="8dp"
                     android:scaleType="fitCenter" />
 
@@ -261,7 +260,7 @@
                     android:id="@+id/nav_home"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="HOME"
+                    android:text="@string/nav_home"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -285,7 +284,7 @@
                     android:id="@+id/nav_language"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="LANGUAGE"
+                    android:text="@string/nav_language"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -309,7 +308,7 @@
                     android:id="@+id/nav_words"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="WORDS"
+                    android:text="@string/nav_words"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -333,7 +332,7 @@
                     android:id="@+id/nav_phrases"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PHRASES"
+                    android:text="@string/nav_phrases"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -357,7 +356,7 @@
                     android:id="@+id/nav_progress"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PROGRESS"
+                    android:text="@string/nav_progress"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -367,8 +366,6 @@
                     android:background="?android:attr/selectableItemBackground" />
 
             </androidx.cardview.widget.CardView>
-
-
 
             <!-- Settings (highlighted since we're on this page) -->
             <androidx.cardview.widget.CardView
@@ -383,7 +380,7 @@
                     android:id="@+id/nav_settings"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="SETTINGS"
+                    android:text="@string/nav_settings"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -407,7 +404,7 @@
                     android:id="@+id/nav_profile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PROFILE"
+                    android:text="@string/nav_profile"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -445,7 +442,7 @@
                     android:src="@drawable/ic_book_open"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Dictionary"
+                    android:contentDescription="@string/cd_dictionary"
                     android:clickable="true"
                     android:focusable="true" />
 
@@ -467,7 +464,7 @@
                     android:src="@drawable/ic_arrow_left"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Back"
+                    android:contentDescription="@string/cd_back"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />
@@ -489,7 +486,7 @@
                     android:src="@drawable/ic_message_circle"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Chat"
+                    android:contentDescription="@string/cd_chat"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />

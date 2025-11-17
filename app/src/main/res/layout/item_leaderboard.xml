@@ -1,144 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_user"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="4dp"
+    android:layout_marginHorizontal="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="#FFFFFF">
 
-
-
-    <androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_user"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        android:layout_marginHorizontal="8dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="2dp"
-        app:cardBackgroundColor="#FFFFFF">
+        android:padding="16dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_rank"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="@string/leaderboard_rank_placeholder"
+            android:textColor="@color/mz_navy_dark"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/circle_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/user_info_layout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@id/tv_rank"
+            app:layout_constraintEnd_toStartOf="@id/score_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
-                android:id="@+id/tv_rank"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:text="#1"
+                android:id="@+id/tv_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/leaderboard_username_placeholder"
                 android:textColor="@color/mz_navy_dark"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:gravity="center"
-                android:background="@drawable/circle_background"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                android:maxLines="1"
+                android:ellipsize="end" />
 
             <LinearLayout
-                android:id="@+id/user_info_layout"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:orientation="vertical"
-                app:layout_constraintStart_toEndOf="@id/tv_rank"
-                app:layout_constraintEnd_toStartOf="@id/score_layout"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp">
 
                 <TextView
-                    android:id="@+id/tv_username"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_words_correct"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Username"
+                    android:text="@string/leaderboard_words_placeholder"
+                    android:textColor="@color/mz_navy_dark"
+                    android:textSize="12sp"
+                    android:layout_marginEnd="12dp" />
+
+                <TextView
+                    android:id="@+id/tv_phrases_correct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/leaderboard_phrases_placeholder"
+                    android:textColor="@color/mz_navy_dark"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/score_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginEnd="8dp">
+
+                <TextView
+                    android:id="@+id/tv_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/leaderboard_score_placeholder"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:maxLines="1"
-                    android:ellipsize="end" />
+                    android:gravity="center" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="4dp">
-
-                    <TextView
-                        android:id="@+id/tv_words_correct"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Words: 0"
-                        android:textColor="@color/mz_navy_dark"
-                        android:textSize="12sp"
-                        android:layout_marginEnd="12dp" />
-
-                    <TextView
-                        android:id="@+id/tv_phrases_correct"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Phrases: 0"
-                        android:textColor="@color/mz_navy_dark"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/score_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_accuracy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:text="@string/leaderboard_accuracy_placeholder"
+                    android:textColor="@color/mz_navy_dark"
+                    android:textSize="12sp"
                     android:gravity="center"
-                    android:layout_marginEnd="8dp">
-
-                    <TextView
-                        android:id="@+id/tv_score"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0 pts"
-                        android:textColor="@color/mz_navy_dark"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:gravity="center" />
-
-                    <TextView
-                        android:id="@+id/tv_accuracy"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0.0%"
-                        android:textColor="@color/mz_navy_dark"
-                        android:textSize="12sp"
-                        android:gravity="center"
-                        android:layout_marginTop="2dp" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/iv_trophy"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_trophy"
-                    android:visibility="gone"
-                    app:tint="#FFD700" />
-
-                <ImageView
-                    android:id="@+id/iv_medal"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_medal"
-                    android:visibility="gone"
-                    app:tint="#C0C0C0" />
+                    android:layout_marginTop="2dp" />
 
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/iv_trophy"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_trophy"
+                android:contentDescription="@string/leaderboard_trophy_description"
+                android:visibility="gone"
+                app:tint="#FFD700" />
 
-    </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/iv_medal"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_medal"
+                android:contentDescription="@string/leaderboard_medal_description"
+                android:visibility="gone"
+                app:tint="#C0C0C0" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -41,7 +41,7 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/rhino"
                     android:scaleType="centerInside"
-                    android:contentDescription="App mascot"
+                    android:contentDescription="@string/cd_mascot"
                     android:padding="4dp" />
 
             </FrameLayout>
@@ -52,7 +52,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_menu_lines"
-                android:contentDescription="Menu"
+                android:contentDescription="@string/cd_menu"
                 android:clickable="true"
                 android:focusable="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,7 @@
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginVertical="12dp"
                 android:gravity="center"
-                android:text="SET GOALS / STEL DOELWITTE"
+                android:text="@string/set_goals_title"
                 android:textColor="#1a237e"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -123,7 +123,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TODAY'S PROGRESS"
+                            android:text="@string/goals_todays_progress"
                             android:textColor="#1a237e"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -133,7 +133,7 @@
                             android:id="@+id/tv_current_progress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="TODAY: 0 words, 0 phrases correct"
+                            android:text="@string/goals_progress_placeholder"
                             android:textColor="#666666"
                             android:textSize="14sp"
                             android:layout_marginBottom="8dp" />
@@ -142,7 +142,7 @@
                             android:id="@+id/tv_goal_progress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="PROGRESS: Words 0% | Phrases 0%"
+                            android:text="@string/goals_progress_percentage_placeholder"
                             android:textColor="#1a237e"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -169,7 +169,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="DAILY WORDS GOAL"
+                            android:text="@string/goals_daily_words"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -246,7 +246,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="DAILY PHRASES GOAL"
+                            android:text="@string/goals_daily_phrases"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -321,7 +321,7 @@
                         android:drawableStart="@drawable/ic_check"
                         android:drawablePadding="12dp"
                         android:paddingHorizontal="24dp"
-                        android:text="SAVE GOALS"
+                        android:text="@string/goals_save_button"
                         android:textColor="#FFD700"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -336,7 +336,7 @@
                         android:drawableStart="@drawable/ic_refresh"
                         android:drawablePadding="12dp"
                         android:paddingHorizontal="24dp"
-                        android:text="RESET TO DEFAULT"
+                        android:text="@string/goals_reset_button"
                         android:textColor="#1a237e"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -347,7 +347,7 @@
 
         </ScrollView>
 
-        <!-- ACHIEVEMENT POPUP OVERLAY - Updated with proper theme colors -->
+        <!-- ACHIEVEMENT POPUP OVERLAY -->
         <androidx.cardview.widget.CardView
             android:id="@+id/achievement_popup"
             android:layout_width="320dp"
@@ -367,7 +367,7 @@
                 android:layout_height="wrap_content"
                 android:padding="24dp">
 
-                <!-- Achievement Badge - White circle with check -->
+                <!-- Achievement Badge -->
                 <androidx.cardview.widget.CardView
                     android:id="@+id/achievement_badge_card"
                     android:layout_width="100dp"
@@ -386,6 +386,7 @@
                         android:src="@drawable/ic_check"
                         android:layout_gravity="center"
                         android:scaleType="fitCenter"
+                        android:contentDescription="@string/achievement_daily_legend"
                         app:tint="#8BC34A" />
 
                 </androidx.cardview.widget.CardView>
@@ -397,7 +398,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:text="DAILY LEGEND!"
+                    android:text="@string/achievement_daily_legend"
                     android:textColor="#FFFFFF"
                     android:textSize="28sp"
                     android:textStyle="bold"
@@ -412,7 +413,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:gravity="center"
-                    android:text="INCREDIBLE! Both goals achieved!\nYou're unstoppable today!"
+                    android:text="@string/achievement_both_message"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     android:lineSpacingExtra="4dp"
@@ -426,7 +427,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:text="Tap to dismiss"
+                    android:text="@string/achievement_tap_dismiss"
                     android:textColor="#E8F5E8"
                     android:textSize="12sp"
                     android:textStyle="italic"
@@ -438,13 +439,14 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!-- Enhanced Falling Stars - More visible and better positioned -->
+        <!-- Enhanced Falling Stars -->
         <ImageView
             android:id="@+id/star1"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_star"
             android:visibility="gone"
+            android:contentDescription="@string/achievement_on_fire"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="30dp"
@@ -457,6 +459,7 @@
             android:layout_height="48dp"
             android:src="@drawable/ic_star"
             android:visibility="gone"
+            android:contentDescription="@string/achievement_on_fire"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="25dp"
@@ -469,6 +472,7 @@
             android:layout_height="44dp"
             android:src="@drawable/ic_star"
             android:visibility="gone"
+            android:contentDescription="@string/achievement_on_fire"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -481,6 +485,7 @@
             android:layout_height="36dp"
             android:src="@drawable/ic_star"
             android:visibility="gone"
+            android:contentDescription="@string/achievement_on_fire"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="80dp"
@@ -493,6 +498,7 @@
             android:layout_height="42dp"
             android:src="@drawable/ic_star"
             android:visibility="gone"
+            android:contentDescription="@string/achievement_on_fire"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="70dp"
@@ -505,6 +511,7 @@
             android:layout_height="38dp"
             android:src="@drawable/ic_star"
             android:visibility="gone"
+            android:contentDescription="@string/achievement_on_fire"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="120dp"
@@ -517,6 +524,7 @@
             android:layout_height="46dp"
             android:src="@drawable/ic_star"
             android:visibility="gone"
+            android:contentDescription="@string/achievement_on_fire"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="120dp"
@@ -529,13 +537,14 @@
             android:layout_height="34dp"
             android:src="@drawable/ic_star"
             android:visibility="gone"
+            android:contentDescription="@string/achievement_on_fire"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="60dp"
             android:layout_marginTop="240dp"
             app:tint="#FFD700" />
 
-        <!-- Enhanced Confetti pieces - Larger and more colorful -->
+        <!-- Enhanced Confetti pieces -->
         <androidx.cardview.widget.CardView
             android:id="@+id/confetti1"
             android:layout_width="18dp"
@@ -697,6 +706,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/rhino"
+                    android:contentDescription="@string/cd_mascot"
                     android:padding="8dp"
                     android:scaleType="fitCenter" />
 
@@ -724,7 +734,7 @@
                     android:id="@+id/nav_home"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="HOME"
+                    android:text="@string/nav_home"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -748,7 +758,7 @@
                     android:id="@+id/nav_language"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="LANGUAGE"
+                    android:text="@string/nav_language"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -772,7 +782,7 @@
                     android:id="@+id/nav_words"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="WORDS"
+                    android:text="@string/nav_words"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -796,7 +806,7 @@
                     android:id="@+id/nav_phrases"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PHRASES"
+                    android:text="@string/nav_phrases"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -820,7 +830,7 @@
                     android:id="@+id/nav_leaderboard"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="LEADERBOARD"
+                    android:text="@string/btn_leaderboard"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -830,8 +840,6 @@
                     android:background="?android:attr/selectableItemBackground" />
 
             </androidx.cardview.widget.CardView>
-
-
 
             <!-- Settings -->
             <androidx.cardview.widget.CardView
@@ -846,7 +854,7 @@
                     android:id="@+id/nav_settings"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="SETTINGS"
+                    android:text="@string/nav_settings"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -870,7 +878,7 @@
                     android:id="@+id/nav_profile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="PROFILE"
+                    android:text="@string/nav_profile"
                     android:textColor="@color/mz_navy_dark"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -908,7 +916,7 @@
                     android:src="@drawable/ic_book_open"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Dictionary"
+                    android:contentDescription="@string/cd_dictionary"
                     android:clickable="true"
                     android:focusable="true" />
 
@@ -930,7 +938,7 @@
                     android:src="@drawable/ic_arrow_left"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Back"
+                    android:contentDescription="@string/cd_back"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />
@@ -952,7 +960,7 @@
                     android:src="@drawable/ic_message_circle"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    android:contentDescription="Chat"
+                    android:contentDescription="@string/cd_chat"
                     android:clickable="true"
                     android:focusable="true"
                     app:tint="@color/mz_navy_dark" />

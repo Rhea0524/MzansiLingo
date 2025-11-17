@@ -654,6 +654,106 @@
     <string name="intent_sent_success">I-Intent ithunyelwe ngempumelelo</string>
     <string name="error_saving_progress">Kuhlulekile ukulondoloza inqubekela phambili</string>
 
+    <!-- Set Goals Activity -->
+    <string name="set_goals_title">MISA IZINHLOSO / STEL DOELWITTE</string>
+    <string name="goals_todays_progress">INQUBEKELA PHAMBILI YANAMUHLA</string>
+    <string name="goals_progress_placeholder">NAMUHLA: amagama angu-0, imisho engu-0 ilungile</string>
+    <string name="goals_progress_percentage_placeholder">INQUBEKELA: Amagama 0% | Imisho 0%</string>
+    <string name="goals_daily_words">INHLOSO YAMAGAMA ANSUKU ZONKE</string>
+    <string name="goals_daily_phrases">INHLOSO YEMISHO YANSUKU ZONKE</string>
+    <string name="goals_save_button">LONDOLOZA IZINHLOSO</string>
+    <string name="goals_reset_button">BUYISELA EZIMISIWE</string>
+
+    <!-- Progress messages -->
+    <string name="goals_today_progress">NAMUHLA: amagama angu-%1$d, imisho engu-%2$d ilungile</string>
+    <string name="goals_progress_format">INQUBEKELA: Amagama %1$d%% | Imisho %2$d%%</string>
+    <string name="goals_all_achieved">🎉 IZINHLOSO ZANSUKU ZONKE ZIFEZEKILE! 🎉</string>
+    <string name="goals_words_achieved">✅ Inhloso yamagama ifezekile!</string>
+    <string name="goals_phrases_achieved">✅ Inhloso yemisho ifezekile!</string>
+
+    <!-- Achievement messages -->
+    <string name="achievement_words_master">INKOSI YAMAGAMA!</string>
+    <string name="achievement_words_message">Inhloso yamagama yansuku zonke ifezekile!\nUyakha isigama sakho!</string>
+    <string name="achievement_phrase_champion">INQWABA YEMISHO!</string>
+    <string name="achievement_phrase_message">Inhloso yemisho yansuku zonke ifezekile!\nAmakhono akho okuxhumana ayakhula!</string>
+    <string name="achievement_daily_legend">INGANEKWANE YANSUKU ZONKE!</string>
+    <string name="achievement_both_message">OKUMANGALISAYO! Zombili izinhloso zifezekile!\nAwunakuvinjelwa namuhla!</string>
+    <string name="achievement_on_fire">UYAVUTHA!</string>
+    <string name="achievement_streak_message">Ukulandelana okumangalisayo!\nQhubeka ugcinezimpumelelo!</string>
+    <string name="achievement_tap_dismiss">Thepha ukuvala</string>
+
+    <!-- Toast messages -->
+    <string name="goals_reset_default">Izinhloso zibuyiselwe ezimisiwe</string>
+    <string name="goals_saved_success">Izinhloso zilondoloziwe ngempumelelo!</string>
+    <string name="goals_save_failed">Kuhlulekile ukulondoloza izinhloso. Sicela uzame futhi.</string>
+    <string name="error_loading_goals">Kuhlulekile ukulayisha izinhloso</string>
+
+    <!-- Settings Activity - isiZulu -->
+    <string name="settings_title">IZILUNGISELELO</string>
+    <string name="settings_user_profile">Iphrofayili Yomsebenzisi</string>
+    <string name="settings_notifications">Izaziso</string>
+    <string name="settings_privacy_security">Ubumfihlo Nokuphepha</string>
+    <string name="settings_help_support">Usizo Nokusekelwa</string>
+    <string name="settings_export_data">Thumela Idatha Yokuhlola</string>
+    <string name="settings_about">Mayelana</string>
+    <string name="settings_log_out">Phuma</string>
+
+    <!-- Logout Dialog - isiZulu -->
+    <string name="logout_dialog_title">Phuma</string>
+    <string name="logout_dialog_message">Uqinisekile ukuthi ufuna ukuphuma?</string>
+    <string name="logout_dialog_confirm">Phuma</string>
+    <string name="logout_dialog_cancel">Khansela</string>
+    <string name="logout_error">Iphutha ekuphumeni: %s</string>
+
+    <!-- Word Detail Activity - isiZulu -->
+    <string name="word_detail_title">AMAGAMA / WOORDE</string>
+    <string name="word_detail_test_mode">IMODI YOKUHLOLA / TOETS MODUS</string>
+    <string name="word_detail_submit">Thumela</string>
+    <string name="word_detail_next">Okulandelayo</string>
+    <string name="word_detail_finish_test">Qeda Ukuhlolwa</string>
+    <string name="word_detail_check_answer">Hlola Impendulo</string>
+
+    <!-- Word Detail Messages - isiZulu -->
+    <string name="word_sound_disabled_test">Umsindo uvalwe ngesikhathi sokuhlolwa</string>
+    <string name="word_no_pronounce">Alikho igama lokuphimisa</string>
+    <string name="word_loading_pronunciation">Layisha ukuphimisa...</string>
+    <string name="word_pronunciation_unavailable">Ukuphimisa akutholakali</string>
+    <string name="word_audio_playback_error">Iphutha lokudlala umsindo</string>
+    <string name="word_pronunciation_service_unavailable">Isevisi yokuphimisa ayitholakali</string>
+    <string name="word_playing_pronunciation">Iyidlala ukuphimisa</string>
+    <string name="word_audio_playback_failed">Ukudlala umsindo kuhlulekile</string>
+    <string name="word_media_player_error">Iphutha lomdlali wemidiya: %s</string>
+
+    <!-- Word Test Messages - isiZulu -->
+    <string name="word_test_error_no_words">Iphutha: Awekho amagama okuhlola</string>
+    <string name="word_test_correct">Kulungile! Kahle kakhulu!</string>
+    <string name="word_test_incorrect">Akulungile. Impendulo elungile: %s</string>
+    <string name="word_test_complete">Ukuhlolwa Kuqediwe!\nAmaphuzu: %1$d/%2$d (%3$d%%)</string>
+    <string name="word_answer_is">Impendulo ithi: %1$s = %2$s</string>
+
+    <!-- Category Names (isiZulu) -->
+    <string name="category_emotions_af">Emosies</string>
+    <string name="category_animals_af">Diere</string>
+    <string name="category_colors_af">Kleure</string>
+    <string name="category_food_af">Kos</string>
+
+    <!-- Leaderboard Item Placeholders -->
+    <string name="leaderboard_rank_placeholder">#1</string>
+    <string name="leaderboard_username_placeholder">Igama Lomsebenzisi</string>
+    <string name="leaderboard_words_placeholder">Amagama: 0</string>
+    <string name="leaderboard_phrases_placeholder">Imisho: 0</string>
+    <string name="leaderboard_score_placeholder">0 amaphuzu</string>
+    <string name="leaderboard_accuracy_placeholder">0.0%</string>
+    <string name="leaderboard_trophy_description">Isithonjana sendondo</string>
+    <string name="leaderboard_medal_description">Isithonjana sembadali</string>
+
+    <!-- Leaderboard Dynamic Text (used in adapter) -->
+    <string name="leaderboard_rank_format">#%d</string>
+    <string name="leaderboard_words_format">Amagama: %d</string>
+    <string name="leaderboard_phrases_format">Imisho: %d</string>
+    <string name="leaderboard_score_format">%d amaphuzu</string>
+    <string name="leaderboard_accuracy_format">%.1f%%</string>
+
 </resources>
 
 
