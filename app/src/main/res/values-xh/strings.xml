@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name - REQUIRED -->
+    <string name="app_name">MzansiLingo</string>
+
+    <!-- Home Activity Buttons -->
+    <string name="btn_words">AMAGAMA / WOORDE</string>
+    <string name="btn_phrases">AMABINZANA / FRASES</string>
+    <string name="btn_leaderboard">IBHODI YABAHOLI / RANGLYS</string>
+    <string name="btn_set_goals">MISELA IINJONGO / STEL DOELWITTE</string>
+    <string name="btn_ai_chat">INCOKO YE-AI / KI-KLETS</string>
+    <string name="language_header_afrikaans">ULWIMI:\nISIXHOSA</string>
+
+    <!-- Language Selection -->
+    <string name="select_language_header">Khetha Ulwimi Lwakho</string>
+    <string name="home_language_title">Loluphi ulwimi lwakho lwekhaya?</string>
+    <string name="home_language_subtitle">Ulwimi lwe-interface ye-app</string>
+    <string name="learning_language_title">Uyafunda:</string>
+    <string name="afrikaans">IsiXhosa</string>
+    <string name="app_teaches_afrikaans">Le app ifundisa isiXhosa</string>
+    <string name="select_home_language_hint">Khetha ulwimi lwakho</string>
+    <string name="save_language">Gcina Ulwimi</string>
+    <string name="language_saved_success">Ulwimi lugcinwe ngempumelelo!</string>
+    <string name="error_select_home_language">Nceda ukhethe ulwimi lwakho lwekhaya</string>
+    <string name="error_select_available_language">Nceda ukhethe kwiilwimi ezikhoyo</string>
+
+    <!-- Navigation Drawer -->
+    <string name="nav_home">Ekhaya</string>
+    <string name="nav_language">Ulwimi</string>
+    <string name="nav_words">Amagama</string>
+    <string name="nav_phrases">Amabinzana</string>
+    <string name="nav_progress">Inkqubela</string>
+    <string name="nav_settings">Iisetingi</string>
+    <string name="nav_profile">Iprofayile</string>
+
+    <!-- Content Descriptions -->
+    <string name="cd_back">Buyela</string>
+    <string name="cd_menu">Imenyu</string>
+    <string name="cd_mascot">I-Mascot ye-App</string>
+    <string name="cd_dictionary">Isichazi-magama</string>
+    <string name="cd_chat">Incoko</string>
+
+    <!-- About Activity -->
+    <string name="about_title">MALUNGA NE-MZANSI LINGO</string>
+    <string name="about_version">Inguqulelo 1.0 • 2024</string>
+    <string name="about_our_mission">INJONGO YETHU</string>
+    <string name="about_mission_text">I-Mzansi Lingo yinkqubo yokufunda ulwimi esebenza ngeselula, edidiyelelayo ezisa uvuyo lokufunda kwilifa lethu lemveli nolwimi eMzantsi Afrika. Sinikezela ngeekosi kwiilwimi ezisixhenxe ezisemthethweni zaseMzantsi Afrika: isiZulu, isiXhosa, Sesotho, Setswana, Sepedi, Afrikaans, neNgesi.</string>
+    <string name="about_what_makes_special">YINTONI ESENZA SIKHETHEKE</string>
+    <string name="about_special_text">I-app yethu idibanisa ukufunda okunemdlalo, ukuzidibanisa nenkcubeko, kunye nokuzilolonga ukuthetha okusebenzayo ukunceda abasebenzisi ukuba baphumelele kwisigama, kwigrama, nakwizakhono zencoko. Yenzelwe abemi baseMzantsi Afrika nabatyeleli, sikhuthaza ukuthetha iilwimi ezininzi nonxibelelwano phakathi kweenkcubeko kuwo wonke uMzantsi Afrika.</string>
+    <string name="about_who_we_serve">SIBAKHONZA BANI</string>
+    <string name="about_serve_text">Abaphulaphuli bethu abaphambili baquka abemi baseMzantsi Afrika, abakhenkethi, abaphuma ngaphandle, kunye nabafundi abanonmdla wokufunda iilwimi zalapha ukuze baphuhlise inkcubeko, ukukhula ngokwengqesho, okanye ubudlelane bobuqu. Samkela nabani na onentshisekelo kwiilwimi nenkcubeko yaseMzantsi Afrika.</string>
+    <string name="about_key_features">IIMPAWU EZIPHAMBILI</string>
+    <string name="about_features_text">🎮 Ukufunda Okusekwe Kumdlalo: Amabhaso amnandi njengamanqaku, iibheji, kunye nemigca yempumelelo yenza ukufunda kube mnandi kwaye kukhuthaze ngendlela entle.\n\n🏆 Iibhodi Zabaholi &amp; Ukubekwa Ngokwamabanga: Thelekisa inkqubela yakho nabahlobo kunye nabanye abafundi ukukhuthaza kunye nomoya woluntu.\n\n📅 Iinjongo Zemihla Ngemihla &amp; Izikhumbuzo: Misela iinjongo zemihla ngemihla kwaye ufumane izikhumbuzo ukwakha imikhwa yokufunda eqhubekayo nangona uneshedyuli exakekileyo.</string>
+    <string name="about_learning_approach">INDLELA YOKUFUNDA</string>
+    <string name="about_approach_text">📚 Igrama &amp; Amanqanaba Obuchwepheshe: Izifundo ziqhubela phambili ukusuka kwiqala ukuya kweziphezulu ngamanyathelo acacileyo, zakha ukuzithemba kwaye zenze inkqubela ilula ukulandelela.\n\n🗣️ Ukufunda Okugxile Ekuthetheni: Imisebenzi yokuthetha, ukujonga ukuphimisela, kunye neencoko ze-AI ziphucula ukuzithemba ekuthetheni kwixesha lokwenyani, kungekhona nje isigama.\n\n🌍 Ukudityaniswa Kwenkcubeko: Funda iilwimi kumxholo wazo wenkcubeko ukuze ufumane ukuqonda okunzulu kunye nokuqonda.</string>
+    <string name="about_meet_mascot">DIBANA NE-MASCOT YETHU</string>
+    <string name="about_mascot_text">Ubabaxanwa wethu obuhlobo wopopayi oluluhlaza umele umoya woMzantsi Afrika. Ngamehlo amakhulu angqukuva, uncumo olonwabileyo, kunye neempondo ezimhlophe, i-mascot yethu yobabaxanwa ibonisa ubuhlobo kunye nendalo emnandi yokufunda ulwimi ngelixa idibanisa nesazisi saseMzantsi Afrika.</string>
+    <string name="about_our_vision">UMBONO WETHU</string>
+    <string name="about_vision_text">Sibona uMzantsi Afrika apho imiqobo yolwimi ingamabhulorho okuqonda, apho lonke isakhamuzi linokuncokola ngaphesheya kwemida yenkcubeko, kwaye apho ukwahluka kwethu ngolwimi kube ngamandla ethu amakhulu. Ngobugcisa kunye nophuhliso, senza ukufunda ulwimi kufumaneke kubo bonke abantu.</string>
+    <string name="about_contact_credits">UQHAGAMSHELWANO &amp; IIMBASA</string>
+    <string name="about_contact_text">Iphuhlisiwe nge-❤️ yoMzantsi Afrika\n\nI-imeyile: mzansilingo@gmail.com\nImnxeba: 1234567890\nIdilesi: 123 Smith Street\n\nEnkosi ekhethekileyo kuluntu lweelwimi olugcina kwaye lwabelana ngeelwimi ezintle zaseMzantsi Afrika.</string>
+
+    <!-- AI Chat Activity -->
+    <string name="ai_assistant_online">UMNCEDISI WE-AI USEBENZA</string>
+    <string name="ai_chat_hint">Ndibuze ngolwimi...</string>
+    <string name="send_message">Thumela umyalezo</string>
+    <string name="ai_chat_welcome_message">🦏 Molo! Ndingumncedisi wakho wesiXhosa we-Mzansi Lingo!\n\n🗣️ Ungabuza ngeNgesi:\n• "How do I say hello in isiXhosa?"\n• "What is thank you in isiXhosa?"\n• "How do I say numbers in isiXhosa?"\n\n💡 Zonke iimpendulo zam ziya kuba ngesiXhosa.</string>
+    <string name="api_connection_failed">⚠️ Uqhagamshelwano lwe-API aluphumelelanga:</string>
+    <string name="no_internet_connection">⚠️ Akukho unxibelelwano lwe-intanethi olukhoyo.</string>
+    <string name="ai_thinking">🦏 Ndiyacinga...</string>
+    <string name="error_prefix">⚠️ Impazamo:</string>
+    <string name="network_error">⚠️ Impazamo yenethiwekhi:</string>
+
+    <!-- Phrases Activity -->
+    <string name="phrases_title">AMABINZANA / FRASES</string>
+    <string name="category_polite">Imbeko Nokubalulekileyo/\nBeleefd en Noodsaaklik</string>
+    <string name="category_communication">Unxibelelwano &amp; Ulwazi/\nKommunikasie &amp; Inligting</string>
+    <string name="category_personal">Ulwazi Lobuqu/\nPersoonlike Inligting</string>
+    <string name="category_travel">Ukuhamba &amp; Iimfuno Zemihla Ngemihla/\nReis &amp; Daaglikse Behoeftes</string>
+    <string name="btn_test_yourself">ZIVAVANYA / TOETS JOUSELF</string>
+    <string name="starting_test_for">Ukuqalisa uvavanyo lwekhethekazi:</string>
+
+    <!-- Politeness Phrases -->
+    <string name="phrase_please_en">Nceda</string>
+    <string name="phrase_please_af">Nceda</string>
+    <string name="phrase_thank_you_en">Enkosi</string>
+    <string name="phrase_thank_you_af">Enkosi</string>
+    <string name="phrase_excuse_me_en">Uxolo</string>
+    <string name="phrase_excuse_me_af">Uxolo</string>
+    <string name="phrase_sorry_en">Ndiyaxolisa</string>
+    <string name="phrase_sorry_af">Ndiyaxolisa</string>
+    <string name="phrase_welcome_en">Wamkelekile</string>
+    <string name="phrase_welcome_af">Wamkelekile</string>
+    <string name="phrase_may_i_have_en">Ndinokufumana...</string>
+    <string name="phrase_may_i_have_af">Ndinokufumana...</string>
+
+    <!-- Communication Phrases -->
+    <string name="phrase_need_help_en">Ndidinga uncedo. Ungandinceda?</string>
+    <string name="phrase_need_help_af">Ndidinga uncedo. Ungandinceda?</string>
+    <string name="phrase_dont_understand_en">Andiqondi</string>
+    <string name="phrase_dont_understand_af">Andiqondi</string>
+    <string name="phrase_what_time_en">Ngubani ixesha?</string>
+    <string name="phrase_what_time_af">Ngubani ixesha?</string>
+    <string name="phrase_how_much_cost_en">Yimalini le nto?</string>
+    <string name="phrase_how_much_cost_af">Yimalini le nto?</string>
+    <string name="phrase_bathroom_en">Iphi indlu yangasese?</string>
+    <string name="phrase_bathroom_af">Iphi indlu yangasese?</string>
+    <string name="phrase_speak_english_en">Ungayithetha iNgesi?</string>
+    <string name="phrase_speak_english_af">Ungayithetha iNgesi?</string>
+
+    <!-- Personal Information Phrases -->
+    <string name="phrase_my_name_en">Igama lam ngu...</string>
+    <string name="phrase_my_name_af">Igama lam ngu...</string>
+    <string name="phrase_i_am_from_en">Ndivela e...</string>
+    <string name="phrase_i_am_from_af">Ndivela e...</string>
+    <string name="phrase_how_old_en">Uneminyaka emingaphi?</string>
+    <string name="phrase_how_old_af">Uneminyaka emingaphi?</string>
+    <string name="phrase_where_live_en">Uhlala phi?</string>
+    <string name="phrase_where_live_af">Uhlala phi?</string>
+    <string name="phrase_phone_number_en">Yintoni inombolo yakho yomnxeba?</string>
+    <string name="phrase_phone_number_af">Yintoni inombolo yakho yomnxeba?</string>
+    <string name="phrase_what_work_en">Wenza ntoni ngomsebenzi?</string>
+    <string name="phrase_what_work_af">Wenza ntoni ngomsebenzi?</string>
+
+    <!-- Travel Phrases -->
+    <string name="phrase_train_station_en">Iphi isikhululo sikaloliwe?</string>
+    <string name="phrase_train_station_af">Iphi isikhululo sikaloliwe?</string>
+    <string name="phrase_need_taxi_en">Ndidinga iteksi</string>
+    <string name="phrase_need_taxi_af">Ndidinga iteksi</string>
+    <string name="phrase_buy_food_en">Ndingayithenga phi ukutya?</string>
+    <string name="phrase_buy_food_af">Ndingayithenga phi ukutya?</string>
+    <string name="phrase_hospital_nearby_en">Ingaba ikhona isibhedlele ekufutshane?</string>
+    <string name="phrase_hospital_nearby_af">Ingaba ikhona isibhedlele ekufutshane?</string>
+    <string name="phrase_nearest_atm_en">Iphi i-ATM ekufutshane?</string>
+    <string name="phrase_nearest_atm_af">Iphi i-ATM ekufutshane?</string>
+    <string name="phrase_i_am_lost_en">Ndilahlekile. Ungandinceda?</string>
+    <string name="phrase_i_am_lost_af">Ndilahlekile. Ungandinceda?</string>
+
+    <!-- Words/Category Activity -->
+    <string name="words_title">AMAGAMA / WOORDE</string>
+    <string name="category_emotions">Iimvakalelo / Emosies</string>
+    <string name="category_colors">Imibala / Kleure</string>
+    <string name="category_animals">Izilwanyana / Diere</string>
+    <string name="category_food">Ukutya / Kos</string>
+
+    <!-- Emotion Words -->
+    <string name="word_happy">Ovuyayo</string>
+    <string name="word_sad">Olusizi</string>
+    <string name="word_fear">Uloyiko</string>
+    <string name="word_shock">Ukothuka</string>
+    <string name="word_anger">Umsindo</string>
+    <string name="word_silly">Ohlekisayo</string>
+
+    <!-- Color Words -->
+    <string name="word_red">Bomvu</string>
+    <string name="word_blue">Luhlaza okwesibhakabhaka</string>
+    <string name="word_green">Luhlaza okwengca</string>
+    <string name="word_yellow">Tyheli</string>
+    <string name="word_purple">Mfusa</string>
+    <string name="word_pink">Pinki</string>
+
+    <!-- Animal Words -->
+    <string name="word_lion">Ingonyama</string>
+    <string name="word_elephant">Indlovu</string>
+    <string name="word_giraffe">Indlulamithi</string>
+    <string name="word_zebra">Iqwarhashe</string>
+    <string name="word_hippo">Imvubu</string>
+
+    <!-- Food Words -->
+    <string name="word_apple">I-apile</string>
+    <string name="word_banana">Ibhanana</string>
+    <string name="word_bread">Isonka</string>
+    <string name="word_milk">Ubisi</string>
+    <string name="word_meat">Inyama</string>
+    <string name="word_rice">Irayisi</string>
+
+    <!-- Afrikaans translations (always shown) -->
+    <string name="word_happy_af">Ovuyayo</string>
+    <string name="word_sad_af">Olusizi</string>
+    <string name="word_fear_af">Uloyiko</string>
+    <string name="word_shock_af">Ukothuka</string>
+    <string name="word_anger_af">Umsindo</string>
+    <string name="word_silly_af">Ohlekisayo</string>
+
+    <string name="word_red_af">Bomvu</string>
+    <string name="word_blue_af">Luhlaza okwesibhakabhaka</string>
+    <string name="word_green_af">Luhlaza okwengca</string>
+    <string name="word_yellow_af">Tyheli</string>
+    <string name="word_purple_af">Mfusa</string>
+    <string name="word_pink_af">Pinki</string>
+
+    <string name="word_lion_af">Ingonyama</string>
+    <string name="word_elephant_af">Indlovu</string>
+    <string name="word_giraffe_af">Indlulamithi</string>
+    <string name="word_zebra_af">Iqwarhashe</string>
+    <string name="word_hippo_af">Imvubu</string>
+
+    <string name="word_apple_af">I-apile</string>
+    <string name="word_banana_af">Ibhanana</string>
+    <string name="word_bread_af">Isonka</string>
+    <string name="word_milk_af">Ubisi</string>
+    <string name="word_meat_af">Inyama</string>
+    <string name="word_rice_af">Irayisi</string>
+
+    <!-- Export Test Data Activity -->
+    <string name="export_data_title">THUMELA IDATHA YOVAVANYO</string>
+    <string name="btn_date_from">UKUSUKA</string>
+    <string name="btn_date_to">UKUYA</string>
+    <string name="btn_preview_data">JONGA IDATHA</string>
+    <string name="btn_export_pdf">THUMELA KWI-PDF</string>
+    <string name="btn_share_results">YABELANA NGEZIPHUMO</string>
+    <string name="btn_ok">KULUNGILE</string>
+    <string name="btn_export_pdf_short">Thumela i-PDF</string>
+
+    <!-- Filter Labels -->
+    <string name="filter_category">UDIDI:</string>
+    <string name="filter_test_type">UHLOBO LOVAVANYO:</string>
+    <string name="filter_date_range">ULUHLU LWEMIHLA:</string>
+    <string name="filter_export_format">IFOMATHI YOKUTHUMELA:</string>
+
+    <!-- Summary Labels -->
+    <string name="export_summary_label">Isishwankathelo Sokuthumela:</string>
+    <string name="total_tests_label">Izivivinyo Ezizonke: %d</string>
+    <string name="average_score_label">Amanqaku Avumelana: %s%%</string>
+    <string name="date_range_label">Uluhlu Lwemihla: %s</string>
+    <string name="export_format_label">Ifomathi Yokuthumela: PDF</string>
+    <string name="export_date_label">Umhla Wokuthumela: %s</string>
+
+    <!-- Date Range Options -->
+    <string name="date_range_all_time">Lonke Ixesha</string>
+    <string name="date_range_from">Ukusuka %s</string>
+    <string name="date_range_until">Ukuya %s</string>
+
+    <!-- Preview Dialog -->
+    <string name="data_preview_title">Ukujonga Idatha</string>
+    <string name="preview_title">UKUJONGA KWANGAPHAMBILI IZIPHUMO ZOVAVANYO</string>
+    <string name="sample_results_label">Iziphumo Zesampulu (Okuqala 5):</string>
+
+    <!-- Result Details -->
+    <string name="result_date_label">Umhla: %s</string>
+    <string name="result_language_label">Ulwimi: %s</string>
+    <string name="result_test_type_label">Uhlobo Lovavanyo: %s</string>
+    <string name="result_score_label">Amanqaku: %.0f%% (%d/%d)</string>
+    <string name="result_time_label">Ixesha: %ds</string>
+    <string name="result_category_label">Udidi: %s</string>
+
+    <!-- PDF Export -->
+    <string name="pdf_title">INGXELO YOKUTHUMELA IZIPHUMO ZOVAVANYO</string>
+    <string name="pdf_export_success">I-PDF ithunyelwe ngempumelelo: %s</string>
+
+    <!-- Table Headers -->
+    <string name="table_header_date">Umhla</string>
+    <string name="table_header_language">Ulwimi</string>
+    <string name="table_header_test_type">Uhlobo Lovavanyo</string>
+    <string name="table_header_score">Amanqaku</string>
+    <string name="table_header_questions">Imibuzo</string>
+    <string name="table_header_time">Ixesha (s)</string>
+    <string name="table_header_category">Udidi</string>
+
+    <!-- Share -->
+    <string name="share_subject">Ukuthumela Iziphumo Zovavanyo</string>
+    <string name="share_chooser_title">Yabelana Ngeziphumo</string>
+    <string name="share_summary_title">ISISHWANKATHELO SEZIPHUMO ZOVAVANYO</string>
+    <string name="top_performances_label">UKUSEBENZA OKUPHEZULU:</string>
+    <string name="generated_by_app">Iveliswe yi-Mzansi Lingo App</string>
+
+    <!-- Error Messages -->
+    <string name="error_user_not_authenticated">Umsebenzisi akagunyaziwe</string>
+    <string name="error_loading_data">Impazamo ekulayisheni idatha: %s</string>
+    <string name="error_exporting_pdf">Impazamo ekuthumeleni i-PDF: %s</string>
+    <string name="error_no_pdf_app">Akukho app ifumanekayo yokuvula iifayile ze-PDF</string>
+    <string name="no_test_results_found">Akukho ziphumo zovavanyo ezifunyenweyo kumsebenzisi wangoku</string>
+    <string name="loaded_test_results">Kulayishwe iziphumo zovavanyo ezingu-%d kumsebenzisi wangoku</string>
+    <string name="no_data_to_preview">Akukho datha yokujonga</string>
+    <string name="no_data_to_export">Akukho datha yokuthumela</string>
+    <string name="no_data_to_share">Akukho datha yokwabelana</string>
+
+    <!-- String Arrays for Spinners -->
+    <string-array name="export_languages">
+        <item>Zonke Iilwimi</item>
+        <item>IsiNgesi</item>
+        <item>Isi-Afrikaans</item>
+        <item>IsiZulu</item>
+        <item>IsiXhosa</item>
+        <item>Sesotho</item>
+    </string-array>
+
+    <string-array name="export_test_types">
+        <item>Zonke Iindidi</item>
+        <item>UVAVANYO_LWAMAGAMA</item>
+        <item>UVAVANYO_LWAMABINZANA</item>
+        <item>Ixutywe</item>
+        <item>Amagama</item>
+        <item>Igrama</item>
+    </string-array>
+
+    <!-- Help & Support Activity -->
+    <string name="help_support_title">UNCEDO &amp; INKXASO</string>
+    <string name="help_support_subtitle">Udinga uncedo? Silapha ukukunceda!</string>
+
+    <!-- Getting Started -->
+    <string name="help_getting_started_title">1. UKUQALISA</string>
+    <string name="help_getting_started_text">Ngaba usandula ufika kwi-app yethu yokufunda ulwimi? Qalisa ngokwenza iprofayile yakho, ukhethe ulwimi lwakho olujoliswe kulo, kwaye uthabathe uvavanyo lokubekwa ukumisela inqanaba lakho langoku. Inkqubo yethu yokufunda eguquguqukayo iya kwenza indlela yokufunda elalelwe wena wedwa.</string>
+
+    <!-- Account Management -->
+    <string name="help_account_title">2. ULAWULO LWE-AKHAWUNTI</string>
+    <string name="help_account_text">Ungahlaziya ulwazi lweprofayile yakho, utshintshe iphasiwedi yakho, kwaye ulawule umrhumo wakho kwi-menyu ye-Zisetingi. Ukuze uphinde usete iphasiwedi yakho, cofa \'Ulibele iPhasiwedi\' kwisikrini sokungena kwaye ulandele imiyalelo ethunyelwe kwi-imeyile yakho.</string>
+
+    <!-- Learning Features -->
+    <string name="help_learning_title">3. IIMPAWU ZOKUFUNDA</string>
+    <string name="help_learning_text">I-app yethu ibonelela ngezifundo ezidibaniselayo, ukuziqhelanisa nesigama, uqeqesho lokuphimisela, kunye nokuziqonda kwenkcubeko. Sebenzisa imiceli-mngeni yemihla ngemihla ukugcina umzila wakho, kwaye ungalibali ukuphonononga izinto ofunde ngaphambili ukuze womeleze ukugcinwa kwememori yakho.</string>
+
+    <!-- Technical Issues -->
+    <string name="help_technical_title">4. IINGXAKI ZOBUGCISA</string>
+    <string name="help_technical_text">Ukuba unengxaki yokuwisa, iingxaki zokulayisha, okanye iingxaki zomsindo, zama ukuqalisa kwakhona i-app, khangela unxibelelwano lwakho lwe-intanethi, kwaye uqinisekise ukuba unayo eyona nguqulelo yakutshanje ifakiwe. Susa i-cache ye-app ukuba iingxaki ziqhubeka.</string>
+
+    <!-- Subscription & Billing -->
+    <string name="help_subscription_title">5. UMRHUMO &amp; UKUBHALISA</string>
+    <string name="help_subscription_text">Lawula umrhumo wakho nge-app store yesixhobo sakho (iGoogle Play Store okanye i-Apple App Store). Unganyusa, wehle, okanye urhoxise umrhumo wakho nanini na. Imigaqo-nkqubo yokubuya imali ilawulwa yimigaqo ye-app store ekhoyo.</string>
+
+    <!-- Progress Tracking -->
+    <string name="help_progress_title">6. UKULANDELA INKQUBELA</string>
+    <string name="help_progress_text">Landela uhambo lwakho lokufunda nge-tab ye-Inkqubela. Jonga umgca wakho wemihla ngemihla, izifundo ezigqityiweyo, amagama aphumeliweyo, kunye nenqanaba lobugcisa ngokubanzi. Misela iinjongo zemihla ngemihla kwaye ufumane izaziso ukuze uhlale ukhuthazekile kwaye uqhubekekile nokufunda kwakho.</string>
+
+    <!-- Offline Learning -->
+    <string name="help_offline_title">7. UKUFUNDA NGAPHANDLE KWE-INTANETHI</string>
+    <string name="help_offline_text">Khuphela izifundo ukuze uzisebenzise ngaphandle kwe-intanethi xa unoxhumano oluqinisekileyo lwe-intanethi. Izifundo ezingaphandle kwe-intanethi ziquka imisebenzi esekwe kumbhalo kunye nomsindo olayishwe kwangaphambili. Inkqubela yakho iya kudityaniswa ngokuzenzekelayo xa uphinda uqhagamshele kwi-intanethi.</string>
+
+    <!-- FAQs -->
+    <string name="help_faq_title">8. IMIBUZO EBUZWA QHOQHO</string>
+    <string name="help_faq_text">U: Ndingafunda iilwimi ezininzi?\nI: Ewe! Ungongeza iilwimi ezininzi kwiprofayile yakho kwaye utshintshe phakathi kwazo.\n\nU: Zide kangakanani izifundo?\nI: Izifundo zisukela kwimizuzu emi-5 ukuya kweli-15, ilungele ukuziqhelanisa kwemihla ngemihla.\n\nU: Ndingayisebenzisa i-app ngaphandle kwe-intanethi?\nI: Ewe, ngomxholo okhutshelwe ngaphandle kwe-intanethi.</string>
+
+    <!-- Contact Support -->
+    <string name="help_contact_title">9. QHAGAMSHELANA NENKXASO</string>
+    <string name="help_contact_text">Usadinga uncedo? Iqela lethu lenkxaso likulungele ukukunceda:\n\nI-imeyile: mzansilingo@gmail.com\nImnxeba: 1234567890\nIdilesi: 123 Smith Street\n\nIxesha lokuphendula: Kwiiyure ezingama-24\nIiyure zenkxaso: UMvulo - Lwesihlanu, 9 AM - 6 PM</string>
+
+    <!-- Leaderboard Activity -->
+    <string name="leaderboard_title">IBHODI YABAHOLI / RANGLYS</string>
+    <string name="leaderboard_no_data">Akukho datha ifumanekayo / Geen data beskikbaar nie</string>
+    <string name="error_loading_leaderboard">Impazamo ekulayisheni idatha yebhodi yabaholi</string>
+    <string name="leaderboard_header_rank">Inqanaba</string>
+    <string name="leaderboard_header_player">Umdlali</string>
+    <string name="leaderboard_header_score">Amanqaku</string>
+    <string name="leaderboard_header_accuracy">Ukuchaneka</string>
+
+    <!-- Login Activity -->
+    <string name="label_email">I-IMEYILE</string>
+    <string name="hint_enter_email">Ngenisa i-imeyile</string>
+    <string name="label_password">IPHASIWEDI</string>
+    <string name="hint_enter_password">Ngenisa iphasiwedi</string>
+    <string name="label_home_language">ULWIMI LWEKHAYA</string>
+    <string name="hint_home_language">Ulwimi Lwekhaya</string>
+    <string name="label_language_to_learn">ULWIMI ENDIFUNA UKULUFUNDA</string>
+    <string name="hint_language">Ulwimi</string>
+
+    <string name="btn_login_with_google">Ngena ngeGoogle</string>
+    <string name="btn_login">Ngena</string>
+    <string name="btn_signing_in">Kuyangena...</string>
+    <string name="btn_login_with_biometric">Ngena ngeBiometric</string>
+    <string name="btn_setup_biometric_login">Seta Ukungena ngeBiometric</string>
+    <string name="btn_enable">Vumela</string>
+    <string name="btn_not_now">Hayi Ngoku</string>
+    <string name="link_sign_up">Awunayo i-akhawunti? Bhalisa</string>
+
+    <!-- Biometric -->
+    <string name="biometric_login_title">Ukungena ngeBiometric</string>
+    <string name="biometric_login_subtitle">Sebenzisa umnwe wakho okanye ubuso bakho ukungena</string>
+    <string name="biometric_use_password">Sebenzisa iPhasiwedi</string>
+
+    <!-- Dialog -->
+    <string name="dialog_enable_biometric_title">Vumela Ukungena ngeBiometric</string>
+    <string name="dialog_enable_biometric_message">Ungathanda ukusebenzisa umnwe wakho okanye ubuso bakho ukungena ngokulandelayo?</string>
+
+    <!-- Messages -->
+    <string name="msg_welcome_back">Wamkelekile kwakhona!</string>
+    <string name="msg_google_login_success">Ukungena ngeGoogle kuphumelele!</string>
+    <string name="msg_biometric_enabled">Ukungena ngeBiometric kuvuliwe!</string>
+    <string name="msg_login_first_setup">Nceda uqale ngokungena ukuseta uqinisekiso lwe-biometric</string>
+    <string name="msg_login_first_setup_long">Nceda uqale ngokungena nge-imeyile/iphasiwedi okanye iGoogle ukuseta uqinisekiso lwe-biometric</string>
+
+    <!-- Errors -->
+    <string name="error_email_required">I-imeyile iyafuneka</string>
+    <string name="error_valid_email">Nceda ufake idilesi ye-imeyile esebenzayo</string>
+    <string name="error_password_required">Iphasiwedi iyafuneka</string>
+    <string name="error_password_length">Iphasiwedi kufuneka ibe nobuncinane boonobumba abayi-6</string>
+    <string name="error_incorrect_password">Iphasiwedi engalunganga</string>
+    <string name="error_no_account_found">Akukho akhawunti ifunyenwe ngale imeyile</string>
+    <string name="error_invalid_email_format">Ifomathi ye-imeyile engasebenziyo</string>
+    <string name="error_account_disabled">Le akhawunti iyekisiwe</string>
+    <string name="error_too_many_attempts">Iinzame ezininzi ezingaphumelelanga. Nceda uzame kwakhona kamva.</string>
+    <string name="error_network">Impazamo yenethiwekhi. Nceda ukhangele unxibelelwano lwakho.</string>
+    <string name="error_login_failed">Ukungena akuphumelelanga: %s</string>
+    <string name="error_google_sign_in_failed">Ukungena ngeGoogle akuphumelelanga</string>
+    <string name="error_authentication">Impazamo yokuqinisekisa: %s</string>
+    <string name="error_authentication_failed">Ukuqinisekisa akuphumelelanga</string>
+    <string name="error_authentication_failed_message">Ukuqinisekisa akuphumelelanga: %s</string>
+    <string name="error_showing_biometric">Impazamo ekuboniseni uqinisekiso lwe-biometric</string>
+    <string name="error_invalid_stored_credentials">Iziqinisekiso ezigciniweyo ezingasebenziyo</string>
+    <string name="error_retrieving_credentials">Impazamo ekufumaneni iziqinisekiso ezigciniweyo</string>
+    <string name="error_enable_biometric_failed">Akuphumelelanga ukuvumela ukungena ngeBiometric</string>
+    <string name="error_save_user_data">Akuphumelelanga ukugcina idatha yomsebenzisi: %s</string>
+    <string name="error_navigate_home">Impazamo ekuhambeni esikrini sasekhaya</string>
+
+    <!-- Registration/Sign Up Activity -->
+    <string name="btn_sign_up">Bhalisa</string>
+    <string name="btn_creating_account">Kukwenziwa i-Akhawunti...</string>
+    <string name="label_full_name">IGAMA ELIPHELELEYO</string>
+    <string name="hint_enter_full_name">Ngenisa igama elipheleleyo</string>
+    <string name="label_username">IGAMA LOMSEBENZISI</string>
+    <string name="hint_enter_username">Ngenisa Igama Lomsebenzisi</string>
+
+    <!-- Registration Errors -->
+    <string name="error_full_name_required">Igama elipheleleyo liyafuneka</string>
+    <string name="error_username_required">Igama lomsebenzisi liyafuneka</string>
+    <string name="error_unable_get_user_id">Impazamo: Akukwazeki ukufumana i-ID yomsebenzisi</string>
+    <string name="error_signup_failed">Ukubhalisa akuphumelelanga</string>
+    <string name="error_signup_failed_with_message">Ukubhalisa akuphumelelanga: %s</string>
+    <string name="error_email_already_registered">Le imeyile sele ibhalisiwe</string>
+    <string name="error_email_already_registered_long">I-imeyile sele ibhalisiwe. Zama ukungena endaweni yoko.</string>
+    <string name="error_weak_password">Iphasiwedi ibuthathaka kakhulu</string>
+    <string name="error_weak_password_long">Nceda ukhethe iphasiwedi eyomelele</string>
+    <string name="error_firestore_save_failed">I-akhawunti yenziwe, kodwa i-Firestore ayiphumelelanga</string>
+    <string name="error_navigate_home_with_message">Impazamo ekuhambeni esikrini sasekhaya: %s</string>
+
+    <!-- Success Messages -->
+    <string name="msg_account_created_success">I-akhawunti yenziwe ngempumelelo!</string>
+
+    <!-- Language Array for Registration -->
+    <string-array name="signup_languages">
+        <item>isiZulu</item>
+        <item>isiXhosa</item>
+        <item>Afrikaans</item>
+        <item>IsiNgesi</item>
+        <item>Sepedi</item>
+        <item>Setswana</item>
+        <item>Sesotho</item>
+        <item>Xitsonga</item>
+        <item>Tshivenda</item>
+        <item>isiNdebele</item>
+        <item>Okunye</item>
+    </string-array>
+
+    <!-- Notification Activity -->
+    <string name="notifications_title">IZAZISO</string>
+    <string name="morning_reminder_label">Isikhumbuzo Sasekuseni (7:00 AM)</string>
+    <string name="evening_reminder_label">Isikhumbuzo Sangokuhlwa (6:00 PM)</string>
+    <string name="btn_test_notification">Vavanya Isaziso</string>
+
+    <!-- Notification Messages -->
+    <string name="notification_channel_name">Izikhumbuzo Zokufunda</string>
+    <string name="notification_channel_description">Izikhumbuzo zemihla ngemihla zokufunda ulwimi</string>
+    <string name="morning_reminder_enabled">Izikhumbuzo zasekuseni zivuliwe ngo-7:00 AM</string>
+    <string name="morning_reminder_disabled">Izikhumbuzo zasekuseni zicinyiwe</string>
+    <string name="evening_reminder_enabled">Izikhumbuzo zangokuhlwa zivuliwe ngo-6:00 PM</string>
+    <string name="evening_reminder_disabled">Izikhumbuzo zangokuhlwa zicinyiwe</string>
+    <string name="test_notification_sent">Isaziso sovavanyo sithunyelwe!</string>
+
+    <!-- Notification Errors -->
+    <string name="error_exact_alarm_permission">Imvume ye-alam echanekileyo iyafuneka ukuze izaziso zisebenze ngokufanelekileyo</string>
+    <string name="error_enable_exact_alarm">Nceda uvumele imvume ye-alam echanekileyo kwiisetingi</string>
+    <string name="error_permission_exact_alarms">Imvume iyafuneka kwii-alam ezichanekileyo</string>
+
+    <!-- Offline Activity -->
+    <string name="offline_quiz_title">UVAVANYO LUNGAPHANDLE KWE-INTANETHI</string>
+    <string name="offline_quiz_description">Vavanya ulwazi lwakho ngemibuzo eli-10 enokukhetha. Akukho intanethi iyafuneka!</string>
+    <string name="offline_quiz_description_afrikaans">Vavanya ulwazi lwakho ngemibuzo eli-10 enokukhetha. Akukho intanethi iyafuneka!</string>
+    <string name="start_quiz">QALISA UVAVANYO</string>
+    <string name="already_on_offline_quiz">Usele ukwisikrini Sovavanyo Olungaphandle kwe-Intanethi</string>
+    <string name="starting_quotes">Ukuqalisa i-QuotesActivity...</string>
+
+    <!-- Offline Quiz Activity -->
+    <string name="offline_quiz">UVAVANYO LUNGAPHANDLE KWE-INTANETHI</string>
+    <string name="question_format">Umbuzo %1$d/%2$d</string>
+    <string name="correct_count">%d ilungile</string>
+    <string name="translate_this_word">Guqulela eli gama:</string>
+    <string name="next_question">UMBUZO OLANDELAYO</string>
+    <string name="exit_quiz">Phuma Kuvavanyo?</string>
+    <string name="exit_quiz_message">Inkqubela yakho iya kulahleka. Uqinisekile?</string>
+    <string name="yes">Ewe</string>
+    <string name="no">Hayi</string>
+    <string name="correct_toast">Kulungile! ✓</string>
+    <string name="wrong_toast">Akuchananga! Impendulo echanekileyo yayiyi: %s</string>
+    <string name="quiz_complete">Uvavanyo Lugqityiwe!</string>
+    <string name="excellent_result">Kulungile kakhulu! 🌟\n\nUfumene %1$d ngaphandle kwe-%2$d\n\nUkuchaneka: %3$d%%</string>
+    <string name="great_result">Umsebenzi omhle! 👍\n\nUfumene %1$d ngaphandle kwe-%2$d\n\nUkuchaneka: %3$d%%</string>
+    <string name="good_result">Inzame enhle! 💪\n\nUfumene %1$d ngaphandle kwe-%2$d\n\nUkuchaneka: %3$d%%</string>
+    <string name="practice_result">Qhubeka uziqhelanisa! 📚\n\nUfumene %1$d ngaphandle kwe-%2$d\n\nUkuchaneka: %3$d%%</string>
+    <string name="try_again">Zama Kwakhona</string>
+    <string name="exit">Phuma</string>
+    <string name="quiz_synced">Iziphumo zovavanyo zidityanisiwe ngempumelelo! ✓</string>
+
+    <string name="back">Buyela</string>
+    <string name="menu">Imenyu</string>
+
+    <!-- Phrases Categories - English (top line) -->
+    <string name="category_communication_en">Unxibelelwano &amp;\nUlwazi</string>
+    <string name="category_polite_en">Imbeko\nNokubalulekileyo</string>
+    <string name="category_personal_en">Ulwazi\nLobuqu</string>
+    <string name="category_travel_en">Ukuhamba &amp; Iimfuno\nZemihla Ngemihla</string>
+
+    <!-- Phrases Categories - Afrikaans (bottom line - always same) -->
+    <string name="category_communication_af">Kommunikasie &amp;\nInligting</string>
+    <string name="category_polite_af">Beleefd en\nNoodsaaklik</string>
+    <string name="category_personal_af">Persoonlike\nInligting</string>
+    <string name="category_travel_af">Reis &amp; Daaglikse\nBehoeftes</string>
+
+    <!-- Phrases Detail Activity -->
+    <string name="phrase_test_title">UVAVANYO LWAMABINZANA / FRASE TOETS</string>
+    <string name="sound_disabled_test">Isandi sicinywe ngexesha lovavanyo</string>
+    <string name="no_phrase_pronounce">Akukho binzana lokuphimisela</string>
+    <string name="loading_pronunciation">Kulayishwa ukuphimisela...</string>
+    <string name="pronunciation_unavailable">Ukuphimisela akufumaneki</string>
+    <string name="audio_playback_error">Impazamo yokudlala umsindo</string>
+    <string name="pronunciation_service_unavailable">Inkonzo yokuphimisela ayifumaneki</string>
+    <string name="playing_pronunciation">Ukudlala ukuphimisela</string>
+    <string name="audio_playback_failed">Ukudlala umsindo akuphumelelanga</string>
+    <string name="media_player_error">Impazamo yomdlali wemidiya: %s</string>
+    <string name="practice_phrase">Ziqhelanise Ibinzana</string>
+    <string name="error_no_phrases">Impazamo: Akukho mabinzana okuwavavanya</string>
+    <string name="correct_well_done">Kulungile! Usebenze kakuhle!</string>
+    <string name="incorrect_answer">Akuchananga. Impendulo echanekileyo ngu: %s</string>
+    <string name="btn_next">Okulandelayo</string>
+    <string name="btn_finish_test">Gqiba Uvavanyo</string>
+    <string name="btn_submit">Ngenisa</string>
+    <string name="phrase_practiced">Kuhle! Uziqhelanise: %1$s = %2$s</string>
+    <string name="phrase_test_complete">Uvavanyo Lwamabinzana Lugqityiwe!\nAmanqaku: %1$d/%2$d (%3$d%%)</string>
+
+    <!-- Privacy Activity -->
+    <string name="privacy_security_title">UBUMFIHLO &amp; UKHUSELEKO</string>
+    <string name="privacy_policy_title">UMGAQO-NKQUBO WOBUMFIHLO</string>
+    <string name="privacy_last_updated">Uhlaziywe kokugqibela: 2025-09-05</string>
+
+    <string name="privacy_section1_title">1. ULWAZI ESILUQOKELELAYO</string>
+    <string name="privacy_section1_content">Siqokelela ulwazi olusinika lona ngqo, njengokuba xa usenza i-akhawunti, usebenzisa iimpawu zethu zokufunda ulwimi, okanye usiqhagamshelela ukufumana inkxaso. Oku kunokubandakanya igama lakho, idilesi ye-imeyile, inkqubela yokufunda, kunye nezinto ozikhethayo.</string>
+
+    <string name="privacy_section2_title">2. INDLELA ESISEBENZISA NGAYO ULWAZI LWAKHO</string>
+    <string name="privacy_section2_content">Sisebenzisa ulwazi esiluqokelelayo ukubonelela, ukugcina, kwaye siphuhlise iinkonzo zethu zokufunda ulwimi, silandele inkqubela yakho yokufunda, senze amava akho abe ngawakho, kwaye sinxibelelane nawe malunga ne-akhawunti yakho kunye neenkonzo zethu.</string>
+
+    <string name="privacy_section3_title">3. UKHUSELEKO LWEDATHA</string>
+    <string name="privacy_section3_content">Siphumeza amanyathelo okhuseleko afanelekileyo ukukhusela ulwazi lwakho lobuqu ngokuchasene nokungena okungagunyaziwe, utshintsho, ukubhengezwa, okanye ukonakaliswa. Idatha yakho iyafihlelwa zombini ekuhambeni nakwikho-lokho kusetyenziswa iiprothokholi ezisemgangathweni wemizi-mveliso.</string>
+
+    <string name="privacy_section4_title">4. UKWABELANA NGOLWAZI</string>
+    <string name="privacy_section4_content">Asithengisi, sitshintshiselane, okanye sidlulisele ulwazi lwakho lobuqu kubathathu-nxanye ngaphandle kwemvume yakho, ngaphandle njengoko kuchaziwe kulo mgaqo-nkqubo. Singalwabelana ngolwazi ngababoneleli beenkonzo abasincedayo ekusebenziseni i-app yethu nasekuboneleleni ngeenkonzo kuwe.</string>
+
+    <string name="privacy_section5_title">5. UKUGCINWA KWEDATHA</string>
+    <string name="privacy_section5_content">Sigcina ulwazi lwakho ixesha elifunekayo ukukunikezela ngeenkonzo zethu kwaye njengoko kuchaziwe kulo mgaqo-nkqubo. Ungacela ukucinywa kwe-akhawunti yakho kunye nedatha edibeneyo nangaliphi na ixesha ngokuqhagamshelana nathi.</string>
+
+    <string name="privacy_section6_title">6. AMALUNGELO AKHO</string>
+    <string name="privacy_section6_content">Unelungelo lokufikelela, ukuhlaziya, okanye ukucima ulwazi lwakho lobuqu. Unokukhetha ukungathumeli ezinye zonxibelelwano ezivela kuthi. Ukuba unayo nayiphi na imibuzo malunga namalungelo akho obumfihlo, nceda usiqhagamshelele.</string>
+
+    <string name="privacy_section7_title">7. UBUMFIHLO BABANTWANA</string>
+    <string name="privacy_section7_content">Inkonzo yethu ayijongelwanga abantwana abangaphantsi kweminyaka eli-13. Asiqokeleli ulwazi lobuqu kubantwana abangaphantsi kweminyaka eli-13 ngokwazi. Ukuba sazi ukuba siqokelele ulwazi lobuqu kumntwana ongaphantsi kweminyaka eli-13, siya kuthatha amanyathelo okususa olo lwazi.</string>
+
+    <string name="privacy_section8_title">8. UTSHINTSHO KULO MGAQO-NKQUBO</string>
+    <string name="privacy_section8_content">Singaluhlaziya olu mgaqo-nkqubo wobumfihlo ngamaxesha athile. Siya kukwazisa ngayo nayiphi na inguqu ngokuthumela umgaqo-nkqubo omtsha kule phepha kwaye sihlaziye umhla \'Wokugqibela wahlaziywa\'. Ukuqhubeka kwakho usebenzisa inkonzo yethu emva kwayo nayiphi na inguqu kuthetha ukwamkela umgaqo-nkqubo omtsha.</string>
+
+    <string name="privacy_section9_title">9. QHAGAMSHELANA NATHI</string>
+    <string name="privacy_section9_content">Ukuba unayo nayiphi na imibuzo malunga nalo Mgaqo-nkqubo Wobumfihlo okanye iinkqubo zethu, nceda usiqhagamshelele:\n\nI-imeyile: mzansilingo@gmail.com\nImnxeba: 1234567890\nIdilesi: 123 Smith Street</string>
+
+    <!-- Profile Activity -->
+    <string name="profile_title">IPROFAYILE YOMSEBENZISI</string>
+    <string name="profile_label_full_name">IGAMA ELIPHELELEYO</string>
+    <string name="profile_label_email">I-IMEYILE</string>
+    <string name="profile_label_username">IGAMA LOMSEBENZISI</string>
+    <string name="profile_label_password">IPHASIWEDI</string>
+    <string name="profile_label_home_language">ULWIMI LWEKHAYA</string>
+    <string name="profile_hint_full_name">UJane Doe</string>
+    <string name="profile_hint_email">janedoe@gmail.com</string>
+    <string name="profile_hint_username">JD123</string>
+    <string name="profile_hint_password">••••••••</string>
+    <string name="profile_password_disabled">Iphasiwedi ayinakutshintshwa kwiprofayile</string>
+    <string name="btn_save_profile">Gcina</string>
+    <string name="profile_saving">Kuyagcinwa...</string>
+    <string name="profile_login_required">Nceda ungene ukufikelela iprofayile yakho</string>
+    <string name="profile_saved_success">Iprofayile igcinwe ngempumelelo!</string>
+    <string name="profile_error_updating">Impazamo ekuhlaziyeni iprofayile: %s</string>
+    <string name="profile_error_email_update">Impazamo ekuhlaziyeni i-imeyile: %s. Kunokufuneka uphinde uqinisekise.</string>
+
+    <string-array name="profile_languages">
+        <item>IsiNgesi</item>
+        <item>Isi-Afrikaans</item>
+        <item>IsiZulu</item>
+        <item>IsiXhosa</item>
+        <item>Sesotho</item>
+        <item>Setswana</item>
+        <item>Xitsonga</item>
+        <item>Tshivenda</item>
+        <item>IsiNdebele</item>
+        <item>SiSwati</item>
+        <item>Sepedi</item>
+    </string-array>
+
+    <!-- Progress Activity -->
+    <string name="progress_header_title">INKQUBELA /\nVORDERING</string>
+    <string name="progress_words_right">AMAGAMA ANGAMA-%d ALUNGILE</string>
+    <string name="progress_phrases_right">AMABINZANA ANGAMA-%d ALUNGILE</string>
+    <string name="progress_days_practice">IIMIHLA ZOKUZIQHELANISA EZINGAMA-%d</string>
+    <string name="progress_words_placeholder">AMAGAMA ANGAMA-0 ALUNGILE</string>
+    <string name="progress_phrases_placeholder">AMABINZANA ANGAMA-0 ALUNGILE</string>
+    <string name="progress_days_placeholder">IIMIHLA ZOKUZIQHELANISA EZINGAMA-0</string>
+
+    <!-- Days of the week -->
+    <string name="day_mon">MVU</string>
+    <string name="day_tues">LWE</string>
+    <string name="day_wed">THA</string>
+    <string name="day_thurs">SIN</string>
+    <string name="day_fri">HLA</string>
+    <string name="day_sat">MGQ</string>
+    <string name="day_sun">CAW</string>
+
+    <!-- Progress descriptions -->
+    <string name="day_monday_progress">Inkqubela YoMvulo</string>
+    <string name="day_tuesday_progress">Inkqubela YoLwesibini</string>
+    <string name="day_wednesday_progress">Inkqubela YoLwesithathu</string>
+    <string name="day_thursday_progress">Inkqubela YoLwesine</string>
+    <string name="day_friday_progress">Inkqubela YoLwesihlanu</string>
+    <string name="day_saturday_progress">Inkqubela YoMgqibelo</string>
+    <string name="day_sunday_progress">Inkqubela YeCawe</string>
+
+    <!-- Icons -->
+    <string name="icon_words">Umfanekiso Wamagama</string>
+    <string name="icon_phrases">Umfanekiso Wamabinzana</string>
+    <string name="icon_calendar">Umfanekiso Wekhalenda</string>
+    <string name="icon_quotes">Umfanekiso Wezicatshulwa</string>
+    <string name="icon_statistics">Umfanekiso Weenkcukacha-manani</string>
+
+    <!-- Quotes Activity -->
+    <string name="quotes_title">IZICATSHULWA / AANHALINGS</string>
+    <string name="quotes_subtitle">Zokukhuthaza &amp; Zokuvuselela / Inspirerende &amp; Motiverende</string>
+    <string name="nav_quotes">IZICATSHULWA</string>
+    <string name="language_english">IsiNgesi</string>
+    <string name="language_afrikaans">IsiXhosa</string>
+    <string name="playing_quote">Ukudlala isicatshulwa</string>
+
+    <!-- Quotes Content (English version) -->
+    <string name="quote_journey">Uhambo lwekhulu leemayile luqala ngenyathelo elinye</string>
+    <string name="quote_believe">Kholelwa ukuba uyakwazi kwaye usekuphakathi kwendlela</string>
+    <string name="quote_success">Impumelelo ayisikho isiphumo sokugqibela, ukusilela akusiyo intlekele</string>
+    <string name="quote_great_work">Eyona ndlela yokwenza umsebenzi omkhulu kukuthanda oko ukwenzayo</string>
+    <string name="quote_education">Imfundo sesona sixhobo sinamandla onokusisebenzisa ukutshintsha ihlabathi</string>
+    <string name="quote_slowly">Akukhathaleki ukuba uhamba kancinci kangakanani ukuba awuyeki nje</string>
+
+    <!-- Quotes Content (Afrikaans - always displayed) -->
+    <string name="quote_journey_af">Uhambo lwekhulu leemayile luqala ngenyathelo elinye</string>
+    <string name="quote_believe_af">Kholelwa ukuba uyakwazi kwaye usekuphakathi kwendlela</string>
+    <string name="quote_success_af">Impumelelo ayisikho isiphumo sokugqibela, ukusilela akusiyo intlekele</string>
+    <string name="quote_great_work_af">Eyona ndlela yokwenza umsebenzi omkhulu kukuthanda oko ukwenzayo</string>
+    <string name="quote_education_af">Imfundo sesona sixhobo sinamandla onokusisebenzisa ukutshintsha ihlabathi</string>
+    <string name="quote_slowly_af">Akukhathaleki ukuba uhamba kancinci kangakanani ukuba awuyeki nje</string>
+
+    <!-- Messages -->
+    <string name="already_on_stats">Usele ujonga iinkcukacha-manani</string>
+    <string name="intent_sent_success">Injongo ithunyelwe ngempumelelo</string>
+    <string name="error_saving_progress">Akuphumelelanga ukugcina inkqubela</string>
+
+    <!-- Set Goals Activity -->
+    <string name="set_goals_title">MISELA IINJONGO / STEL DOELWITTE</string>
+    <string name="goals_todays_progress">INKQUBELA YANAMHLANJE</string>
+    <string name="goals_progress_placeholder">NAMHLANJE: amagama angama-0, amabinzana angama-0 alungile</string>
+    <string name="goals_progress_percentage_placeholder">INKQUBELA: Amagama 0% | Amabinzana 0%</string>
+    <string name="goals_daily_words">INJONGO YAMAGAMA YEMIHLA NGEMIHLA</string>
+    <string name="goals_daily_phrases">INJONGO YAMABINZANA YEMIHLA NGEMIHLA</string>
+    <string name="goals_save_button">GCINA IINJONGO</string>
+    <string name="goals_reset_button">BUYISELA KWIMEKO ENGAGQIBEKANGA</string>
+
+    <!-- Progress messages -->
+    <string name="goals_today_progress">NAMHLANJE: amagama angama-%1$d, amabinzana angama-%2$d alungile</string>
+    <string name="goals_progress_format">INKQUBELA: Amagama %1$d%% | Amabinzana %2$d%%</string>
+    <string name="goals_all_achieved">🎉 IINJONGO ZEMIHLA NGEMIHLA ZIFEZEKISIWE! 🎉</string>
+    <string name="goals_words_achieved">✅ Injongo yamagama ifezekisiwe!</string>
+    <string name="goals_phrases_achieved">✅ Injongo yamabinzana ifezekisiwe!</string>
+
+    <!-- Achievement messages -->
+    <string name="achievement_words_master">INKOSI YAMAGAMA!</string>
+    <string name="achievement_words_message">Injongo yamagama yemihla ngemihla ifezekisiwe!\nUyakha isigama sakho!</string>
+    <string name="achievement_phrase_champion">INTSHATSHELI YAMABINZANA!</string>
+    <string name="achievement_phrase_message">Injongo yamabinzana yemihla ngemihla ifezekisiwe!\nIzakhono zakho zonxibelelwano ziyakhula!</string>
+    <string name="achievement_daily_legend">INTSOMI YEMIHLA NGEMIHLA!</string>
+    <string name="achievement_both_message">NGUMMANGALISO! Zombini iinjongo zifezekisiwe!\nAwunakumiswa namhlanje!</string>
+    <string name="achievement_on_fire">UVUTHA!</string>
+    <string name="achievement_streak_message">Umgca omnandi kakhulu!\nQhubeka nesantya!</string>
+    <string name="achievement_tap_dismiss">Cofa ukuze uyichize</string>
+
+    <!-- Toast messages -->
+    <string name="goals_reset_default">Iinjongo zibuyiselwe kumaxabiso angagqibekanga</string>
+    <string name="goals_saved_success">Iinjongo zigcinwe ngempumelelo!</string>
+    <string name="goals_save_failed">Akuphumelelanga ukugcina iinjongo. Nceda uzame kwakhona.</string>
+    <string name="error_loading_goals">Akuphumelelanga ukulayisha iinjongo</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_title">IISETINGI</string>
+    <string name="settings_user_profile">Iprofayile Yomsebenzisi</string>
+    <string name="settings_notifications">Izaziso</string>
+    <string name="settings_privacy_security">Ubumfihlo &amp; Ukhuseleko</string>
+    <string name="settings_help_support">Uncedo &amp; Inkxaso</string>
+    <string name="settings_export_data">Thumela Idatha Yovavanyo</string>
+    <string name="settings_about">Malunga</string>
+    <string name="settings_log_out">Phuma</string>
+
+    <!-- Logout Dialog -->
+    <string name="logout_dialog_title">Phuma</string>
+    <string name="logout_dialog_message">Uqinisekile ukuba ufuna ukuphuma?</string>
+    <string name="logout_dialog_confirm">Phuma</string>
+    <string name="logout_dialog_cancel">Rhoxisa</string>
+    <string name="logout_error">Impazamo ngexesha lokuphuma: %s</string>
+
+    <!-- Word Detail Activity -->
+    <string name="word_detail_title">AMAGAMA / WOORDE</string>
+    <string name="word_detail_test_mode">IMOWUDI YOVAVANYO / TOETS MODUS</string>
+    <string name="word_detail_submit">Ngenisa</string>
+    <string name="word_detail_next">Okulandelayo</string>
+    <string name="word_detail_finish_test">Gqiba Uvavanyo</string>
+    <string name="word_detail_check_answer">Khangela Impendulo</string>
+
+    <!-- Word Detail Messages -->
+    <string name="word_sound_disabled_test">Isandi sicinywe ngexesha lovavanyo</string>
+    <string name="word_no_pronounce">Akukho gama lokuphimisela</string>
+    <string name="word_loading_pronunciation">Kulayishwa ukuphimisela...</string>
+    <string name="word_pronunciation_unavailable">Ukuphimisela akufumaneki</string>
+    <string name="word_audio_playback_error">Impazamo yokudlala umsindo</string>
+    <string name="word_pronunciation_service_unavailable">Inkonzo yokuphimisela ayifumaneki</string>
+    <string name="word_playing_pronunciation">Ukudlala ukuphimisela</string>
+    <string name="word_audio_playback_failed">Ukudlala umsindo akuphumelelanga</string>
+    <string name="word_media_player_error">Impazamo yomdlali wemidiya: %s</string>
+
+    <!-- Word Test Messages -->
+    <string name="word_test_error_no_words">Impazamo: Akukho magama okuwavavanya</string>
+    <string name="word_test_correct">Kulungile! Usebenze kakuhle!</string>
+    <string name="word_test_incorrect">Akuchananga. Impendulo echanekileyo ngu: %s</string>
+    <string name="word_test_complete">Uvavanyo Lugqityiwe!\nAmanqaku: %1$d/%2$d (%3$d%%)</string>
+    <string name="word_answer_is">Impendulo ngu: %1$s = %2$s</string>
+
+    <!-- Category Names (English) -->
+    <string name="category_emotions_af">Iimvakalelo</string>
+    <string name="category_animals_af">Izilwanyana</string>
+    <string name="category_colors_af">Imibala</string>
+    <string name="category_food_af">Ukutya</string>
+
+    <!-- Leaderboard Item Placeholders -->
+    <string name="leaderboard_rank_placeholder">#1</string>
+    <string name="leaderboard_username_placeholder">Igama lomsebenzisi</string>
+    <string name="leaderboard_words_placeholder">Amagama: 0</string>
+    <string name="leaderboard_phrases_placeholder">Amabinzana: 0</string>
+    <string name="leaderboard_score_placeholder">0 amaphuzu</string>
+    <string name="leaderboard_accuracy_placeholder">0.0%</string>
+    <string name="leaderboard_trophy_description">Umfanekiso wendebe</string>
+    <string name="leaderboard_medal_description">Umfanekiso wembasa</string>
+
+    <!-- Leaderboard Dynamic Text (used in adapter) -->
+    <string name="leaderboard_rank_format">#%d</string>
+    <string name="leaderboard_words_format">Amagama: %d</string>
+    <string name="leaderboard_phrases_format">Amabinzana: %d</string>
+    <string name="leaderboard_score_format">%d amaphuzu</string>
+    <string name="leaderboard_accuracy_format">%.1f%%</string>
+
+</resources>
