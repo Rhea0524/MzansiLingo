@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -29,6 +30,7 @@ class NotificationActivity : AppCompatActivity() {
         const val CHANNEL_ID = "MZANSILINGO_REMINDERS"
         const val MORNING_HOUR = 7
         const val EVENING_HOUR = 18
+        private const val TAG = "NotificationActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +39,7 @@ class NotificationActivity : AppCompatActivity() {
 
         initViews()
         setupNotificationChannel()
+        checkExactAlarmPermission()
         setupClickListeners()
         setupNavigationDrawer()
         setupNotifications()
@@ -67,6 +70,19 @@ class NotificationActivity : AppCompatActivity() {
 
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun checkExactAlarmPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            if (!alarmManager.canScheduleExactAlarms()) {
+                Toast.makeText(
+                    this,
+                    "Exact alarm permission required for notifications to work properly",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 
@@ -118,7 +134,14 @@ class NotificationActivity : AppCompatActivity() {
             }
         }
 
-
+        btnTestNotification.setOnClickListener {
+            // Send a test notification immediately
+            val intent = Intent(this, NotificationReceiver::class.java).apply {
+                putExtra("type", "test")
+            }
+            sendBroadcast(intent)
+            Toast.makeText(this, "Test notification sent!", Toast.LENGTH_SHORT).show()
+        }
 
         findViewById<ImageView>(R.id.nav_back).setOnClickListener {
             finish()
@@ -126,7 +149,7 @@ class NotificationActivity : AppCompatActivity() {
     }
 
     private fun scheduleMorningNotification() {
-        scheduleRepeatingNotification(
+        scheduleNotification(
             MORNING_NOTIFICATION_ID,
             MORNING_HOUR,
             0,
@@ -135,7 +158,7 @@ class NotificationActivity : AppCompatActivity() {
     }
 
     private fun scheduleEveningNotification() {
-        scheduleRepeatingNotification(
+        scheduleNotification(
             EVENING_NOTIFICATION_ID,
             EVENING_HOUR,
             0,
@@ -143,8 +166,27 @@ class NotificationActivity : AppCompatActivity() {
         )
     }
 
-    private fun scheduleRepeatingNotification(id: Int, hour: Int, minute: Int, type: String) {
+    private fun scheduleNotification(id: Int, hour: Int, minute: Int, type: String) {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        // Check if exact alarm permission is granted (Android 12+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!alarmManager.canScheduleExactAlarms()) {
+                Toast.makeText(
+                    this,
+                    "Please enable exact alarm permission in settings",
+                    Toast.LENGTH_LONG
+                ).show()
+                try {
+                    val intent = Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to open exact alarm settings", e)
+                }
+                return
+            }
+        }
+
         val intent = Intent(this, NotificationReceiver::class.java).apply {
             putExtra("type", type)
         }
@@ -158,6 +200,7 @@ class NotificationActivity : AppCompatActivity() {
             set(Calendar.HOUR_OF_DAY, hour)
             set(Calendar.MINUTE, minute)
             set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
 
             // If the time has already passed today, schedule for tomorrow
             if (before(Calendar.getInstance())) {
@@ -166,14 +209,17 @@ class NotificationActivity : AppCompatActivity() {
         }
 
         try {
-            alarmManager.setRepeating(
+            // Use setExactAndAllowWhileIdle for better reliability
+            // The receiver will reschedule itself after firing
+            alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
-                AlarmManager.INTERVAL_DAY,
                 pendingIntent
             )
+            Log.d(TAG, "Scheduled $type notification for ${calendar.time}")
         } catch (e: SecurityException) {
             Toast.makeText(this, "Permission needed for exact alarms", Toast.LENGTH_LONG).show()
+            Log.e(TAG, "Failed to schedule notification", e)
         }
     }
 
@@ -185,11 +231,9 @@ class NotificationActivity : AppCompatActivity() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         alarmManager.cancel(pendingIntent)
+        Log.d(TAG, "Cancelled notification with id: $id")
     }
 
-
-
-    // Simplified navigation - keep only essential methods
     private fun setupNavigationDrawer() {
         findViewById<TextView>(R.id.nav_home).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
@@ -234,5 +278,11 @@ class NotificationActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Re-check permission status when returning to the activity
+        checkExactAlarmPermission()
     }
 }

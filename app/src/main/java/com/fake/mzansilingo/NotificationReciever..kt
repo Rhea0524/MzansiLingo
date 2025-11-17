@@ -1,11 +1,11 @@
 package com.fake.mzansilingo
 
+import android.app.AlarmManager
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.media.RingtoneManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -41,11 +41,52 @@ class NotificationReceiver : BroadcastReceiver() {
         val type = intent.getStringExtra("type") ?: "morning"
         Log.d(TAG, "Received notification broadcast: $type")
 
+        // IMPORTANT: Reschedule the notification for tomorrow
+        rescheduleNotification(context, type)
+
         when (type) {
             "morning" -> checkProgressAndShowMorningNotification(context)
             "evening" -> checkProgressAndShowEveningNotification(context)
             "test" -> showSimpleNotification(context, "Test Notification", "This is a test notification!")
             else -> showSimpleNotification(context, "MzansiLingo Reminder", "Time to practice your language skills!")
+        }
+    }
+
+    private fun rescheduleNotification(context: Context, type: String) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val (id, hour) = when (type) {
+            "morning" -> Pair(NotificationActivity.MORNING_NOTIFICATION_ID, NotificationActivity.MORNING_HOUR)
+            "evening" -> Pair(NotificationActivity.EVENING_NOTIFICATION_ID, NotificationActivity.EVENING_HOUR)
+            else -> return
+        }
+
+        val intent = Intent(context, NotificationReceiver::class.java).apply {
+            putExtra("type", type)
+        }
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            context, id, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val calendar = Calendar.getInstance().apply {
+            add(Calendar.DATE, 1)  // Schedule for tomorrow
+            set(Calendar.HOUR_OF_DAY, hour)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        try {
+            alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                calendar.timeInMillis,
+                pendingIntent
+            )
+            Log.d(TAG, "Rescheduled $type notification for ${calendar.time}")
+        } catch (e: SecurityException) {
+            Log.e(TAG, "Failed to reschedule notification", e)
         }
     }
 
