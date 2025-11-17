@@ -26,7 +26,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_arrow_left"
-            android:contentDescription="Back"
+            android:contentDescription="@string/cd_back"
             android:clickable="true"
             android:focusable="true"
             android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/rhino"
                 android:scaleType="centerInside"
-                android:contentDescription="App mascot"
+                android:contentDescription="@string/cd_mascot"
                 android:padding="4dp" />
 
         </FrameLayout>
@@ -77,7 +77,7 @@
             android:layout_marginHorizontal="32dp"
             android:layout_marginVertical="16dp"
             android:gravity="center"
-            android:text="ABOUT MZANSI LINGO"
+            android:text="@string/about_title"
             android:textColor="#1a237e"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -113,7 +113,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ABOUT MZANSI LINGO"
+                    android:text="@string/about_title"
                     android:textColor="#1a237e"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -123,7 +123,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Version 1.0 • 2024"
+                    android:text="@string/about_version"
                     android:textColor="#666666"
                     android:textSize="12sp"
                     android:layout_marginBottom="20dp"
@@ -133,7 +133,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="OUR MISSION"
+                    android:text="@string/about_our_mission"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -142,7 +142,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Mzansi Lingo is a mobile-first, interactive language-learning application that brings the joy of learning to South Africa's diverse cultural and linguistic heritage. We offer courses in seven official South African languages: isiZulu, isiXhosa, Sesotho, Setswana, Sepedi, Afrikaans, and English."
+                    android:text="@string/about_mission_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -152,7 +152,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="WHAT MAKES US SPECIAL"
+                    android:text="@string/about_what_makes_special"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -161,7 +161,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Our app combines gamified learning, cultural immersion, and practical speaking exercises to help users master vocabulary, grammar, and conversational skills. Designed for both locals and visitors, we promote multilingualism and cross-cultural communication throughout South Africa."
+                    android:text="@string/about_special_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -171,7 +171,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="WHO WE SERVE"
+                    android:text="@string/about_who_we_serve"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -180,7 +180,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Our primary audience includes South African citizens, tourists, expatriates, and students interested in learning local languages for cultural enrichment, professional growth, or personal connection. We welcome anyone passionate about South African languages and culture."
+                    android:text="@string/about_serve_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -190,7 +190,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="KEY FEATURES"
+                    android:text="@string/about_key_features"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -199,7 +199,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="🎮 Game-Based Learning: Fun rewards like points, badges, and streaks make learning enjoyable and addictive in a positive way.\n\n🏆 Leaderboards &amp; Rankings: Compare your progress with friends and other learners to boost motivation and community spirit.\n\n📅 Daily Targets &amp; Reminders: Set daily goals and receive reminders to build consistent learning habits despite busy schedules."
+                    android:text="@string/about_features_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -209,7 +209,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="LEARNING APPROACH"
+                    android:text="@string/about_learning_approach"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -218,7 +218,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="📚 Grammar &amp; Proficiency Levels: Lessons progress from beginner to advanced in clear steps, building confidence and making progress easy to track.\n\n🗣️ Speech-Centred Learning: Speaking tasks, pronunciation checks, and AI conversations improve real-world speaking confidence, not just vocabulary.\n\n🌍 Cultural Integration: Learn languages within their cultural context to gain deeper understanding and appreciation."
+                    android:text="@string/about_approach_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -228,7 +228,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="MEET OUR MASCOT"
+                    android:text="@string/about_meet_mascot"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -237,7 +237,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Our friendly cartoon green rhinoceros represents the spirit of South Africa. With large round eyes, a cheerful smile, and white horns, our rhino mascot embodies the approachable and fun nature of language learning while connecting to South African identity."
+                    android:text="@string/about_mascot_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -247,7 +247,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="OUR VISION"
+                    android:text="@string/about_our_vision"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -256,7 +256,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="We envision a South Africa where language barriers are bridges to understanding, where every citizen can communicate across cultural divides, and where our linguistic diversity becomes our greatest strength. Through technology and innovation, we're making language learning accessible to everyone."
+                    android:text="@string/about_vision_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -266,7 +266,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="CONTACT &amp; CREDITS"
+                    android:text="@string/about_contact_credits"
                     android:textColor="#1a237e"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -275,7 +275,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Developed with ❤️ for South Africa\n\nEmail: mzansilingo@gmail.com\nPhone: 1234567890\nAddress: 123 Smith Street\n\nSpecial thanks to the linguistic communities that preserve and share South Africa's beautiful languages."
+                    android:text="@string/about_contact_text"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:lineSpacingExtra="2dp" />

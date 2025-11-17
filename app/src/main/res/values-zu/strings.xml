@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name - REQUIRED (keep same or translate) -->
+    <string name="app_name">MzansiLingo</string>
+
+    <!-- Home Activity Buttons - isiZulu -->
+    <string name="btn_words">AMAGAMA / WOORDE</string>
+    <string name="btn_phrases">IMISHO / FRASES</string>
+    <string name="btn_leaderboard">IBHODI LABAHOLI / RANGLYS</string>
+    <string name="btn_set_goals">MISA IZINHLOSO / STEL DOELWITTE</string>
+    <string name="btn_ai_chat">INGXOXO YE-AI / KI-KLETS</string>
+    <string name="language_header_afrikaans">ULIMI:\nISI-AFRIKAANS</string>
+
+    <!-- Existing strings - isiZulu -->
+    <string name="select_language_header">Khetha Ulimi Lwakho</string>
+    <string name="home_language_title">Yiluphi ulimi lwakho lasekhaya?</string>
+    <string name="home_language_subtitle">Ulimi lohlelo lokusebenza</string>
+    <string name="learning_language_title">Uyafunda:</string>
+    <string name="afrikaans">Isi-Afrikaans</string>
+    <string name="app_teaches_afrikaans">Lolu hlelo lwakha ufundisa isi-Afrikaans</string>
+    <string name="select_home_language_hint">Khetha ulimi lwakho</string>
+    <string name="save_language">Londoloza Ulimi</string>
+    <string name="language_saved_success">Ulimi lulondoloziwe ngempumelelo!</string>
+    <string name="error_select_home_language">Sicela ukhethe ulimi lwakho lasekhaya</string>
+    <string name="error_select_available_language">Sicela ukhethe kulolimi olutholakalayo</string>
+
+    <!-- Navigation Drawer - isiZulu -->
+    <string name="nav_home">Ikhaya</string>
+    <string name="nav_language">Ulimi</string>
+    <string name="nav_words">Amagama</string>
+    <string name="nav_phrases">Imisho</string>
+    <string name="nav_progress">Inqubekela Phambili</string>
+    <string name="nav_settings">Izilungiselelo</string>
+    <string name="nav_profile">Iphrofayili</string>
+
+    <!-- Content Descriptions - isiZulu -->
+    <string name="cd_back">Emuva</string>
+    <string name="cd_menu">Imenyu</string>
+    <string name="cd_mascot">I-Mascot Yohlelo</string>
+    <string name="cd_dictionary">Isichazamazwi</string>
+    <string name="cd_chat">Xoxa</string>
+
+    <!-- About Activity - isiZulu -->
+    <string name="about_title">MAYELANA NE-MZANSI LINGO</string>
+    <string name="about_version">Inguqulo 1.0 • 2024</string>
+    <string name="about_our_mission">UMGOMO WETHU</string>
+    <string name="about_mission_text">I-Mzansi Lingo iyisicelo sokufunda ulimi esisebenza kumakhalekhukhwini, esihlanganisa injabulo yokufunda negugu lezilimi ezihlukene zaseNingizimu Afrika. Sinikeza izifundo ezilimini eziyisikhombisa ezisemthethweni zaseNingizimu Afrika: isiZulu, isiXhosa, Sesotho, Setswana, Sepedi, isi-Afrikaans, nesiNgisi.</string>
+    <string name="about_what_makes_special">YINI ESENZA SIHLUKE</string>
+    <string name="about_special_text">Uhlelo lwethu luhlanganisa ukufunda okufana nomdlalo, ukuzizwisa isiko, nezivivinyo zokukhuluma ezisebenzayo ukusiza abasebenzisi bakhe ulwazi lwegama, uhlelo lolimi, namakhono enkulumo. Sakhelwe izakhamuzi kanye nezivakashi, sikhuthaza ukusebenzisa izilimi eziningi nokuxhumana kwamasiko kulo lonke elaseNingizimu Afrika.</string>
+    <string name="about_who_we_serve">SIKHONZA BANI</string>
+    <string name="about_serve_text">Izilaleli zethu eziyinhloko zihlanganisa izakhamuzi zaseNingizimu Afrika, abavakashi, abahlali bangaphandle, nabafundi abanentshisekelo yokufunda izilimi zasemakhaya ukuze bathuthukise isiko, ukukhula komsebenzi, noma ukuxhumana komuntu siqu. Samukela wonke umuntu onentshisekelo ngezilimi namasiko aseNingizimu Afrika.</string>
+    <string name="about_key_features">IZICI EZIBALULEKILE</string>
+    <string name="about_features_text">🎮 Ukufunda Okusekelwe Kumdlalo: Imiklomelo emnandi njengamaphuzu, ama-badge, nezinhlekelele kwenza ukufunda kujabulise futhi kudonsele ngendlela enhle.\n\n🏆 Amabhodi Abaholi &amp; Ukubekwa Kwezinga: Qhathanisa inqubekela yakho nabangani nabanye abafundi ukukhuthaza umfutho nomoya womphakathi.\n\n📅 Izinhloso Zansuku Zonke &amp; Izikhumbuzo: Beka izinhloso zansuku zonke futhi uthole izikhumbuzo zokwakha imikhuba yokufunda ethembekile naphezu kwezimiso ezimatasatasa.</string>
+    <string name="about_learning_approach">INDLELA YOKUFUNDA</string>
+    <string name="about_approach_text">📚 Uhlelo Lolimi &amp; Amazinga Okwazi: Izifundo ziyaqhubeka kusukela kwabaqalayo kuya kwabaphezulu ngezinyathelo ezicacile, zakha ukuzethemba futhi kwenze inqubekela phambili ilula ukulandelela.\n\n🗣️ Ukufunda Okugxile Ekukhulumeni: Imisebenzi yokukhuluma, ukuhlola ukuphimisa, nezingxoxo ze-AI zithuthukisa ukuzethemba kokukhuluma kwangempela, hhayi nje igama.\n\n🌍 Ukuhlanganiswa Kwamasiko: Funda izilimi ngokwesimo sazo samasiko ukuze uthole ukuqonda okujulile nokwazisa.</string>
+    <string name="about_meet_mascot">HLANGANA NE-MASCOT YETHU</string>
+    <string name="about_mascot_text">I-rhinoceros yethu eluhlaza enobungane emele umoya waseNingizimu Afrika. Ngamehlo amakhulu ayindilinga, ukumamatheka okujabulisayo, nempondo ezimhlophe, i-mascot yethu ye-rhino imela ubuntu obufinyelelekayo nobumnandi bokufunda ulimi ngesikhathi ixhuma nobunikazi baseNingizimu Afrika.</string>
+    <string name="about_our_vision">UMBONO WETHU</string>
+    <string name="about_vision_text">Sibona iNingizimu Afrika lapho imigoqo yolimi iyizibuko zokuqonda, lapho lonke isakhamuzi singaxhumana phakathi kwezehlukaniso zamasiko, futhi lapho ukuhluka kwethu kwezilimi kuba amandla ethu amakhulu. Ngokusebenzisa ubuchwepheshe nokusungula, senza ukufunda ulimi kufinyeleleke kuwo wonke umuntu.</string>
+    <string name="about_contact_credits">UKUXHUMANA &amp; UKUQAPHELWA</string>
+    <string name="about_contact_text">Yenziwe ngo-❤️ yaseNingizimu Afrika\n\nI-imeyili: mzansilingo@gmail.com\nIfoni: 1234567890\nIkheli: 123 Smith Street\n\nSibonga kakhulu imiphakathi yezilimi egcina futhi yabelana ngezilimi ezinhle zaseNingizimu Afrika.</string>
+
+    <!-- AI Chat Activity - isiZulu -->
+    <string name="ai_assistant_online">I-AI ASSISTANT IYASEBENZA</string>
+    <string name="ai_chat_hint">Ngibuze ngezilimi...</string>
+    <string name="send_message">Thumela umlayezo</string>
+    <string name="ai_chat_welcome_message">🦏 Sawubona! NginguMsizi wakho we-Mzansi Lingo wesi-Afrikaans!\n\n🗣️ Ungabuza ngesiNgisi:\n• "Ngisho kanjani sawubona ngesi-Afrikaans?"\n• "Yini ukuthi ngiyabonga ngesi-Afrikaans?"\n• "Ngisho kanjani izinombolo ngesi-Afrikaans?"\n\n💡 Zonke izimpendulo zami zizoba ngesi-Afrikaans.</string>
+    <string name="api_connection_failed">⚠️ Ukuxhumana kwe-API kuhlulekile:</string>
+    <string name="no_internet_connection">⚠️ Ayikho i-inthanethi etholakalayo.</string>
+    <string name="ai_thinking">🦏 Ngiyacabanga...</string>
+    <string name="error_prefix">⚠️ Iphutha:</string>
+    <string name="network_error">⚠️ Iphutha lenethiwekhi:</string>
+
+</resources>

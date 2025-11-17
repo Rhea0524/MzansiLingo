@@ -37,7 +37,7 @@
                 android:src="@drawable/ic_arrow_left"
                 android:padding="12dp"
                 android:scaleType="fitCenter"
-                android:contentDescription="Back"
+                android:contentDescription="@string/cd_back"
                 app:tint="#FFFFFF" />
 
         </androidx.cardview.widget.CardView>
@@ -49,18 +49,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="AI CHAT / KI-KLETS"
+            android:text="@string/btn_ai_chat"
             android:textColor="#FFD700"
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_menu"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_back"
             app:layout_constraintTop_toTopOf="parent" />
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -93,7 +90,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AI ASSISTANT ONLINE"
+                android:text="@string/ai_assistant_online"
                 android:textColor="#1a237e"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -169,7 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:hint="Ask me about languages..."
+                android:hint="@string/ai_chat_hint"
                 android:textColorHint="#999999"
                 android:textColor="#1a237e"
                 android:textSize="16sp"
@@ -198,7 +195,7 @@
                 android:src="@android:drawable/ic_menu_send"
                 android:padding="16dp"
                 android:scaleType="fitCenter"
-                android:contentDescription="Send message"
+                android:contentDescription="@string/send_message"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="?android:attr/selectableItemBackgroundBorderless"

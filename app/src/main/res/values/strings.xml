@@ -1,6 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App Name - REQUIRED -->
     <string name="app_name">MzansiLingo</string>
-    <string name="unknown">Unknown</string>
-    <string name="default_web_client_id">370111223511-smns9as07tusftm5u1dsumn2dbrl3qub.apps.googleusercontent.com</string>
+
+    <!-- Home Activity Buttons -->
+    <string name="btn_words">WORDS / WOORDE</string>
+    <string name="btn_phrases">PHRASES / FRASES</string>
+    <string name="btn_leaderboard">LEADERBOARD / RANGLYS</string>
+    <string name="btn_set_goals">SET GOALS / STEL DOELWITTE</string>
+    <string name="btn_ai_chat">AI CHAT / KI-KLETS</string>
+    <string name="language_header_afrikaans">LANGUAGE:\nAFRIKAANS</string>
+
+    <!-- Language Selection -->
+    <string name="select_language_header">Select Your Language</string>
+    <string name="home_language_title">What is your home language?</string>
+    <string name="home_language_subtitle">The language of the app interface</string>
+    <string name="learning_language_title">You are learning:</string>
+    <string name="afrikaans">Afrikaans</string>
+    <string name="app_teaches_afrikaans">This app teaches Afrikaans</string>
+    <string name="select_home_language_hint">Select your language</string>
+    <string name="save_language">Save Language</string>
+    <string name="language_saved_success">Language saved successfully!</string>
+    <string name="error_select_home_language">Please select your home language</string>
+    <string name="error_select_available_language">Please select from available languages</string>
+
+    <!-- Navigation Drawer -->
+    <string name="nav_home">Home</string>
+    <string name="nav_language">Language</string>
+    <string name="nav_words">Words</string>
+    <string name="nav_phrases">Phrases</string>
+    <string name="nav_progress">Progress</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_profile">Profile</string>
+
+    <!-- Content Descriptions -->
+    <string name="cd_back">Back</string>
+    <string name="cd_menu">Menu</string>
+    <string name="cd_mascot">App Mascot</string>
+    <string name="cd_dictionary">Dictionary</string>
+    <string name="cd_chat">Chat</string>
+
+    <!-- About Activity -->
+    <string name="about_title">ABOUT MZANSI LINGO</string>
+    <string name="about_version">Version 1.0 • 2024</string>
+    <string name="about_our_mission">OUR MISSION</string>
+    <string name="about_mission_text">Mzansi Lingo is a mobile-first, interactive language-learning application that brings the joy of learning to South Africa\'s diverse cultural and linguistic heritage. We offer courses in seven official South African languages: isiZulu, isiXhosa, Sesotho, Setswana, Sepedi, Afrikaans, and English.</string>
+    <string name="about_what_makes_special">WHAT MAKES US SPECIAL</string>
+    <string name="about_special_text">Our app combines gamified learning, cultural immersion, and practical speaking exercises to help users master vocabulary, grammar, and conversational skills. Designed for both locals and visitors, we promote multilingualism and cross-cultural communication throughout South Africa.</string>
+    <string name="about_who_we_serve">WHO WE SERVE</string>
+    <string name="about_serve_text">Our primary audience includes South African citizens, tourists, expatriates, and students interested in learning local languages for cultural enrichment, professional growth, or personal connection. We welcome anyone passionate about South African languages and culture.</string>
+    <string name="about_key_features">KEY FEATURES</string>
+    <string name="about_features_text">🎮 Game-Based Learning: Fun rewards like points, badges, and streaks make learning enjoyable and addictive in a positive way.\n\n🏆 Leaderboards &amp; Rankings: Compare your progress with friends and other learners to boost motivation and community spirit.\n\n📅 Daily Targets &amp; Reminders: Set daily goals and receive reminders to build consistent learning habits despite busy schedules.</string>
+    <string name="about_learning_approach">LEARNING APPROACH</string>
+    <string name="about_approach_text">📚 Grammar &amp; Proficiency Levels: Lessons progress from beginner to advanced in clear steps, building confidence and making progress easy to track.\n\n🗣️ Speech-Centred Learning: Speaking tasks, pronunciation checks, and AI conversations improve real-world speaking confidence, not just vocabulary.\n\n🌍 Cultural Integration: Learn languages within their cultural context to gain deeper understanding and appreciation.</string>
+    <string name="about_meet_mascot">MEET OUR MASCOT</string>
+    <string name="about_mascot_text">Our friendly cartoon green rhinoceros represents the spirit of South Africa. With large round eyes, a cheerful smile, and white horns, our rhino mascot embodies the approachable and fun nature of language learning while connecting to South African identity.</string>
+    <string name="about_our_vision">OUR VISION</string>
+    <string name="about_vision_text">We envision a South Africa where language barriers are bridges to understanding, where every citizen can communicate across cultural divides, and where our linguistic diversity becomes our greatest strength. Through technology and innovation, we\'re making language learning accessible to everyone.</string>
+    <string name="about_contact_credits">CONTACT &amp; CREDITS</string>
+    <string name="about_contact_text">Developed with ❤️ for South Africa\n\nEmail: mzansilingo@gmail.com\nPhone: 1234567890\nAddress: 123 Smith Street\n\nSpecial thanks to the linguistic communities that preserve and share South Africa\'s beautiful languages.</string>
+
+    <!-- AI Chat Activity -->
+    <string name="ai_assistant_online">AI ASSISTANT ONLINE</string>
+    <string name="ai_chat_hint">Ask me about languages...</string>
+    <string name="send_message">Send message</string>
+    <string name="ai_chat_welcome_message">🦏 Hello! I am your Mzansi Lingo Afrikaans Assistant!\n\n🗣️ You can ask me in English:\n• "How do I say hello in Afrikaans?"\n• "What is thank you in Afrikaans?"\n• "How do I say numbers in Afrikaans?"\n\n💡 All my answers will be in Afrikaans.</string>
+    <string name="api_connection_failed">⚠️ API connection failed:</string>
+    <string name="no_internet_connection">⚠️ No internet connection available.</string>
+    <string name="ai_thinking">🦏 Thinking...</string>
+    <string name="error_prefix">⚠️ Error:</string>
+    <string name="network_error">⚠️ Network error:</string>
 
 </resources>
