@@ -10,13 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 
-
-
 class OfflineActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
-
-    // Bottom navigation elements
     private lateinit var btnBottomDict: ImageView
     private lateinit var btnBottomQuotes: ImageView
     private lateinit var btnBottomStats: ImageView
@@ -25,14 +21,20 @@ class OfflineActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_offline)
 
-        // Initialize drawer layout
         drawerLayout = findViewById(R.id.drawer_layout)
-
-        // Initialize bottom navigation
         initializeBottomNavigation()
-
-        // Setup click listeners
         setupClickListeners()
+
+        // Make the card clickable to start quiz
+        findViewById<androidx.cardview.widget.CardView>(R.id.content_card).setOnClickListener {
+            startOfflineQuiz()
+        }
+    }
+
+    private fun startOfflineQuiz() {
+        val intent = Intent(this, OfflineQuizActivity::class.java)
+        intent.putExtra("LANGUAGE", getIntent().getStringExtra("LANGUAGE") ?: "afrikaans")
+        startActivity(intent)
     }
 
     private fun initializeBottomNavigation() {
@@ -47,7 +49,6 @@ class OfflineActivity : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        // Menu button to open drawer
         val menuButton = findViewById<ImageView>(R.id.btn_menu)
         menuButton.setOnClickListener {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -57,84 +58,59 @@ class OfflineActivity : AppCompatActivity() {
             }
         }
 
-        // Back button
         val backButton = findViewById<ImageView>(R.id.btn_back)
         backButton.setOnClickListener {
             finish()
         }
 
-        // Setup navigation drawer listeners
         setupNavigationDrawerListeners()
-
-        // Setup bottom navigation listeners
         setupBottomNavigationListeners()
     }
 
     private fun setupNavigationDrawerListeners() {
-        // Home navigation
         findViewById<TextView>(R.id.nav_home).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToHome()
         }
 
-        // Language navigation
         findViewById<TextView>(R.id.nav_language).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToLanguageSelection()
         }
 
-        // Words navigation
         findViewById<TextView>(R.id.nav_words).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToWordsActivity()
         }
 
-        // Phrases navigation
         findViewById<TextView>(R.id.nav_phrases).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToPhrasesActivity()
         }
 
-        // Quotes navigation (if present in drawer)
-        try {
-            findViewById<TextView>(R.id.nav_quotes).setOnClickListener {
-                drawerLayout.closeDrawer(GravityCompat.END)
-                navigateToQuotes()
-            }
-        } catch (e: Exception) {
-            Log.d("OfflineActivity", "nav_quotes not found in drawer")
-        }
-
-        // Progress navigation
         findViewById<TextView>(R.id.nav_progress).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToProgressActivity()
         }
 
-
-
-        // Settings navigation
         findViewById<TextView>(R.id.nav_settings).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToSettings()
         }
 
-        // Profile navigation
         findViewById<TextView>(R.id.nav_profile).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToProfile()
         }
 
-        // Navigation drawer bottom icons
         findViewById<ImageView>(R.id.nav_dictionary).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
-            // Already on offline quiz screen - just close drawer
             Toast.makeText(this, "Already on Offline Quiz screen", Toast.LENGTH_SHORT).show()
         }
 
         findViewById<ImageView>(R.id.nav_back).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
-            finish() // Go back to previous screen
+            finish()
         }
 
         findViewById<ImageView>(R.id.nav_chat).setOnClickListener {
@@ -144,17 +120,14 @@ class OfflineActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavigationListeners() {
-        // Bottom book/dictionary button - already on offline activity
         try {
             btnBottomDict.setOnClickListener {
-                // Already on OfflineActivity - show feedback
                 Toast.makeText(this, "Already on Offline Quiz screen", Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             Log.w("OfflineActivity", "Bottom dict button not found")
         }
 
-        // Bottom quotes button - navigate to QuotesActivity
         try {
             btnBottomQuotes.setOnClickListener {
                 navigateToQuotes()
@@ -163,7 +136,6 @@ class OfflineActivity : AppCompatActivity() {
             Log.w("OfflineActivity", "Bottom quotes button not found")
         }
 
-        // Bottom bars/statistics button - navigate to ProgressActivity
         try {
             btnBottomStats.setOnClickListener {
                 navigateToStatistics()
@@ -173,7 +145,6 @@ class OfflineActivity : AppCompatActivity() {
         }
     }
 
-    // Navigation methods matching other activities functionality
     private fun navigateToHome() {
         val intent = Intent(this, HomeActivity::class.java)
         intent.putExtra("LANGUAGE", "afrikaans")
@@ -209,8 +180,6 @@ class OfflineActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-
-
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
@@ -223,12 +192,10 @@ class OfflineActivity : AppCompatActivity() {
 
     private fun navigateToQuotes() {
         Toast.makeText(this, "Starting QuotesActivity...", Toast.LENGTH_SHORT).show()
-
         try {
             val intent = Intent(this, QuotesActivity::class.java)
             intent.putExtra("LANGUAGE", "afrikaans")
             startActivity(intent)
-            Toast.makeText(this, "Intent sent successfully", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_LONG).show()
             Log.e("OfflineActivity", "Navigation error", e)
