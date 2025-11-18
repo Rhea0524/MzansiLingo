@@ -106,8 +106,8 @@ Code Attribution / References
 ![Biometric Authentication](./images/image2.png)
 
 ### Offline Quiz Feature
-![Offline Quiz](./Images/image3.png)
-![Offline Quiz 2](./Images/image4.png)
+![Offline Quiz](./images/image3.png)
+![Offline Quiz 2](./images/image4.png)
 
 ### Multi-Language Support
 ![Multi-Language Feature](./images/image5.png)
