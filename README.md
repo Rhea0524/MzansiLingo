@@ -7,7 +7,8 @@
 ## 📑 Table of Contents
 
 - [Overview](#overview)  
-- [Technologies Used](#technologies-used)  
+- [Technologies Used](#technologies-used)
+- [Latest Features 2025 Update](#latest-features-2025-update)   
 - [System Functionalities & User Roles](#system-functionalities--user-roles)  
 - [Setup Instructions](#setup-instructions)  
 - [Architecture](#architecture)  
@@ -24,7 +25,7 @@ The primary goal of **Mzansi Lingo** is to provide a focused, immersive platform
 - **Daily Goals**: Users complete word and phrase goals each day and receive gamification pop-ups as motivation.  
 - **Audio-Based Learning**: Users can hear correct pronunciation for words, phrases, and quotes.  
 - **AI Chat Support**: Users can ask a chatbot how to say or pronounce certain words or phrases.  
-- **Progress Tracking**: Users earn points and can monitor their learning progress.  
+- **Progress Tracking**: Users earn points and can monitor their learning progress and can share screenshots of their progress with friends.  
 - **Leaderboards**: Compare progress with others using the app.
 - **Set goals**: Users can set daily goals for the words and phrases to get right.
 
@@ -34,31 +35,47 @@ This app is designed for individual learners and emphasizes **consistency, pronu
 
 ## Technologies Used
 
-- **Kotlin** – Android app development  
-- **Android Studio** – IDE for building the app  
-- **REST API** – Hosted on Railway for AI chatbot integration  
-- **Firebase** – Optional backend features for data storage and analytics  
-- **XML** – Layouts and UI design  
-- **Git & GitHub** – Version control
-- **Visual Studio Code** - IDE for building API
+-	Kotlin – Main app development language
+-	Android Studio – IDE
+-	XML – UI layout design
+-	REST API (Railway) – For AI chatbot integration
+-	Retrofit – API communication
+-	BiometricPrompt API – Biometric authentication
+-	Firebase Cloud Messaging (FCM) – Real-time notifications
+-	Room Database / Local Caching – Offline mode data
+-	Coroutine Support (Kotlin) – Asynchronous tasks
+-	Git & GitHub – Version control
+
 
 ---
 
-## System Functionalities & User Roles
+## System Functionalities and User Roles
 
 ### Learners
-- Track progress on words and phrases.  
-- Complete daily goals for words and phrases.  
-- Listen to pronunciation through audio playback.  
-- Interact with AI chatbot for pronunciation guidance.  
-- View points, goals and leaderboards.  
+
+Learners can:
+
+- Study words, phrases, and quotes  
+- Listen to audio pronunciation  
+- Track progress and points  
+- Complete daily goals and streaks  
+- Use AI chatbot for translations  
+- Capture progress screenshots  
+- Enable biometric login  
+- Operate offline  
+- Select preferred language  
+- View leaderboards  
+ 
 
 ### App Features
-- **Gamification**: Pop-ups triggered after completing daily goals for words, phrases, or both.  
-- **Speech-Based Learning**: Built-in speakers pronounce words, phrases, and quotes.  
-- **AI Chat Support**: Users can ask for correct pronunciation and spelling guidance.
-- **Set goals**: Users can set daily goals for the words and phrases to get right.
-- **Leaderboards**: Users can earn points from completing tests and move their way up the leaderboard.
+- Gamification (points, progress pop-ups)  
+- Audio-based pronunciation  
+- Real-time notifications  
+- Offline access to saved learning content  
+- Biometric login  
+- Multilingual interface  
+- AI chatbot for translations and pronunciation  
+- Leaderboards and progress tracking  
 
 ---
 
@@ -91,18 +108,25 @@ git clone https://github.com/Rhea0524/MzansiLingo.git
 ## Architecture
 
 ### App Structure
-- The app is built in **Android Studio** using **Empty Activities** for each screen.  
-- Each activity handles a single feature, keeping the code modular and easy to maintain:  
-  - `HomeActivity` – Displays daily goals, progress, and navigation.  
-  - `WordsActivity` & `PhrasesActivity` – Show lists of words and phrases to learn.  
-  - `AiChatActivity` – Handles AI chatbot interactions.  
-  - `LeaderboardActivity` – Displays points and user rankings.  
-  - `SettingsActivity` & `ProfileActivity` – Manage user preferences and account details.  
+| Component | Description |
+|----------|-------------|
+| HomeActivity | Displays daily goals, progress, and navigation |
+| WordsActivity | Shows a list of Afrikaans words |
+| PhrasesActivity | Displays Afrikaans phrases |
+| AiChatActivity | Provides AI chatbot interactions |
+| LeaderboardActivity | Shows user rankings |
+| SettingsActivity | Language selection, notifications, user preferences |
+| ProfileActivity | Displays progress and user details |
+| BiometricAuthActivity | Manages biometric authentication |
+| OfflineManager | Manages local content caching |
+| NotificationService | Sends reminders and updates |
 
 ### Data Flow
-- User interactions in each activity are handled locally and asynchronously.  
-- **REST API on Railway** powers the AI chatbot, allowing users to ask for pronunciation guidance or translations.  
-- Progress tracking, points, and gamification pop-ups are calculated and displayed directly in the app.  
+- User actions update the Room database and UI in real time  
+- AI chatbot communication uses Retrofit to access a REST API  
+- Offline content is stored locally and syncs automatically when online  
+- Notifications use Firebase Cloud Messaging  
+- BiometricPrompt activates during user authentication  
 
 ---
 
@@ -123,7 +147,12 @@ The following resources were referenced or used during the development of **Mzan
 - [Glide Image Loading Library](https://github.com/bumptech/glide) – If used for loading icons or images in the app.  
 - [Stack Overflow](https://stackoverflow.com/) – Troubleshooting common Android/Kotlin issues.  
 - [YouTube Tutorials for Android Development](https://www.youtube.com/) – For examples of Android UI, navigation, and activity management.  
-- [Kotlin Coroutines Guide](https://kotlinlang.org/docs/coroutines-overview.html) – Used for asynchronous tasks like API calls.  
+- [Kotlin Coroutines Guide](https://kotlinlang.org/docs/coroutines-overview.html) – Used for asynchronous tasks like API calls.
+- Android BiometricPrompt Documentation
+-	Room Database Guide
+-	Firebase Cloud Messaging Docs
+-	Android Localization (strings.xml multi-language support)
+ 
 
 ----
 
