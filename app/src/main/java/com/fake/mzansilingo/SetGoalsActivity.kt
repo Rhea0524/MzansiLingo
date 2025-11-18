@@ -18,7 +18,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
@@ -36,7 +35,7 @@ import android.media.AudioManager
 import android.os.VibrationEffect
 import android.os.Vibrator
 
-class SetGoalsActivity : AppCompatActivity() {
+class SetGoalsActivity : BaseActivity() {
 
     // Firebase
     private lateinit var auth: FirebaseAuth
@@ -68,7 +67,7 @@ class SetGoalsActivity : AppCompatActivity() {
     private lateinit var achievementTitle: TextView
     private lateinit var achievementMessage: TextView
     private lateinit var achievementStars: List<ImageView>
-    private lateinit var achievementConfetti: List<View> // Fixed: Changed from ImageView to View
+    private lateinit var achievementConfetti: List<View>
     private lateinit var achievementBadge: ImageView
 
     // Navigation drawer items
@@ -185,6 +184,21 @@ class SetGoalsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         setupRealTimeProgressListener()
+
+        // Check for language change and recreate if needed
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentLanguage = prefs.getString("home_language", "English") ?: "English"
+
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate()
+        }
     }
 
     private fun initializeViews() {
@@ -228,13 +242,12 @@ class SetGoalsActivity : AppCompatActivity() {
     private fun initializeAchievementPopup() {
         // Find achievement popup views
         achievementPopup = findViewById(R.id.achievement_popup)
-        // Fix: Use achievement_badge instead of achievement_icon
-        achievementIcon = findViewById(R.id.achievement_badge) // This will serve as our icon
+        achievementIcon = findViewById(R.id.achievement_badge)
         achievementTitle = findViewById(R.id.achievement_title)
         achievementMessage = findViewById(R.id.achievement_message)
         achievementBadge = findViewById(R.id.achievement_badge)
 
-        // Initialize all 8 stars for animation (matching your XML)
+        // Initialize all 8 stars for animation
         achievementStars = listOf(
             findViewById(R.id.star1),
             findViewById(R.id.star2),
@@ -246,7 +259,7 @@ class SetGoalsActivity : AppCompatActivity() {
             findViewById(R.id.star8)
         )
 
-        // Initialize all 10 confetti pieces (matching your XML)
+        // Initialize all 10 confetti pieces
         achievementConfetti = listOf(
             findViewById<View>(R.id.confetti1),
             findViewById<View>(R.id.confetti2),
@@ -273,41 +286,30 @@ class SetGoalsActivity : AppCompatActivity() {
         when (type) {
             AchievementType.WORDS_GOAL -> {
                 achievementBadge.setImageResource(R.drawable.ic_book_open)
-                achievementTitle.text = "WORDS MASTER!"
-                achievementMessage.text = "Daily words goal achieved!\nYou're building your vocabulary!"
-                achievementPopup.setCardBackgroundColor(Color.parseColor("#2E7D32")) // Darker green
+                achievementTitle.text = getString(R.string.achievement_words_master)
+                achievementMessage.text = getString(R.string.achievement_words_message)
+                achievementPopup.setCardBackgroundColor(Color.parseColor("#2E7D32"))
             }
             AchievementType.PHRASES_GOAL -> {
                 achievementBadge.setImageResource(R.drawable.ic_message_circle)
-                achievementTitle.text = "PHRASE CHAMPION!"
-                achievementMessage.text = "Daily phrases goal achieved!\nYour communication skills are growing!"
-                achievementPopup.setCardBackgroundColor(Color.parseColor("#2E7D32")) // Darker green
+                achievementTitle.text = getString(R.string.achievement_phrase_champion)
+                achievementMessage.text = getString(R.string.achievement_phrase_message)
+                achievementPopup.setCardBackgroundColor(Color.parseColor("#2E7D32"))
             }
             AchievementType.BOTH_GOALS -> {
-                achievementBadge.setImageResource(R.drawable.ic_trophy_badge) // Changed from rhino to trophy
-                achievementTitle.text = "DAILY LEGEND!"
-                achievementMessage.text = "INCREDIBLE! Both goals achieved!\nYou're unstoppable today!"
-                achievementPopup.setCardBackgroundColor(Color.parseColor("#1B5E20")) // Very dark green for maximum impact
+                achievementBadge.setImageResource(R.drawable.ic_trophy_badge)
+                achievementTitle.text = getString(R.string.achievement_daily_legend)
+                achievementMessage.text = getString(R.string.achievement_both_message)
+                achievementPopup.setCardBackgroundColor(Color.parseColor("#1B5E20"))
             }
             AchievementType.STREAK_ACHIEVEMENT -> {
                 achievementBadge.setImageResource(R.drawable.ic_check)
-                achievementTitle.text = "ON FIRE!"
-                achievementMessage.text = "Amazing streak!\nKeep the momentum going!"
-                achievementPopup.setCardBackgroundColor(Color.parseColor("#2E7D32")) // Darker green
+                achievementTitle.text = getString(R.string.achievement_on_fire)
+                achievementMessage.text = getString(R.string.achievement_streak_message)
+                achievementPopup.setCardBackgroundColor(Color.parseColor("#2E7D32"))
             }
         }
 
-        // Rest of the method stays the same...
-        playAchievementSound(type)
-        achievementPopup.visibility = View.VISIBLE
-        animateAchievementEntry()
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            hideAchievementPopup()
-        }, 4000)
-
-
-        // Rest of the method stays the same...
         playAchievementSound(type)
         achievementPopup.visibility = View.VISIBLE
         animateAchievementEntry()
@@ -342,7 +344,7 @@ class SetGoalsActivity : AppCompatActivity() {
 
             val starSet = AnimatorSet()
             starSet.playTogether(starFall, starFade, starRotate)
-            starSet.startDelay = (index * 100).toLong() // Stagger the stars
+            starSet.startDelay = (index * 100).toLong()
             starSet.duration = 800
             starSet.interpolator = AccelerateDecelerateInterpolator()
 
@@ -369,7 +371,7 @@ class SetGoalsActivity : AppCompatActivity() {
             confettiAnimators.add(confettiSet)
         }
 
-        // Badge pulse animation - Fixed: Use individual ObjectAnimators with repeat properties
+        // Badge pulse animation
         val badgePulse = ObjectAnimator.ofFloat(achievementBadge, "scaleX", 1f, 1.3f, 1f)
         badgePulse.duration = 1000
         badgePulse.repeatCount = ValueAnimator.INFINITE
@@ -404,13 +406,11 @@ class SetGoalsActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animator) {
                 achievementPopup.visibility = View.GONE
 
-                // Stop badge animations - Fixed: Handle list of animators
                 val badgeAnimators = achievementBadge.tag as? List<ObjectAnimator>
                 badgeAnimators?.forEach { animator ->
                     animator.cancel()
                 }
 
-                // Hide all animated elements
                 achievementStars.forEach { it.visibility = View.GONE }
                 achievementConfetti.forEach { it.visibility = View.GONE }
             }
@@ -428,7 +428,6 @@ class SetGoalsActivity : AppCompatActivity() {
 
             when (type) {
                 AchievementType.WORDS_GOAL -> {
-                    // Quick ascending celebration
                     toneGen.startTone(ToneGenerator.TONE_DTMF_2, 120)
                     Handler(Looper.getMainLooper()).postDelayed({
                         toneGen.startTone(ToneGenerator.TONE_DTMF_5, 120)
@@ -440,7 +439,6 @@ class SetGoalsActivity : AppCompatActivity() {
                 }
 
                 AchievementType.PHRASES_GOAL -> {
-                    // Double celebration chime
                     toneGen.startTone(ToneGenerator.TONE_DTMF_6, 150)
                     Handler(Looper.getMainLooper()).postDelayed({
                         toneGen.startTone(ToneGenerator.TONE_DTMF_6, 150)
@@ -452,7 +450,6 @@ class SetGoalsActivity : AppCompatActivity() {
                 }
 
                 AchievementType.BOTH_GOALS -> {
-                    // EPIC victory fanfare - the big celebration!
                     toneGen.startTone(ToneGenerator.TONE_DTMF_1, 100)
                     Handler(Looper.getMainLooper()).postDelayed({
                         toneGen.startTone(ToneGenerator.TONE_DTMF_3, 100)
@@ -464,16 +461,15 @@ class SetGoalsActivity : AppCompatActivity() {
                         toneGen.startTone(ToneGenerator.TONE_DTMF_8, 150)
                     }, 360)
                     Handler(Looper.getMainLooper()).postDelayed({
-                        toneGen.startTone(ToneGenerator.TONE_DTMF_0, 300) // Triumphant finish
+                        toneGen.startTone(ToneGenerator.TONE_DTMF_0, 300)
                     }, 520)
                     Handler(Looper.getMainLooper()).postDelayed({
-                        toneGen.startTone(ToneGenerator.TONE_DTMF_0, 200) // Echo for emphasis
+                        toneGen.startTone(ToneGenerator.TONE_DTMF_0, 200)
                         toneGen.release()
                     }, 850)
                 }
 
                 AchievementType.STREAK_ACHIEVEMENT -> {
-                    // Energetic streak sound
                     toneGen.startTone(ToneGenerator.TONE_DTMF_7, 80)
                     Handler(Looper.getMainLooper()).postDelayed({
                         toneGen.startTone(ToneGenerator.TONE_DTMF_7, 80)
@@ -536,15 +532,12 @@ class SetGoalsActivity : AppCompatActivity() {
         val wordsAchieved = todayWordsRight >= dailyWordsGoal
         val phrasesAchieved = todayPhrasesRight >= dailyPhrasesGoal
 
-        // IMPORTANT: Check for BOTH goals first (highest priority)
         if (wordsAchieved && phrasesAchieved && !bothGoalsAchievedToday) {
             showAchievementPopup(AchievementType.BOTH_GOALS)
             bothGoalsAchievedToday = true
-            // Also set individual flags to prevent showing individual achievements after
             wordsGoalAchievedToday = true
             phrasesGoalAchievedToday = true
         }
-        // Only show individual achievements if both goals haven't been achieved
         else if (wordsAchieved && !wordsGoalAchievedToday && !bothGoalsAchievedToday) {
             showAchievementPopup(AchievementType.WORDS_GOAL)
             wordsGoalAchievedToday = true
@@ -556,7 +549,6 @@ class SetGoalsActivity : AppCompatActivity() {
     }
 
     private fun setupClickListeners() {
-        // Menu toggle
         btnMenu.setOnClickListener {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 drawerLayout.closeDrawer(GravityCompat.END)
@@ -565,7 +557,6 @@ class SetGoalsActivity : AppCompatActivity() {
             }
         }
 
-        // Goal adjustment buttons
         btnWordsDecrease.setOnClickListener {
             if (dailyWordsGoal > MIN_GOAL_VALUE) {
                 dailyWordsGoal--
@@ -607,7 +598,7 @@ class SetGoalsActivity : AppCompatActivity() {
             dailyPhrasesGoal = DEFAULT_PHRASES_GOAL
             updateGoalDisplay()
             resetAchievementFlags()
-            Toast.makeText(this, "Goals reset to default values", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.goals_reset_default), Toast.LENGTH_SHORT).show()
         }
 
         // Navigation drawer listeners
@@ -635,8 +626,6 @@ class SetGoalsActivity : AppCompatActivity() {
             closeDrawer()
             navigateToLeaderboardActivity()
         }
-
-
 
         navSettings.setOnClickListener {
             closeDrawer()
@@ -687,7 +676,7 @@ class SetGoalsActivity : AppCompatActivity() {
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error loading goals", e)
-                    Toast.makeText(this, "Failed to load goals", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.error_loading_goals), Toast.LENGTH_SHORT).show()
                     updateGoalDisplay()
                 }
         }
@@ -719,7 +708,7 @@ class SetGoalsActivity : AppCompatActivity() {
     }
 
     private fun updateProgressDisplay() {
-        tvCurrentProgress.text = "TODAY: $todayWordsRight words, $todayPhrasesRight phrases correct"
+        tvCurrentProgress.text = getString(R.string.goals_today_progress, todayWordsRight, todayPhrasesRight)
 
         val wordsPercentage = if (dailyWordsGoal > 0) {
             ((todayWordsRight.toFloat() / dailyWordsGoal) * 100).toInt()
@@ -729,14 +718,16 @@ class SetGoalsActivity : AppCompatActivity() {
             ((todayPhrasesRight.toFloat() / dailyPhrasesGoal) * 100).toInt()
         } else 0
 
-        val progressText = StringBuilder("PROGRESS: Words ${minOf(wordsPercentage, 100)}% | Phrases ${minOf(phrasesPercentage, 100)}%")
+        val progressText = StringBuilder(getString(R.string.goals_progress_format,
+            minOf(wordsPercentage, 100),
+            minOf(phrasesPercentage, 100)))
 
         if (todayWordsRight >= dailyWordsGoal && todayPhrasesRight >= dailyPhrasesGoal) {
-            progressText.append("\n🎉 DAILY GOALS ACHIEVED! 🎉")
+            progressText.append("\n").append(getString(R.string.goals_all_achieved))
         } else if (todayWordsRight >= dailyWordsGoal) {
-            progressText.append("\n✅ Words goal achieved!")
+            progressText.append("\n").append(getString(R.string.goals_words_achieved))
         } else if (todayPhrasesRight >= dailyPhrasesGoal) {
-            progressText.append("\n✅ Phrases goal achieved!")
+            progressText.append("\n").append(getString(R.string.goals_phrases_achieved))
         }
 
         tvGoalProgress.text = progressText.toString()
@@ -756,16 +747,16 @@ class SetGoalsActivity : AppCompatActivity() {
                 .set(goalsData, SetOptions.merge())
                 .addOnSuccessListener {
                     Log.d(TAG, "Goals saved successfully")
-                    Toast.makeText(this, "Goals saved successfully!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.goals_saved_success), Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener { e ->
                     Log.w(TAG, "Error saving goals", e)
-                    Toast.makeText(this, "Failed to save goals. Please try again.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.goals_save_failed), Toast.LENGTH_LONG).show()
                 }
         }
     }
 
-    // Navigation methods (same as original)
+    // Navigation methods
     private fun closeDrawer() {
         if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END)
@@ -840,8 +831,6 @@ class SetGoalsActivity : AppCompatActivity() {
         intent.putExtra("LANGUAGE", "afrikaans")
         startActivity(intent)
     }
-
-
 
     private fun redirectToLogin() {
         startActivity(Intent(this, LoginActivity::class.java))

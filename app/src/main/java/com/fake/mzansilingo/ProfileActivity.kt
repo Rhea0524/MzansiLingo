@@ -10,16 +10,21 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : BaseActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var tvProfileTitle: TextView
+    private lateinit var tvLabelFullName: TextView
+    private lateinit var tvLabelEmail: TextView
+    private lateinit var tvLabelUsername: TextView
+    private lateinit var tvLabelPassword: TextView
+    private lateinit var tvLabelHomeLanguage: TextView
     private lateinit var etFullName: EditText
     private lateinit var etEmail: EditText
     private lateinit var etUsername: EditText
@@ -27,6 +32,15 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var spinnerLanguage: Spinner
     private lateinit var btnSave: MaterialButton
     private lateinit var btnMenu: ImageView
+
+    // Navigation drawer items
+    private lateinit var navHome: TextView
+    private lateinit var navLanguage: TextView
+    private lateinit var navWords: TextView
+    private lateinit var navPhrases: TextView
+    private lateinit var navProgress: TextView
+    private lateinit var navSettings: TextView
+    private lateinit var navProfile: TextView
 
     // Firebase
     private lateinit var auth: FirebaseAuth
@@ -40,12 +54,12 @@ class ProfileActivity : AppCompatActivity() {
 
         // Check if user is logged in
         if (auth.currentUser == null) {
-            // User not logged in, redirect to login
             redirectToLogin()
             return
         }
 
         initViews()
+        setupUI()
         setupPasswordField()
         setupLanguageSpinner()
         setupClickListeners()
@@ -53,16 +67,22 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun redirectToLogin() {
-        Toast.makeText(this, "Please log in to access your profile", Toast.LENGTH_SHORT).show()
-        // Uncomment when you have LoginActivity
-        // val intent = Intent(this, LoginActivity::class.java)
-        // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        // startActivity(intent)
+        Toast.makeText(this, getString(R.string.profile_login_required), Toast.LENGTH_SHORT).show()
         finish()
     }
 
     private fun initViews() {
         drawerLayout = findViewById(R.id.drawer_layout)
+        tvProfileTitle = findViewById(R.id.tv_profile_title)
+
+        // Initialize label TextViews
+        tvLabelFullName = findViewById(R.id.tv_label_full_name)
+        tvLabelEmail = findViewById(R.id.tv_label_email)
+        tvLabelUsername = findViewById(R.id.tv_label_username)
+        tvLabelPassword = findViewById(R.id.tv_label_password)
+        tvLabelHomeLanguage = findViewById(R.id.tv_label_home_language)
+
+        // Initialize input fields
         etFullName = findViewById(R.id.et_full_name)
         etEmail = findViewById(R.id.et_email)
         etUsername = findViewById(R.id.et_username)
@@ -70,6 +90,45 @@ class ProfileActivity : AppCompatActivity() {
         spinnerLanguage = findViewById(R.id.spinner_language)
         btnSave = findViewById(R.id.btn_save)
         btnMenu = findViewById(R.id.btn_menu)
+
+        // Navigation drawer items
+        navHome = findViewById(R.id.nav_home)
+        navLanguage = findViewById(R.id.nav_language)
+        navWords = findViewById(R.id.nav_words)
+        navPhrases = findViewById(R.id.nav_phrases)
+        navProgress = findViewById(R.id.nav_progress)
+        navSettings = findViewById(R.id.nav_settings)
+        navProfile = findViewById(R.id.nav_profile)
+    }
+
+    private fun setupUI() {
+        // Set title using string resources
+        tvProfileTitle.text = getString(R.string.profile_title)
+
+        // Set label texts using string resources
+        tvLabelFullName.text = getString(R.string.profile_label_full_name)
+        tvLabelEmail.text = getString(R.string.profile_label_email)
+        tvLabelUsername.text = getString(R.string.profile_label_username)
+        tvLabelPassword.text = getString(R.string.profile_label_password)
+        tvLabelHomeLanguage.text = getString(R.string.profile_label_home_language)
+
+        // Set button text using string resources
+        btnSave.text = getString(R.string.btn_save_profile)
+
+        // Set EditText hints using string resources
+        etFullName.hint = getString(R.string.profile_hint_full_name)
+        etEmail.hint = getString(R.string.profile_hint_email)
+        etUsername.hint = getString(R.string.profile_hint_username)
+        etPassword.hint = getString(R.string.profile_hint_password)
+
+        // Set navigation drawer texts using string resources
+        navHome.text = getString(R.string.nav_home).uppercase()
+        navLanguage.text = getString(R.string.nav_language).uppercase()
+        navWords.text = getString(R.string.nav_words).uppercase()
+        navPhrases.text = getString(R.string.nav_phrases).uppercase()
+        navProgress.text = getString(R.string.nav_progress).uppercase()
+        navSettings.text = getString(R.string.nav_settings).uppercase()
+        navProfile.text = getString(R.string.nav_profile).uppercase()
     }
 
     private fun setupPasswordField() {
@@ -79,7 +138,7 @@ class ProfileActivity : AppCompatActivity() {
         etPassword.isFocusableInTouchMode = false
 
         // Set a placeholder to indicate passwords can't be changed here
-        etPassword.hint = "Password cannot be changed from profile"
+        etPassword.hint = getString(R.string.profile_password_disabled)
         etPassword.setText("") // Keep it empty for security
 
         // Set input type (though it won't be editable)
@@ -88,11 +147,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setupLanguageSpinner() {
-        val languages = arrayOf(
-            "English", "Afrikaans", "Zulu", "Xhosa",
-            "Sotho", "Tswana", "Tsonga", "Venda",
-            "Ndebele", "Swati", "Pedi"
-        )
+        val languages = resources.getStringArray(R.array.profile_languages)
 
         val adapter = ArrayAdapter(
             this,
@@ -121,46 +176,37 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        // Home navigation
-        findViewById<TextView>(R.id.nav_home).setOnClickListener {
+        navHome.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToHome()
         }
 
-        // Language navigation
-        findViewById<TextView>(R.id.nav_language).setOnClickListener {
+        navLanguage.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToLanguageSelection()
         }
 
-        // Words navigation
-        findViewById<TextView>(R.id.nav_words).setOnClickListener {
+        navWords.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToWordsActivity()
         }
 
-        // Phrases navigation
-        findViewById<TextView>(R.id.nav_phrases).setOnClickListener {
+        navPhrases.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToPhrasesActivity()
         }
 
-        // Progress navigation
-        findViewById<TextView>(R.id.nav_progress).setOnClickListener {
+        navProgress.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToProgressActivity()
         }
 
-
-
-        // Settings navigation
-        findViewById<TextView>(R.id.nav_settings).setOnClickListener {
+        navSettings.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToSettings()
         }
 
-        // Profile navigation (current page - just close drawer)
-        findViewById<TextView>(R.id.nav_profile).setOnClickListener {
+        navProfile.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
         }
 
@@ -181,7 +227,7 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    // Navigation methods matching HomeActivity functionality
+    // Navigation methods
     private fun navigateToHome() {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
@@ -211,8 +257,6 @@ class ProfileActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-
-
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
@@ -234,20 +278,16 @@ class ProfileActivity : AppCompatActivity() {
         auth.currentUser?.let { user ->
             Log.d("ProfileActivity", "Loading user data for: ${user.uid}")
 
-            // Load email from Firebase Auth
             val email = user.email ?: ""
             etEmail.setText(email)
             Log.d("ProfileActivity", "Email loaded: $email")
 
-            // Load display name from Firebase Auth (if available)
             val displayName = user.displayName ?: ""
             etFullName.setText(displayName)
             Log.d("ProfileActivity", "Display name loaded: $displayName")
 
-            // Load additional data from SharedPreferences
             loadAdditionalDataFromPrefs()
 
-            // Password field is disabled, so we don't need to set anything
             Log.d("ProfileActivity", "User data loading completed")
         } ?: run {
             Log.e("ProfileActivity", "No current user found")
@@ -265,7 +305,6 @@ class ProfileActivity : AppCompatActivity() {
 
         etUsername.setText(savedUsername)
 
-        // Set language spinner selection
         val adapter = spinnerLanguage.adapter as? ArrayAdapter<String>
         adapter?.let { spinnerAdapter ->
             val position = spinnerAdapter.getPosition(savedLanguage)
@@ -284,25 +323,25 @@ class ProfileActivity : AppCompatActivity() {
 
         Log.d("ProfileActivity", "Saving profile - Name: $fullName, Email: $email, Username: $username")
 
-        // Validate input (removed password validation since it's not editable)
+        // Validate input
         when {
             fullName.isEmpty() -> {
-                etFullName.error = "Full name is required"
+                etFullName.error = getString(R.string.error_full_name_required)
                 etFullName.requestFocus()
                 return
             }
             email.isEmpty() -> {
-                etEmail.error = "Email is required"
+                etEmail.error = getString(R.string.error_email_required)
                 etEmail.requestFocus()
                 return
             }
             !isValidEmail(email) -> {
-                etEmail.error = "Please enter a valid email"
+                etEmail.error = getString(R.string.error_valid_email)
                 etEmail.requestFocus()
                 return
             }
             username.isEmpty() -> {
-                etUsername.error = "Username is required"
+                etUsername.error = getString(R.string.error_username_required)
                 etUsername.requestFocus()
                 return
             }
@@ -310,10 +349,9 @@ class ProfileActivity : AppCompatActivity() {
 
         // Show saving state
         btnSave.isEnabled = false
-        btnSave.text = "Saving..."
+        btnSave.text = getString(R.string.profile_saving)
 
         auth.currentUser?.let { user ->
-            // Update display name in Firebase Auth
             val profileUpdates = UserProfileChangeRequest.Builder()
                 .setDisplayName(fullName)
                 .build()
@@ -322,19 +360,17 @@ class ProfileActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     Log.d("ProfileActivity", "Display name updated successfully")
 
-                    // Update email if changed
                     val currentEmail = user.email
                     if (currentEmail != email) {
                         updateEmailInAuth(email, username, language)
                     } else {
-                        // If email didn't change, just save additional data
                         saveAdditionalDataToPrefs(username, language)
                         showSaveSuccess()
                     }
                 }
                 .addOnFailureListener { exception ->
                     Log.e("ProfileActivity", "Error updating profile", exception)
-                    Toast.makeText(this, "Error updating profile: ${exception.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.profile_error_updating, exception.message), Toast.LENGTH_SHORT).show()
                     resetSaveButton()
                 }
         }
@@ -344,16 +380,12 @@ class ProfileActivity : AppCompatActivity() {
         auth.currentUser?.updateEmail(newEmail)
             ?.addOnSuccessListener {
                 Log.d("ProfileActivity", "Email updated successfully")
-
-                // Save additional data
                 saveAdditionalDataToPrefs(username, language)
                 showSaveSuccess()
             }
             ?.addOnFailureListener { exception ->
                 Log.e("ProfileActivity", "Error updating email", exception)
-                Toast.makeText(this, "Error updating email: ${exception.message}. You may need to re-authenticate.", Toast.LENGTH_LONG).show()
-
-                // Still save other data even if email update failed
+                Toast.makeText(this, getString(R.string.profile_error_email_update, exception.message), Toast.LENGTH_LONG).show()
                 saveAdditionalDataToPrefs(username, language)
                 resetSaveButton()
             }
@@ -371,17 +403,35 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun showSaveSuccess() {
-        Toast.makeText(this, "Profile saved successfully!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.profile_saved_success), Toast.LENGTH_SHORT).show()
         resetSaveButton()
     }
 
     private fun resetSaveButton() {
         btnSave.isEnabled = true
-        btnSave.text = "Save"
+        btnSave.text = getString(R.string.btn_save_profile)
     }
 
     private fun isValidEmail(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh the activity if language changed
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentLanguage = prefs.getString("home_language", "English") ?: "English"
+
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate()
+        }
     }
 
     override fun onBackPressed() {

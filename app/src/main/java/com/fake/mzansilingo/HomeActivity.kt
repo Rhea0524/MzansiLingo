@@ -7,12 +7,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
 
     private lateinit var btnWords: Button
     private lateinit var btnPhrases: Button
@@ -34,8 +33,8 @@ class HomeActivity : AppCompatActivity() {
         // Initialize views
         initializeViews()
 
-        // Set up the UI for Afrikaans
-        setupAfrikaansUI()
+        // Set up the UI - NOW USING STRING RESOURCES
+        setupUI()
 
         // Set up click listeners
         setupClickListeners()
@@ -59,16 +58,24 @@ class HomeActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
     }
 
-    private fun setupAfrikaansUI() {
-        // Set language header
+    private fun setupUI() {
+        // Use string resources so language changes work
+        // Make sure you have these strings in your strings.xml for each language
+
+        // If you have a string resource for language header, use it:
+        // tvLanguage.text = getString(R.string.language_header_afrikaans)
+        // Otherwise, keep the hardcoded one for now:
         tvLanguage.text = "LANGUAGE:\nAFRIKAANS"
 
-        // Set button texts for Afrikaans
-        btnWords.text = "WORDS / WOORDE"
-        btnPhrases.text = "PHRASES / FRASES"
-        btnLeaderboard.text = "LEADERBOARD / RANGLYS"
-        btnSetGoals.text = "SET GOALS / STEL DOELWITTE"
-        btnAiChat.text = "AI CHAT / KI-KLETS"
+        // IMPORTANT: Replace these hardcoded texts with string resources
+        // For now, I'm showing you what needs to be in strings.xml
+
+        // These should come from strings.xml:
+        btnWords.text = getString(R.string.btn_words) // Add this to strings.xml
+        btnPhrases.text = getString(R.string.btn_phrases) // Add this to strings.xml
+        btnLeaderboard.text = getString(R.string.btn_leaderboard) // Add this to strings.xml
+        btnSetGoals.text = getString(R.string.btn_set_goals) // Add this to strings.xml
+        btnAiChat.text = getString(R.string.btn_ai_chat) // Add this to strings.xml
 
         // Set mascot image (using your existing rhino drawable)
         ivMascot.setImageResource(R.drawable.rhino)
@@ -113,8 +120,6 @@ class HomeActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToLeaderboardActivity()
         }
-
-
 
         findViewById<TextView>(R.id.nav_settings).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
@@ -211,8 +216,6 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-
-
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
@@ -249,51 +252,30 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Refresh the activity if language changed
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentLanguage = prefs.getString("home_language", "English") ?: "English"
+
+        // Check if the locale matches the saved language
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate() // Recreate activity to apply new language
+        }
+    }
+
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END)
         } else {
             super.onBackPressed()
         }
-    }
-}
-
-// Data class to hold language-specific content
-data class LanguageContent(
-    val languageName: String,
-    val wordsText: String,
-    val phrasesText: String,
-    val leaderboardText: String,
-    val setGoalsText: String,
-    val aiChatText: String,
-    val welcomeMessage: String
-)
-
-
-object LanguageContentProvider {
-
-    fun getAfrikaansContent(): LanguageContent {
-        return LanguageContent(
-            languageName = "AFRIKAANS",
-            wordsText = "WORDS / WOORDE",
-            phrasesText = "PHRASES / FRASES",
-            leaderboardText = "LEADERBOARD / RANGLYS",
-            setGoalsText = "SET GOALS / STEL DOELWITTE",
-            aiChatText = "AI CHAT / KI-KLETS",
-            welcomeMessage = "Welkom terug!"
-        )
-    }
-
-
-    fun getSpanishContent(): LanguageContent {
-        return LanguageContent(
-            languageName = "ESPAÑOL",
-            wordsText = "WORDS / PALABRAS",
-            phrasesText = "PHRASES / FRASES",
-            leaderboardText = "LEADERBOARD / TABLA DE POSICIONES",
-            setGoalsText = "SET GOALS / ESTABLECER METAS",
-            aiChatText = "AI CHAT / CHAT IA",
-            welcomeMessage = "¡Bienvenido de nuevo!"
-        )
     }
 }

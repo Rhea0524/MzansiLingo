@@ -11,8 +11,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
@@ -36,7 +37,7 @@ data class OfflineQuizResult(
     val synced: Boolean = false
 )
 
-class OfflineQuizActivity : AppCompatActivity() {
+class OfflineQuizActivity : BaseActivity() {
 
     private lateinit var tvQuestionNumber: TextView
     private lateinit var tvWord: TextView
@@ -51,6 +52,7 @@ class OfflineQuizActivity : AppCompatActivity() {
     private lateinit var cardOption4: CardView
     private lateinit var btnNext: Button
     private lateinit var progressBar: ProgressBar
+    private lateinit var drawerLayout: DrawerLayout
 
     private var questions = mutableListOf<QuizQuestion>()
     private var currentQuestionIndex = 0
@@ -82,7 +84,9 @@ class OfflineQuizActivity : AppCompatActivity() {
 
         language = intent.getStringExtra("LANGUAGE") ?: "afrikaans"
 
+        drawerLayout = findViewById(R.id.drawer_layout)
         initializeViews()
+        setupNavigationDrawer()
         loadQuestions()
         displayQuestion()
         setupClickListeners()
@@ -117,6 +121,130 @@ class OfflineQuizActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.btn_close).setOnClickListener {
             showExitDialog()
         }
+    }
+
+    private fun setupNavigationDrawer() {
+        // Navigation drawer item listeners
+        findViewById<TextView>(R.id.nav_home).apply {
+            text = getString(R.string.nav_home).uppercase()
+            setOnClickListener {
+                drawerLayout.closeDrawer(GravityCompat.END)
+                navigateToHome()
+            }
+        }
+
+        findViewById<TextView>(R.id.nav_language).apply {
+            text = getString(R.string.nav_language).uppercase()
+            setOnClickListener {
+                drawerLayout.closeDrawer(GravityCompat.END)
+                navigateToLanguageSelection()
+            }
+        }
+
+        findViewById<TextView>(R.id.nav_words).apply {
+            text = getString(R.string.nav_words).uppercase()
+            setOnClickListener {
+                drawerLayout.closeDrawer(GravityCompat.END)
+                navigateToWordsActivity()
+            }
+        }
+
+        findViewById<TextView>(R.id.nav_phrases).apply {
+            text = getString(R.string.nav_phrases).uppercase()
+            setOnClickListener {
+                drawerLayout.closeDrawer(GravityCompat.END)
+                navigateToPhrasesActivity()
+            }
+        }
+
+        findViewById<TextView>(R.id.nav_progress).apply {
+            text = getString(R.string.nav_progress).uppercase()
+            setOnClickListener {
+                drawerLayout.closeDrawer(GravityCompat.END)
+                navigateToProgressActivity()
+            }
+        }
+
+        findViewById<TextView>(R.id.nav_settings).apply {
+            text = getString(R.string.nav_settings).uppercase()
+            setOnClickListener {
+                drawerLayout.closeDrawer(GravityCompat.END)
+                navigateToSettings()
+            }
+        }
+
+        findViewById<TextView>(R.id.nav_profile).apply {
+            text = getString(R.string.nav_profile).uppercase()
+            setOnClickListener {
+                drawerLayout.closeDrawer(GravityCompat.END)
+                navigateToProfile()
+            }
+        }
+
+        findViewById<ImageView>(R.id.nav_dictionary).setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            Toast.makeText(this, getString(R.string.already_on_offline_quiz), Toast.LENGTH_SHORT).show()
+        }
+
+        findViewById<ImageView>(R.id.nav_back).setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            showExitDialog()
+        }
+
+        findViewById<ImageView>(R.id.nav_chat).setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            navigateToAiChatActivity()
+        }
+    }
+
+    private fun navigateToHome() {
+        val intent = Intent(this, HomeActivity::class.java)
+        intent.putExtra("LANGUAGE", language)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun navigateToLanguageSelection() {
+        val intent = Intent(this, LanguageSelectionActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToWordsActivity() {
+        val intent = Intent(this, WordsActivity::class.java)
+        intent.putExtra("LANGUAGE", language)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun navigateToPhrasesActivity() {
+        val intent = Intent(this, PhrasesActivity::class.java)
+        intent.putExtra("LANGUAGE", language)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun navigateToProgressActivity() {
+        val intent = Intent(this, ProgressActivity::class.java)
+        intent.putExtra("LANGUAGE", language)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun navigateToAiChatActivity() {
+        val intent = Intent(this, AiChatActivity::class.java)
+        intent.putExtra("LANGUAGE", language)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun navigateToSettings() {
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToProfile() {
+        val intent = Intent(this, ProfileActivity::class.java)
+        startActivity(intent)
     }
 
     private fun loadQuestions() {
@@ -188,9 +316,9 @@ class OfflineQuizActivity : AppCompatActivity() {
         }
 
         val question = questions[currentQuestionIndex]
-        tvQuestionNumber.text = "Question ${currentQuestionIndex + 1}/${questions.size}"
+        tvQuestionNumber.text = getString(R.string.question_format, currentQuestionIndex + 1, questions.size)
         tvWord.text = question.word
-        tvProgress.text = "$score correct"
+        tvProgress.text = getString(R.string.correct_count, score)
         progressBar.progress = ((currentQuestionIndex.toFloat() / questions.size) * 100).toInt()
 
         btnOption1.text = question.options[0]
@@ -230,14 +358,14 @@ class OfflineQuizActivity : AppCompatActivity() {
             card.setCardBackgroundColor(correctColor)
             button.text = "✓ ${question.options[answerIndex]}"
             score++
-            Toast.makeText(this, "Correct! ✓", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.correct_toast), Toast.LENGTH_SHORT).show()
         } else {
             // Wrong answer - show red with X
             card.setCardBackgroundColor(wrongColor)
             button.text = "✗ ${question.options[answerIndex]}"
             // Also highlight the correct answer
             highlightCorrectAnswer(question.correctAnswer)
-            Toast.makeText(this, "Wrong! The correct answer was: ${question.options[question.correctAnswer]}", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.wrong_toast, question.options[question.correctAnswer]), Toast.LENGTH_LONG).show()
         }
 
         btnNext.isEnabled = true
@@ -312,25 +440,25 @@ class OfflineQuizActivity : AppCompatActivity() {
         val percentage = (score.toFloat() / questions.size * 100).toInt()
 
         val message = when {
-            percentage >= 90 -> "Excellent! 🌟\n\nYou scored $score out of ${questions.size}\n\nAccuracy: $percentage%"
-            percentage >= 70 -> "Great job! 👍\n\nYou scored $score out of ${questions.size}\n\nAccuracy: $percentage%"
-            percentage >= 50 -> "Good effort! 💪\n\nYou scored $score out of ${questions.size}\n\nAccuracy: $percentage%"
-            else -> "Keep practicing! 📚\n\nYou scored $score out of ${questions.size}\n\nAccuracy: $percentage%"
+            percentage >= 90 -> getString(R.string.excellent_result, score, questions.size, percentage)
+            percentage >= 70 -> getString(R.string.great_result, score, questions.size, percentage)
+            percentage >= 50 -> getString(R.string.good_result, score, questions.size, percentage)
+            else -> getString(R.string.practice_result, score, questions.size, percentage)
         }
 
         // Save the quiz result locally
         saveQuizResult(score, questions.size)
 
         AlertDialog.Builder(this)
-            .setTitle("Quiz Complete!")
+            .setTitle(getString(R.string.quiz_complete))
             .setMessage(message)
-            .setPositiveButton("Try Again") { _, _ ->
+            .setPositiveButton(getString(R.string.try_again)) { _, _ ->
                 currentQuestionIndex = 0
                 score = 0
                 questions.shuffle()
                 displayQuestion()
             }
-            .setNegativeButton("Exit") { _, _ ->
+            .setNegativeButton(getString(R.string.exit)) { _, _ ->
                 finish()
             }
             .setCancelable(false)
@@ -438,7 +566,7 @@ class OfflineQuizActivity : AppCompatActivity() {
                     logDailyLogin(userId, dateFormat.format(Date(result.timestamp)))
 
                     if (syncedCount == unsyncedResults.size) {
-                        Toast.makeText(this, "Quiz results synced successfully! ✓", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.quiz_synced), Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener { e ->
@@ -478,15 +606,19 @@ class OfflineQuizActivity : AppCompatActivity() {
 
     private fun showExitDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Exit Quiz?")
-            .setMessage("Your progress will be lost. Are you sure?")
-            .setPositiveButton("Yes") { _, _ -> finish() }
-            .setNegativeButton("No", null)
+            .setTitle(getString(R.string.exit_quiz))
+            .setMessage(getString(R.string.exit_quiz_message))
+            .setPositiveButton(getString(R.string.yes)) { _, _ -> finish() }
+            .setNegativeButton(getString(R.string.no), null)
             .show()
     }
 
     override fun onBackPressed() {
-        showExitDialog()
+        if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+            drawerLayout.closeDrawer(GravityCompat.END)
+        } else {
+            showExitDialog()
+        }
     }
 
     override fun onResume() {

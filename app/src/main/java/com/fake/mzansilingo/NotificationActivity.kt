@@ -10,16 +10,17 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import java.util.*
 
-class NotificationActivity : AppCompatActivity() {
+class NotificationActivity : BaseActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var btnMenu: ImageView
     private lateinit var tvTitle: TextView
+    private lateinit var tvMorningLabel: TextView
+    private lateinit var tvEveningLabel: TextView
     private lateinit var switchMorningReminder: Switch
     private lateinit var switchEveningReminder: Switch
     private lateinit var btnTestNotification: Button
@@ -49,21 +50,27 @@ class NotificationActivity : AppCompatActivity() {
         drawerLayout = findViewById(R.id.drawer_layout)
         btnMenu = findViewById(R.id.btn_menu)
         tvTitle = findViewById(R.id.tv_title)
+        tvMorningLabel = findViewById(R.id.tv_morning_label)
+        tvEveningLabel = findViewById(R.id.tv_evening_label)
         switchMorningReminder = findViewById(R.id.switch_morning_reminder)
         switchEveningReminder = findViewById(R.id.switch_evening_reminder)
         btnTestNotification = findViewById(R.id.btn_test_notification)
 
-        tvTitle.text = "NOTIFICATIONS"
+        // Set text from string resources
+        tvTitle.text = getString(R.string.notifications_title)
+        tvMorningLabel.text = getString(R.string.morning_reminder_label)
+        tvEveningLabel.text = getString(R.string.evening_reminder_label)
+        btnTestNotification.text = getString(R.string.btn_test_notification)
     }
 
     private fun setupNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Learning Reminders",
+                getString(R.string.notification_channel_name),
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = "Daily reminders for language learning"
+                description = getString(R.string.notification_channel_description)
                 enableVibration(true)
                 setShowBadge(true)
             }
@@ -79,7 +86,7 @@ class NotificationActivity : AppCompatActivity() {
             if (!alarmManager.canScheduleExactAlarms()) {
                 Toast.makeText(
                     this,
-                    "Exact alarm permission required for notifications to work properly",
+                    getString(R.string.error_exact_alarm_permission),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -98,10 +105,18 @@ class NotificationActivity : AppCompatActivity() {
             sharedPrefs.edit().putBoolean("morning_enabled", isChecked).apply()
             if (isChecked) {
                 scheduleMorningNotification()
-                Toast.makeText(this, "Morning reminders enabled at 7:00 AM", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.morning_reminder_enabled),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 cancelNotification(MORNING_NOTIFICATION_ID)
-                Toast.makeText(this, "Morning reminders disabled", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.morning_reminder_disabled),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -109,10 +124,18 @@ class NotificationActivity : AppCompatActivity() {
             sharedPrefs.edit().putBoolean("evening_enabled", isChecked).apply()
             if (isChecked) {
                 scheduleEveningNotification()
-                Toast.makeText(this, "Evening reminders enabled at 6:00 PM", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.evening_reminder_enabled),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 cancelNotification(EVENING_NOTIFICATION_ID)
-                Toast.makeText(this, "Evening reminders disabled", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    getString(R.string.evening_reminder_disabled),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -140,7 +163,11 @@ class NotificationActivity : AppCompatActivity() {
                 putExtra("type", "test")
             }
             sendBroadcast(intent)
-            Toast.makeText(this, "Test notification sent!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                getString(R.string.test_notification_sent),
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         findViewById<ImageView>(R.id.nav_back).setOnClickListener {
@@ -174,7 +201,7 @@ class NotificationActivity : AppCompatActivity() {
             if (!alarmManager.canScheduleExactAlarms()) {
                 Toast.makeText(
                     this,
-                    "Please enable exact alarm permission in settings",
+                    getString(R.string.error_enable_exact_alarm),
                     Toast.LENGTH_LONG
                 ).show()
                 try {
@@ -218,7 +245,11 @@ class NotificationActivity : AppCompatActivity() {
             )
             Log.d(TAG, "Scheduled $type notification for ${calendar.time}")
         } catch (e: SecurityException) {
-            Toast.makeText(this, "Permission needed for exact alarms", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                getString(R.string.error_permission_exact_alarms),
+                Toast.LENGTH_LONG
+            ).show()
             Log.e(TAG, "Failed to schedule notification", e)
         }
     }

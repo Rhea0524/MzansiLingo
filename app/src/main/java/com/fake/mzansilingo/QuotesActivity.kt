@@ -9,7 +9,6 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -17,7 +16,7 @@ import okhttp3.*
 import java.io.IOException
 import java.net.URLEncoder
 
-class QuotesActivity : AppCompatActivity() {
+class QuotesActivity : BaseActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
 
@@ -89,6 +88,25 @@ class QuotesActivity : AppCompatActivity() {
         Log.d(TAG, "=== QuotesActivity onCreate finished ===")
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Refresh the activity if language changed
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentLanguage = prefs.getString("home_language", "English") ?: "English"
+
+        // Check if the locale matches the saved language
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate() // Recreate activity to apply new language
+        }
+    }
+
     private fun initializeViews() {
         Log.d(TAG, "Finding drawer_layout")
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -114,61 +132,61 @@ class QuotesActivity : AppCompatActivity() {
 
         // Journey quote - Show quotes and play TTS when clicked
         findViewById<CardView>(R.id.card_journey_en).setOnClickListener {
-            showQuoteToast(quotes[0].first, "English")
+            showQuoteToast(quotes[0].first, getString(R.string.language_english))
             speakQuote(quotes[0].first, "en")
         }
         findViewById<CardView>(R.id.card_journey_af).setOnClickListener {
-            showQuoteToast(quotes[0].second, "Afrikaans")
+            showQuoteToast(quotes[0].second, getString(R.string.language_afrikaans))
             speakQuote(quotes[0].second, "af")
         }
 
         // Believe quote
         findViewById<CardView>(R.id.card_believe_en).setOnClickListener {
-            showQuoteToast(quotes[1].first, "English")
+            showQuoteToast(quotes[1].first, getString(R.string.language_english))
             speakQuote(quotes[1].first, "en")
         }
         findViewById<CardView>(R.id.card_believe_af).setOnClickListener {
-            showQuoteToast(quotes[1].second, "Afrikaans")
+            showQuoteToast(quotes[1].second, getString(R.string.language_afrikaans))
             speakQuote(quotes[1].second, "af")
         }
 
         // Success quote
         findViewById<CardView>(R.id.card_success_en).setOnClickListener {
-            showQuoteToast(quotes[2].first, "English")
+            showQuoteToast(quotes[2].first, getString(R.string.language_english))
             speakQuote(quotes[2].first, "en")
         }
         findViewById<CardView>(R.id.card_success_af).setOnClickListener {
-            showQuoteToast(quotes[2].second, "Afrikaans")
+            showQuoteToast(quotes[2].second, getString(R.string.language_afrikaans))
             speakQuote(quotes[2].second, "af")
         }
 
         // Great work quote
         findViewById<CardView>(R.id.card_great_work_en).setOnClickListener {
-            showQuoteToast(quotes[3].first, "English")
+            showQuoteToast(quotes[3].first, getString(R.string.language_english))
             speakQuote(quotes[3].first, "en")
         }
         findViewById<CardView>(R.id.card_great_work_af).setOnClickListener {
-            showQuoteToast(quotes[3].second, "Afrikaans")
+            showQuoteToast(quotes[3].second, getString(R.string.language_afrikaans))
             speakQuote(quotes[3].second, "af")
         }
 
         // Education quote
         findViewById<CardView>(R.id.card_education_en).setOnClickListener {
-            showQuoteToast(quotes[4].first, "English")
+            showQuoteToast(quotes[4].first, getString(R.string.language_english))
             speakQuote(quotes[4].first, "en")
         }
         findViewById<CardView>(R.id.card_education_af).setOnClickListener {
-            showQuoteToast(quotes[4].second, "Afrikaans")
+            showQuoteToast(quotes[4].second, getString(R.string.language_afrikaans))
             speakQuote(quotes[4].second, "af")
         }
 
         // Slowly quote
         findViewById<CardView>(R.id.card_slowly_en).setOnClickListener {
-            showQuoteToast(quotes[5].first, "English")
+            showQuoteToast(quotes[5].first, getString(R.string.language_english))
             speakQuote(quotes[5].first, "en")
         }
         findViewById<CardView>(R.id.card_slowly_af).setOnClickListener {
-            showQuoteToast(quotes[5].second, "Afrikaans")
+            showQuoteToast(quotes[5].second, getString(R.string.language_afrikaans))
             speakQuote(quotes[5].second, "af")
         }
 
@@ -179,7 +197,7 @@ class QuotesActivity : AppCompatActivity() {
     private fun speakQuote(text: String, language: String) {
         try {
             // Show loading indicator
-            Toast.makeText(this, "Loading pronunciation...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.loading_pronunciation), Toast.LENGTH_SHORT).show()
 
             // Google Translate TTS URL with language parameter
             val encodedText = URLEncoder.encode(text, "UTF-8")
@@ -193,7 +211,7 @@ class QuotesActivity : AppCompatActivity() {
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     Handler(Looper.getMainLooper()).post {
-                        Toast.makeText(this@QuotesActivity, "Pronunciation unavailable", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@QuotesActivity, getString(R.string.pronunciation_unavailable), Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -214,20 +232,20 @@ class QuotesActivity : AppCompatActivity() {
 
                             } catch (e: Exception) {
                                 Handler(Looper.getMainLooper()).post {
-                                    Toast.makeText(this@QuotesActivity, "Audio playback error", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this@QuotesActivity, getString(R.string.audio_playback_error), Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
                     } else {
                         Handler(Looper.getMainLooper()).post {
-                            Toast.makeText(this@QuotesActivity, "Pronunciation service unavailable", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@QuotesActivity, getString(R.string.pronunciation_service_unavailable), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             })
 
         } catch (e: Exception) {
-            Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.error_prefix) + " ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -238,7 +256,7 @@ class QuotesActivity : AppCompatActivity() {
                 setDataSource(filePath)
                 setOnPreparedListener { mp ->
                     mp.start()
-                    Toast.makeText(this@QuotesActivity, "Playing quote", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@QuotesActivity, getString(R.string.playing_quote), Toast.LENGTH_SHORT).show()
                 }
                 setOnCompletionListener { mp ->
                     mp.release()
@@ -251,13 +269,13 @@ class QuotesActivity : AppCompatActivity() {
                 }
                 setOnErrorListener { mp, what, extra ->
                     mp.release()
-                    Toast.makeText(this@QuotesActivity, "Audio playback failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@QuotesActivity, getString(R.string.audio_playback_failed), Toast.LENGTH_SHORT).show()
                     true
                 }
                 prepareAsync()
             }
         } catch (e: Exception) {
-            Toast.makeText(this, "Media player error: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.media_player_error, e.message), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -299,8 +317,6 @@ class QuotesActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToProgressActivity()
         }
-
-
 
         findViewById<TextView>(R.id.nav_settings).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
@@ -371,8 +387,6 @@ class QuotesActivity : AppCompatActivity() {
         intent.putExtra("LANGUAGE", "afrikaans")
         startActivity(intent)
     }
-
-
 
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)

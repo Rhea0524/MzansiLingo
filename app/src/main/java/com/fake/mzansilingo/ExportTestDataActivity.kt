@@ -41,13 +41,12 @@ data class TestResult(
     val startTime: Long = 0L,
     val endTime: Long = 0L
 ) {
-    // Computed properties for backwards compatibility and convenience
     val score: Double get() = scorePercentage
     val timeSpent: Long get() = testDuration
     val timestampAsDate: Date get() = Date(timestamp)
 }
 
-class ExportTestDataActivity : AppCompatActivity() {
+class ExportTestDataActivity : BaseActivity() {
 
     private lateinit var db: FirebaseFirestore
     private var testResults: List<TestResult> = listOf()
@@ -62,6 +61,7 @@ class ExportTestDataActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var btnBack: ImageView
     private lateinit var btnMenu: ImageView
+    private lateinit var tvTitle: TextView
     private lateinit var btnDateFrom: AppCompatButton
     private lateinit var btnDateTo: AppCompatButton
     private lateinit var spinnerLanguage: Spinner
@@ -74,6 +74,11 @@ class ExportTestDataActivity : AppCompatActivity() {
     private lateinit var tvAverageScore: TextView
     private lateinit var tvDateRange: TextView
     private lateinit var navHome: TextView
+    private lateinit var navLanguage: TextView
+    private lateinit var navWords: TextView
+    private lateinit var navPhrases: TextView
+    private lateinit var navSettings: TextView
+    private lateinit var navProfile: TextView
     private lateinit var navBack: ImageView
     private lateinit var navDictionary: ImageView
     private lateinit var navChat: ImageView
@@ -91,10 +96,29 @@ class ExportTestDataActivity : AppCompatActivity() {
         loadTestData()
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Refresh UI when language changes
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentLanguage = prefs.getString("home_language", "English") ?: "English"
+
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate()
+        }
+    }
+
     private fun initViews() {
         drawerLayout = findViewById(R.id.drawer_layout)
         btnBack = findViewById(R.id.btn_back)
         btnMenu = findViewById(R.id.btn_menu)
+        tvTitle = findViewById(R.id.tv_title)
         btnDateFrom = findViewById(R.id.btn_date_from)
         btnDateTo = findViewById(R.id.btn_date_to)
         spinnerLanguage = findViewById(R.id.spinner_language)
@@ -107,29 +131,44 @@ class ExportTestDataActivity : AppCompatActivity() {
         tvAverageScore = findViewById(R.id.tv_average_score)
         tvDateRange = findViewById(R.id.tv_date_range)
         navHome = findViewById(R.id.nav_home)
+        navLanguage = findViewById(R.id.nav_language)
+        navWords = findViewById(R.id.nav_words)
+        navPhrases = findViewById(R.id.nav_phrases)
+        navSettings = findViewById(R.id.nav_settings)
+        navProfile = findViewById(R.id.nav_profile)
         navBack = findViewById(R.id.nav_back)
         navDictionary = findViewById(R.id.nav_dictionary)
         navChat = findViewById(R.id.nav_chat)
     }
 
     private fun setupUI() {
+        // Use string resources for all text
+        tvTitle.text = getString(R.string.export_data_title)
+        btnDateFrom.text = getString(R.string.btn_date_from)
+        btnDateTo.text = getString(R.string.btn_date_to)
+        btnPreview.text = getString(R.string.btn_preview_data)
+        btnExport.text = getString(R.string.btn_export_pdf)
+        btnShare.text = getString(R.string.btn_share_results)
+
+        // Set initial date range text
+        tvDateRange.text = getString(R.string.date_range_all_time)
+
         setupNavigationDrawer()
     }
 
     private fun setupSpinners() {
-        // Language spinner
-        val languages = arrayOf("All Languages", "English", "Afrikaans", "Zulu", "Xhosa", "Sotho")
+        // Language spinner - Use string resources
+        val languages = resources.getStringArray(R.array.export_languages)
         val languageAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, languages)
         languageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerLanguage.adapter = languageAdapter
 
-        // Test type spinner - updated to match your actual data
-        val testTypes = arrayOf("All Types", "WORD_TEST", "PHRASE_TEST", "Mixed", "Vocabulary", "Grammar")
+        // Test type spinner - Use string resources
+        val testTypes = resources.getStringArray(R.array.export_test_types)
         val testTypeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, testTypes)
         testTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerTestType.adapter = testTypeAdapter
 
-        // Add listeners to spinners for filtering
         spinnerLanguage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 filterAndUpdateData()
@@ -159,18 +198,47 @@ class ExportTestDataActivity : AppCompatActivity() {
         // Navigation drawer clicks
         navHome.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
-            try {
-                val intent = Intent(this, Class.forName("${packageName}.HomeActivity"))
-                startActivity(intent)
-                finish()
-            } catch (e: ClassNotFoundException) {
-                Toast.makeText(this, "Home activity not found", Toast.LENGTH_SHORT).show()
-            }
+            navigateToHome()
+        }
+
+        navLanguage.setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            navigateToLanguageSelection()
+        }
+
+        navWords.setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            navigateToWords()
+        }
+
+        navPhrases.setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            navigateToPhrases()
+        }
+
+        navSettings.setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            navigateToSettings()
+        }
+
+        navProfile.setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            navigateToProfile()
         }
 
         navBack.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             finish()
+        }
+
+        navChat.setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            navigateToChat()
+        }
+
+        navDictionary.setOnClickListener {
+            drawerLayout.closeDrawer(GravityCompat.END)
+            navigateToDictionary()
         }
     }
 
@@ -204,17 +272,15 @@ class ExportTestDataActivity : AppCompatActivity() {
         progressBar.visibility = View.VISIBLE
         Log.d("ExportTestData", "Starting to load test data...")
 
-        // Get current user's ID
         val currentUser = FirebaseAuth.getInstance().currentUser
         val currentUserId = currentUser?.uid
 
         if (currentUserId == null) {
             progressBar.visibility = View.GONE
-            Toast.makeText(this, "User not authenticated", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.error_user_not_authenticated), Toast.LENGTH_LONG).show()
             return
         }
 
-        // Filter by current user's authUserId
         db.collection("test_results")
             .whereEqualTo("authUserId", currentUserId)
             .get()
@@ -224,11 +290,7 @@ class ExportTestDataActivity : AppCompatActivity() {
 
                 for (document in documents) {
                     try {
-                        Log.d("ExportTestData", "Processing document: ${document.id}")
                         val data = document.data
-                        Log.d("ExportTestData", "Document data: $data")
-
-                        // Manual parsing to handle your specific Firebase structure
                         val result = TestResult(
                             authUserId = data["authUserId"] as? String ?: "",
                             testType = data["testType"] as? String ?: "",
@@ -277,7 +339,6 @@ class ExportTestDataActivity : AppCompatActivity() {
                             }
                         )
 
-                        Log.d("ExportTestData", "Parsed result: $result")
                         results.add(result)
                     } catch (e: Exception) {
                         Log.e("ExportTestData", "Error parsing document ${document.id}: ${e.message}", e)
@@ -287,31 +348,33 @@ class ExportTestDataActivity : AppCompatActivity() {
 
                 testResults = results
                 filteredResults = results
-                Log.d("ExportTestData", "Final results count: ${results.size}")
                 updateSummaryStats()
                 progressBar.visibility = View.GONE
 
                 if (results.isEmpty()) {
-                    Toast.makeText(this, "No test results found for current user", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.no_test_results_found), Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(this, "Loaded ${results.size} test results for current user", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.loaded_test_results, results.size), Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener { exception ->
                 Log.e("ExportTestData", "Firebase query failed: ${exception.message}", exception)
                 progressBar.visibility = View.GONE
-                Toast.makeText(this, "Error loading data: ${exception.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.error_loading_data, exception.message), Toast.LENGTH_LONG).show()
             }
     }
 
     private fun filterAndUpdateData() {
+        val allLanguagesText = resources.getStringArray(R.array.export_languages)[0]
+        val allTypesText = resources.getStringArray(R.array.export_test_types)[0]
+
         filteredResults = testResults.filter { result ->
-            val matchesLanguage = spinnerLanguage.selectedItem.toString() == "All Languages" ||
+            val matchesLanguage = spinnerLanguage.selectedItem.toString() == allLanguagesText ||
                     result.language.equals(spinnerLanguage.selectedItem.toString(), ignoreCase = true) ||
                     (spinnerLanguage.selectedItem.toString() == "English" && result.language.isEmpty())
 
             val selectedTestType = spinnerTestType.selectedItem.toString()
-            val matchesTestType = selectedTestType == "All Types" ||
+            val matchesTestType = selectedTestType == allTypesText ||
                     result.testType.equals(selectedTestType, ignoreCase = true)
 
             val resultDate = Date(result.timestamp)
@@ -335,9 +398,9 @@ class ExportTestDataActivity : AppCompatActivity() {
 
         val dateRangeText = when {
             fromDate != null && toDate != null -> "${dateFormat.format(fromDate!!)} - ${dateFormat.format(toDate!!)}"
-            fromDate != null -> "From ${dateFormat.format(fromDate!!)}"
-            toDate != null -> "Until ${dateFormat.format(toDate!!)}"
-            else -> "All Time"
+            fromDate != null -> getString(R.string.date_range_from, dateFormat.format(fromDate!!))
+            toDate != null -> getString(R.string.date_range_until, dateFormat.format(toDate!!))
+            else -> getString(R.string.date_range_all_time)
         }
 
         tvDateRange.text = dateRangeText
@@ -345,41 +408,39 @@ class ExportTestDataActivity : AppCompatActivity() {
 
     private fun previewData() {
         if (filteredResults.isEmpty()) {
-            Toast.makeText(this, "No data to preview", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_data_to_preview), Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Show preview in a dialog
         val previewText = generatePreviewText()
         showPreviewDialog(previewText)
     }
 
     private fun generatePreviewText(): String {
         val sb = StringBuilder()
-        sb.append("TEST RESULTS EXPORT PREVIEW\n")
+        sb.append(getString(R.string.preview_title)).append("\n")
         sb.append("=".repeat(40)).append("\n\n")
-        sb.append("Export Summary:\n")
-        sb.append("Total Tests: ${filteredResults.size}\n")
+        sb.append(getString(R.string.export_summary_label)).append("\n")
+        sb.append(getString(R.string.total_tests_label, filteredResults.size)).append("\n")
 
         val avgScore = if (filteredResults.isNotEmpty()) {
             filteredResults.map { it.scorePercentage }.average()
         } else 0.0
 
-        sb.append("Average Score: ${String.format("%.1f", avgScore)}%\n")
-        sb.append("Date Range: ${tvDateRange.text}\n")
-        sb.append("Export Format: PDF\n\n")
+        sb.append(getString(R.string.average_score_label, String.format("%.1f", avgScore))).append("\n")
+        sb.append(getString(R.string.date_range_label, tvDateRange.text)).append("\n")
+        sb.append(getString(R.string.export_format_label)).append("\n\n")
 
-        sb.append("Sample Results (First 5):\n")
+        sb.append(getString(R.string.sample_results_label)).append("\n")
         sb.append("-".repeat(40)).append("\n")
 
         filteredResults.take(5).forEach { result ->
-            sb.append("Date: ${timestampFormat.format(Date(result.timestamp))}\n")
-            sb.append("Language: ${result.language}\n")
-            sb.append("Test Type: ${result.testType}\n")
-            sb.append("Score: ${result.scorePercentage}% (${result.correctAnswers}/${result.totalQuestions})\n")
-            sb.append("Time: ${result.testDuration / 1000}s\n")
-            sb.append("Category: ${result.category}\n")
-            sb.append("\n")
+            sb.append(getString(R.string.result_date_label, timestampFormat.format(Date(result.timestamp)))).append("\n")
+            sb.append(getString(R.string.result_language_label, result.language)).append("\n")
+            sb.append(getString(R.string.result_test_type_label, result.testType)).append("\n")
+            sb.append(getString(R.string.result_score_label, result.scorePercentage, result.correctAnswers, result.totalQuestions)).append("\n")
+            sb.append(getString(R.string.result_time_label, result.testDuration / 1000)).append("\n")
+            sb.append(getString(R.string.result_category_label, result.category)).append("\n\n")
         }
 
         return sb.toString()
@@ -387,10 +448,10 @@ class ExportTestDataActivity : AppCompatActivity() {
 
     private fun showPreviewDialog(previewText: String) {
         AlertDialog.Builder(this)
-            .setTitle("Data Preview")
+            .setTitle(getString(R.string.data_preview_title))
             .setMessage(previewText)
-            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-            .setNegativeButton("Export PDF") { dialog, _ ->
+            .setPositiveButton(getString(R.string.btn_ok)) { dialog, _ -> dialog.dismiss() }
+            .setNegativeButton(getString(R.string.btn_export_pdf_short)) { dialog, _ ->
                 dialog.dismiss()
                 exportToPDF()
             }
@@ -399,7 +460,7 @@ class ExportTestDataActivity : AppCompatActivity() {
 
     private fun exportToPDF() {
         if (filteredResults.isEmpty()) {
-            Toast.makeText(this, "No data to export", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_data_to_export), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -416,23 +477,23 @@ class ExportTestDataActivity : AppCompatActivity() {
 
             // Title
             val titleFont = Font(Font.FontFamily.HELVETICA, 18f, Font.BOLD, BaseColor.BLUE)
-            val title = Paragraph("TEST RESULTS EXPORT REPORT", titleFont)
+            val title = Paragraph(getString(R.string.pdf_title), titleFont)
             title.alignment = Element.ALIGN_CENTER
             title.spacingAfter = 20f
             document.add(title)
 
             // Summary
             val summaryFont = Font(Font.FontFamily.HELVETICA, 12f, Font.BOLD)
-            document.add(Paragraph("EXPORT SUMMARY", summaryFont))
-            document.add(Paragraph("Total Tests: ${filteredResults.size}"))
+            document.add(Paragraph(getString(R.string.export_summary_label), summaryFont))
+            document.add(Paragraph(getString(R.string.total_tests_label, filteredResults.size)))
 
             val avgScore = if (filteredResults.isNotEmpty()) {
                 filteredResults.map { it.scorePercentage }.average()
             } else 0.0
 
-            document.add(Paragraph("Average Score: ${String.format("%.1f", avgScore)}%"))
-            document.add(Paragraph("Export Date: ${dateFormat.format(Date())}"))
-            document.add(Paragraph("Date Range: ${tvDateRange.text}"))
+            document.add(Paragraph(getString(R.string.average_score_label, String.format("%.1f", avgScore))))
+            document.add(Paragraph(getString(R.string.export_date_label, dateFormat.format(Date()))))
+            document.add(Paragraph(getString(R.string.date_range_label, tvDateRange.text)))
             document.add(Paragraph(" "))
 
             // Results table
@@ -442,13 +503,13 @@ class ExportTestDataActivity : AppCompatActivity() {
 
             // Headers
             val headerFont = Font(Font.FontFamily.HELVETICA, 10f, Font.BOLD)
-            table.addCell(Phrase("Date", headerFont))
-            table.addCell(Phrase("Language", headerFont))
-            table.addCell(Phrase("Test Type", headerFont))
-            table.addCell(Phrase("Score", headerFont))
-            table.addCell(Phrase("Questions", headerFont))
-            table.addCell(Phrase("Time (s)", headerFont))
-            table.addCell(Phrase("Category", headerFont))
+            table.addCell(Phrase(getString(R.string.table_header_date), headerFont))
+            table.addCell(Phrase(getString(R.string.table_header_language), headerFont))
+            table.addCell(Phrase(getString(R.string.table_header_test_type), headerFont))
+            table.addCell(Phrase(getString(R.string.table_header_score), headerFont))
+            table.addCell(Phrase(getString(R.string.table_header_questions), headerFont))
+            table.addCell(Phrase(getString(R.string.table_header_time), headerFont))
+            table.addCell(Phrase(getString(R.string.table_header_category), headerFont))
 
             // Data rows
             val dataFont = Font(Font.FontFamily.HELVETICA, 9f)
@@ -466,14 +527,13 @@ class ExportTestDataActivity : AppCompatActivity() {
             document.close()
 
             progressBar.visibility = View.GONE
-            Toast.makeText(this, "PDF exported successfully: $fileName", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.pdf_export_success, fileName), Toast.LENGTH_LONG).show()
 
-            // Open the PDF
             openFile(file)
 
         } catch (e: Exception) {
             progressBar.visibility = View.GONE
-            Toast.makeText(this, "Error exporting PDF: ${e.message}", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.error_exporting_pdf, e.message), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -489,13 +549,13 @@ class ExportTestDataActivity : AppCompatActivity() {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             startActivity(intent)
         } catch (e: Exception) {
-            Toast.makeText(this, "No app found to open PDF files", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.error_no_pdf_app), Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun shareResults() {
         if (filteredResults.isEmpty()) {
-            Toast.makeText(this, "No data to share", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_data_to_share), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -503,77 +563,88 @@ class ExportTestDataActivity : AppCompatActivity() {
 
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Test Results Export")
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_subject))
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareText)
 
-        startActivity(Intent.createChooser(shareIntent, "Share Results"))
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_chooser_title)))
     }
 
     private fun generateShareText(): String {
         val sb = StringBuilder()
-        sb.append("TEST RESULTS SUMMARY\n\n")
-        sb.append("Export Date: ${dateFormat.format(Date())}\n")
-        sb.append("Total Tests: ${filteredResults.size}\n")
+        sb.append(getString(R.string.share_summary_title)).append("\n\n")
+        sb.append(getString(R.string.export_date_label, dateFormat.format(Date()))).append("\n")
+        sb.append(getString(R.string.total_tests_label, filteredResults.size)).append("\n")
 
         val avgScore = if (filteredResults.isNotEmpty()) {
             filteredResults.map { it.scorePercentage }.average()
         } else 0.0
 
-        sb.append("Average Score: ${String.format("%.1f", avgScore)}%\n")
-        sb.append("Date Range: ${tvDateRange.text}\n\n")
+        sb.append(getString(R.string.average_score_label, String.format("%.1f", avgScore))).append("\n")
+        sb.append(getString(R.string.date_range_label, tvDateRange.text)).append("\n\n")
 
         val topResults = filteredResults.sortedByDescending { it.scorePercentage }.take(3)
         if (topResults.isNotEmpty()) {
-            sb.append("TOP PERFORMANCES:\n")
+            sb.append(getString(R.string.top_performances_label)).append("\n")
             topResults.forEachIndexed { index, result ->
                 sb.append("${index + 1}. ${result.scorePercentage}% - ${result.category} (${result.testType})\n")
             }
         }
 
-        sb.append("\nGenerated by Mzansi Lingo App")
+        sb.append("\n").append(getString(R.string.generated_by_app))
 
         return sb.toString()
     }
 
     private fun setupNavigationDrawer() {
-        // Handle drawer navigation items
-        navHome.setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            try {
-                val intent = Intent(this, Class.forName("${packageName}.HomeActivity"))
-                startActivity(intent)
-                finish()
-            } catch (e: ClassNotFoundException) {
-                Toast.makeText(this, "Home activity not found", Toast.LENGTH_SHORT).show()
-            }
-        }
+        // Navigation drawer text uses string resources
+        navHome.text = getString(R.string.nav_home)
+        navLanguage.text = getString(R.string.nav_language)
+        navWords.text = getString(R.string.nav_words)
+        navPhrases.text = getString(R.string.nav_phrases)
+        navSettings.text = getString(R.string.nav_settings)
+        navProfile.text = getString(R.string.nav_profile)
+    }
 
-        navBack.setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            finish()
-        }
+    // Navigation methods
+    private fun navigateToHome() {
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
-        navDictionary.setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            // Start dictionary activity
-            try {
-                val intent = Intent(this, Class.forName("${packageName}.DictionaryActivity"))
-                startActivity(intent)
-            } catch (e: ClassNotFoundException) {
-                Toast.makeText(this, "Dictionary activity not found", Toast.LENGTH_SHORT).show()
-            }
-        }
+    private fun navigateToLanguageSelection() {
+        val intent = Intent(this, LanguageSelectionActivity::class.java)
+        startActivity(intent)
+    }
 
-        navChat.setOnClickListener {
-            drawerLayout.closeDrawer(GravityCompat.END)
-            // Start AI chat activity
-            try {
-                val intent = Intent(this, Class.forName("${packageName}.AiChatActivity"))
-                startActivity(intent)
-            } catch (e: ClassNotFoundException) {
-                Toast.makeText(this, "Chat activity not found", Toast.LENGTH_SHORT).show()
-            }
-        }
+    private fun navigateToWords() {
+        val intent = Intent(this, WordsActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToPhrases() {
+        val intent = Intent(this, PhrasesActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToSettings() {
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToProfile() {
+        val intent = Intent(this, ProfileActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToDictionary() {
+        val intent = Intent(this, OfflineActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToChat() {
+        val intent = Intent(this, AiChatActivity::class.java)
+        startActivity(intent)
     }
 
     @Suppress("DEPRECATION")

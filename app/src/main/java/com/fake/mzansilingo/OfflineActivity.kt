@@ -6,29 +6,64 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 
-class OfflineActivity : AppCompatActivity() {
+class OfflineActivity : BaseActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var btnBottomDict: ImageView
     private lateinit var btnBottomQuotes: ImageView
     private lateinit var btnBottomStats: ImageView
 
+    // Add references to text views that need updating
+    private lateinit var tvOfflineTitle: TextView
+    private lateinit var tvOfflineDescription: TextView
+    private lateinit var tvOfflineDescriptionAfrikaans: TextView
+    private lateinit var tvComingSoon: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_offline)
 
         drawerLayout = findViewById(R.id.drawer_layout)
+        initializeViews()
         initializeBottomNavigation()
         setupClickListeners()
 
+        // Update UI with proper strings
+        updateUIStrings()
+
         // Make the card clickable to start quiz
-        findViewById<androidx.cardview.widget.CardView>(R.id.content_card).setOnClickListener {
+        findViewById<CardView>(R.id.content_card).setOnClickListener {
             startOfflineQuiz()
         }
+    }
+
+    private fun initializeViews() {
+        // Initialize text views
+        tvOfflineTitle = findViewById(R.id.tv_offline_title)
+        tvOfflineDescription = findViewById(R.id.tv_offline_description)
+        tvOfflineDescriptionAfrikaans = findViewById(R.id.tv_offline_description_afrikaans)
+        tvComingSoon = findViewById(R.id.tv_coming_soon)
+    }
+
+    private fun updateUIStrings() {
+        // Update all text using string resources
+        tvOfflineTitle.text = getString(R.string.offline_quiz_title)
+        tvOfflineDescription.text = getString(R.string.offline_quiz_description)
+        tvOfflineDescriptionAfrikaans.text = getString(R.string.offline_quiz_description_afrikaans)
+        tvComingSoon.text = getString(R.string.start_quiz)  // ← Changed this line
+
+        // Update navigation drawer items
+        findViewById<TextView>(R.id.nav_home).text = getString(R.string.nav_home).uppercase()
+        findViewById<TextView>(R.id.nav_language).text = getString(R.string.nav_language).uppercase()
+        findViewById<TextView>(R.id.nav_words).text = getString(R.string.nav_words).uppercase()
+        findViewById<TextView>(R.id.nav_phrases).text = getString(R.string.nav_phrases).uppercase()
+        findViewById<TextView>(R.id.nav_progress).text = getString(R.string.nav_progress).uppercase()
+        findViewById<TextView>(R.id.nav_settings).text = getString(R.string.nav_settings).uppercase()
+        findViewById<TextView>(R.id.nav_profile).text = getString(R.string.nav_profile).uppercase()
     }
 
     private fun startOfflineQuiz() {
@@ -105,7 +140,7 @@ class OfflineActivity : AppCompatActivity() {
 
         findViewById<ImageView>(R.id.nav_dictionary).setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
-            Toast.makeText(this, "Already on Offline Quiz screen", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.already_on_offline_quiz), Toast.LENGTH_SHORT).show()
         }
 
         findViewById<ImageView>(R.id.nav_back).setOnClickListener {
@@ -122,7 +157,7 @@ class OfflineActivity : AppCompatActivity() {
     private fun setupBottomNavigationListeners() {
         try {
             btnBottomDict.setOnClickListener {
-                Toast.makeText(this, "Already on Offline Quiz screen", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.already_on_offline_quiz), Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             Log.w("OfflineActivity", "Bottom dict button not found")
@@ -191,7 +226,7 @@ class OfflineActivity : AppCompatActivity() {
     }
 
     private fun navigateToQuotes() {
-        Toast.makeText(this, "Starting QuotesActivity...", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.starting_quotes), Toast.LENGTH_SHORT).show()
         try {
             val intent = Intent(this, QuotesActivity::class.java)
             intent.putExtra("LANGUAGE", "afrikaans")

@@ -7,12 +7,11 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 
-class PhrasesActivity : AppCompatActivity() {
+class PhrasesActivity : BaseActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var btnMenu: ImageView
@@ -23,13 +22,25 @@ class PhrasesActivity : AppCompatActivity() {
     private lateinit var cardPersonal: CardView
     private lateinit var cardTravel: CardView
 
+    // Category TextViews
+    private lateinit var tvCommunicationEn: TextView
+    private lateinit var tvCommunicationAf: TextView
+    private lateinit var tvPoliteEn: TextView
+    private lateinit var tvPoliteAf: TextView
+    private lateinit var tvPersonalEn: TextView
+    private lateinit var tvPersonalAf: TextView
+    private lateinit var tvTravelEn: TextView
+    private lateinit var tvTravelAf: TextView
+
+    // Title
+    private lateinit var tvPhrasesTitle: TextView
+
     // Navigation drawer items
     private lateinit var navHome: TextView
     private lateinit var navLanguage: TextView
     private lateinit var navWords: TextView
     private lateinit var navPhrases: TextView
     private lateinit var navProgress: TextView
-
     private lateinit var navSettings: TextView
     private lateinit var navProfile: TextView
     private lateinit var navBack: ImageView
@@ -41,6 +52,7 @@ class PhrasesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_phrases)
 
         initializeViews()
+        setupUI()
         setupClickListeners()
     }
 
@@ -55,18 +67,61 @@ class PhrasesActivity : AppCompatActivity() {
         cardPersonal = findViewById(R.id.card_personal)
         cardTravel = findViewById(R.id.card_travel)
 
+        // Initialize category TextViews
+        tvCommunicationEn = findViewById(R.id.tv_communication_en)
+        tvCommunicationAf = findViewById(R.id.tv_communication_af)
+        tvPoliteEn = findViewById(R.id.tv_polite_en)
+        tvPoliteAf = findViewById(R.id.tv_polite_af)
+        tvPersonalEn = findViewById(R.id.tv_personal_en)
+        tvPersonalAf = findViewById(R.id.tv_personal_af)
+        tvTravelEn = findViewById(R.id.tv_travel_en)
+        tvTravelAf = findViewById(R.id.tv_travel_af)
+
+        // Initialize title
+        tvPhrasesTitle = findViewById(R.id.tv_phrases_title)
+
         // Initialize navigation drawer items
         navHome = findViewById(R.id.nav_home)
         navLanguage = findViewById(R.id.nav_language)
         navWords = findViewById(R.id.nav_words)
         navPhrases = findViewById(R.id.nav_phrases)
         navProgress = findViewById(R.id.nav_progress)
-
         navSettings = findViewById(R.id.nav_settings)
         navProfile = findViewById(R.id.nav_profile)
         navBack = findViewById(R.id.nav_back)
         navChat = findViewById(R.id.nav_chat)
         navDictionary = findViewById(R.id.nav_dictionary)
+    }
+
+    private fun setupUI() {
+        // Set title using string resources
+        tvPhrasesTitle.text = getString(R.string.phrases_title)
+
+        // Set category texts - English/isiZulu text changes, Afrikaans stays same
+        // Communication & Information
+        tvCommunicationEn.text = getString(R.string.category_communication_en)
+        tvCommunicationAf.text = getString(R.string.category_communication_af)
+
+        // Polite and Essential
+        tvPoliteEn.text = getString(R.string.category_polite_en)
+        tvPoliteAf.text = getString(R.string.category_polite_af)
+
+        // Personal Information
+        tvPersonalEn.text = getString(R.string.category_personal_en)
+        tvPersonalAf.text = getString(R.string.category_personal_af)
+
+        // Travel & Daily Needs
+        tvTravelEn.text = getString(R.string.category_travel_en)
+        tvTravelAf.text = getString(R.string.category_travel_af)
+
+        // Set navigation drawer texts using string resources
+        navHome.text = getString(R.string.nav_home).uppercase()
+        navLanguage.text = getString(R.string.nav_language).uppercase()
+        navWords.text = getString(R.string.nav_words).uppercase()
+        navPhrases.text = getString(R.string.nav_phrases).uppercase()
+        navProgress.text = getString(R.string.nav_progress).uppercase()
+        navSettings.text = getString(R.string.nav_settings).uppercase()
+        navProfile.text = getString(R.string.nav_profile).uppercase()
     }
 
     private fun setupClickListeners() {
@@ -96,7 +151,7 @@ class PhrasesActivity : AppCompatActivity() {
             openCategoryActivity("Travel")
         }
 
-        // Navigation drawer click listeners - matching HomeActivity implementation
+        // Navigation drawer click listeners
         navHome.setOnClickListener {
             closeDrawer()
             navigateToHomeActivity()
@@ -121,8 +176,6 @@ class PhrasesActivity : AppCompatActivity() {
             closeDrawer()
             navigateToProgressActivity()
         }
-
-
 
         navSettings.setOnClickListener {
             closeDrawer()
@@ -151,14 +204,13 @@ class PhrasesActivity : AppCompatActivity() {
     }
 
     private fun openCategoryActivity(category: String) {
-        // TODO: Create a CategoryPhrasesActivity to show phrases in selected category
         val intent = Intent(this, CategoryPhrasesActivity::class.java)
         intent.putExtra("CATEGORY", category)
         intent.putExtra("LANGUAGE", "afrikaans")
         startActivity(intent)
     }
 
-    // Navigation methods matching HomeActivity
+    // Navigation methods
     private fun navigateToHomeActivity() {
         val intent = Intent(this, HomeActivity::class.java)
         intent.putExtra("LANGUAGE", "afrikaans")
@@ -188,8 +240,6 @@ class PhrasesActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-
-
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
@@ -209,6 +259,25 @@ class PhrasesActivity : AppCompatActivity() {
     private fun closeDrawer() {
         if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh the activity if language changed
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentLanguage = prefs.getString("home_language", "English") ?: "English"
+
+        // Check if the locale matches the saved language
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate() // Recreate activity to apply new language
         }
     }
 

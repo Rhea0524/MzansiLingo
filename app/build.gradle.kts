@@ -125,6 +125,7 @@ dependencies {
     implementation("com.madgag.spongycastle:prov:1.54.0.0")
     implementation("com.madgag.spongycastle:pkix:1.54.0.0")
 
+
     // Additional UI components
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.drawerlayout:drawerlayout:1.2.0")

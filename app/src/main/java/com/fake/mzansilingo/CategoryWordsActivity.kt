@@ -11,7 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.button.MaterialButton
 import java.io.Serializable
 
-class CategoryWordsActivity : AppCompatActivity() {
+class CategoryWordsActivity : BaseActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var btnMenu: ImageView
     private lateinit var tvWordsTitle: TextView
@@ -78,10 +78,30 @@ class CategoryWordsActivity : AppCompatActivity() {
         setContentLayout()
 
         initializeCommonViews()
+        setupUI()
         setupCommonClickListeners()
         setupCategorySpecificClickListeners()
         setupTestButtonClickListener()
         setupBottomNavigationListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh the activity if language changed
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentLanguage = prefs.getString("home_language", "English") ?: "English"
+
+        // Check if the locale matches the saved language
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate() // Recreate activity to apply new language
+        }
     }
 
     private fun setContentLayout() {
@@ -114,15 +134,123 @@ class CategoryWordsActivity : AppCompatActivity() {
         navChat = findViewById(R.id.nav_chat)
         navDictionary = findViewById(R.id.nav_dictionary)
 
-        // Update title based on category
-        tvCategorySubtitle.text = currentCategory
-
         // Debug: Check if button was found
         if (::btnTestYourself.isInitialized) {
             println("Test button found and initialized")
         } else {
             println("Test button NOT found!")
         }
+    }
+
+    private fun setupUI() {
+        // Set main title from string resources
+        tvWordsTitle.text = getString(R.string.words_title)
+
+        // Set category subtitle from string resources based on category
+        tvCategorySubtitle.text = when (currentCategory.toLowerCase()) {
+            "animals" -> getString(R.string.category_animals)
+            "colors", "colours" -> getString(R.string.category_colors)
+            "food" -> getString(R.string.category_food)
+            "emotions" -> getString(R.string.category_emotions)
+            else -> getString(R.string.category_emotions)
+        }
+
+        // Set test button text from string resources
+        btnTestYourself.text = getString(R.string.btn_test_yourself)
+
+        // Set navigation drawer texts from string resources
+        navHome.text = getString(R.string.nav_home)
+        navLanguage.text = getString(R.string.nav_language)
+        navWords.text = getString(R.string.nav_words)
+        navPhrases.text = getString(R.string.nav_phrases)
+        navProgress.text = getString(R.string.nav_progress)
+        navSettings.text = getString(R.string.nav_settings)
+        navProfile.text = getString(R.string.nav_profile)
+
+        // Set word card labels based on category
+        when (currentCategory.toLowerCase()) {
+            "emotions" -> setupEmotionLabels()
+            "animals" -> setupAnimalLabels()
+            "colors", "colours" -> setupColorLabels()
+            "food" -> setupFoodLabels()
+        }
+    }
+
+    private fun setupEmotionLabels() {
+        findViewById<TextView>(R.id.tv_happy_en)?.text = getString(R.string.word_happy)
+        findViewById<TextView>(R.id.tv_happy_af)?.text = getString(R.string.word_happy_af)
+
+        findViewById<TextView>(R.id.tv_sad_en)?.text = getString(R.string.word_sad)
+        findViewById<TextView>(R.id.tv_sad_af)?.text = getString(R.string.word_sad_af)
+
+        findViewById<TextView>(R.id.tv_fear_en)?.text = getString(R.string.word_fear)
+        findViewById<TextView>(R.id.tv_fear_af)?.text = getString(R.string.word_fear_af)
+
+        findViewById<TextView>(R.id.tv_shock_en)?.text = getString(R.string.word_shock)
+        findViewById<TextView>(R.id.tv_shock_af)?.text = getString(R.string.word_shock_af)
+
+        findViewById<TextView>(R.id.tv_anger_en)?.text = getString(R.string.word_anger)
+        findViewById<TextView>(R.id.tv_anger_af)?.text = getString(R.string.word_anger_af)
+
+        findViewById<TextView>(R.id.tv_silly_en)?.text = getString(R.string.word_silly)
+        findViewById<TextView>(R.id.tv_silly_af)?.text = getString(R.string.word_silly_af)
+    }
+
+    private fun setupColorLabels() {
+        findViewById<TextView>(R.id.tv_red_en)?.text = getString(R.string.word_red)
+        findViewById<TextView>(R.id.tv_red_af)?.text = getString(R.string.word_red_af)
+
+        findViewById<TextView>(R.id.tv_blue_en)?.text = getString(R.string.word_blue)
+        findViewById<TextView>(R.id.tv_blue_af)?.text = getString(R.string.word_blue_af)
+
+        findViewById<TextView>(R.id.tv_green_en)?.text = getString(R.string.word_green)
+        findViewById<TextView>(R.id.tv_green_af)?.text = getString(R.string.word_green_af)
+
+        findViewById<TextView>(R.id.tv_yellow_en)?.text = getString(R.string.word_yellow)
+        findViewById<TextView>(R.id.tv_yellow_af)?.text = getString(R.string.word_yellow_af)
+
+        findViewById<TextView>(R.id.tv_purple_en)?.text = getString(R.string.word_purple)
+        findViewById<TextView>(R.id.tv_purple_af)?.text = getString(R.string.word_purple_af)
+
+        findViewById<TextView>(R.id.tv_pink_en)?.text = getString(R.string.word_pink)
+        findViewById<TextView>(R.id.tv_pink_af)?.text = getString(R.string.word_pink_af)
+    }
+
+    private fun setupAnimalLabels() {
+        findViewById<TextView>(R.id.tv_lion_en)?.text = getString(R.string.word_lion)
+        findViewById<TextView>(R.id.tv_lion_af)?.text = getString(R.string.word_lion_af)
+
+        findViewById<TextView>(R.id.tv_elephant_en)?.text = getString(R.string.word_elephant)
+        findViewById<TextView>(R.id.tv_elephant_af)?.text = getString(R.string.word_elephant_af)
+
+        findViewById<TextView>(R.id.tv_giraffe_en)?.text = getString(R.string.word_giraffe)
+        findViewById<TextView>(R.id.tv_giraffe_af)?.text = getString(R.string.word_giraffe_af)
+
+        findViewById<TextView>(R.id.tv_zebra_en)?.text = getString(R.string.word_zebra)
+        findViewById<TextView>(R.id.tv_zebra_af)?.text = getString(R.string.word_zebra_af)
+
+        findViewById<TextView>(R.id.tv_hippo_en)?.text = getString(R.string.word_hippo)
+        findViewById<TextView>(R.id.tv_hippo_af)?.text = getString(R.string.word_hippo_af)
+    }
+
+    private fun setupFoodLabels() {
+        findViewById<TextView>(R.id.tv_apple_en)?.text = getString(R.string.word_apple)
+        findViewById<TextView>(R.id.tv_apple_af)?.text = getString(R.string.word_apple_af)
+
+        findViewById<TextView>(R.id.tv_banana_en)?.text = getString(R.string.word_banana)
+        findViewById<TextView>(R.id.tv_banana_af)?.text = getString(R.string.word_banana_af)
+
+        findViewById<TextView>(R.id.tv_bread_en)?.text = getString(R.string.word_bread)
+        findViewById<TextView>(R.id.tv_bread_af)?.text = getString(R.string.word_bread_af)
+
+        findViewById<TextView>(R.id.tv_milk_en)?.text = getString(R.string.word_milk)
+        findViewById<TextView>(R.id.tv_milk_af)?.text = getString(R.string.word_milk_af)
+
+        findViewById<TextView>(R.id.tv_meat_en)?.text = getString(R.string.word_meat)
+        findViewById<TextView>(R.id.tv_meat_af)?.text = getString(R.string.word_meat_af)
+
+        findViewById<TextView>(R.id.tv_rice_en)?.text = getString(R.string.word_rice)
+        findViewById<TextView>(R.id.tv_rice_af)?.text = getString(R.string.word_rice_af)
     }
 
     private fun setupCommonClickListeners() {
@@ -160,8 +288,6 @@ class CategoryWordsActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToProgressActivity()
         }
-
-
 
         navSettings.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
@@ -235,8 +361,6 @@ class CategoryWordsActivity : AppCompatActivity() {
         intent.putExtra("LANGUAGE", "afrikaans")
         startActivity(intent)
     }
-
-
 
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)

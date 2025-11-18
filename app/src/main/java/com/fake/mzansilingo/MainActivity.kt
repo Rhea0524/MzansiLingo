@@ -14,13 +14,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var gamificationManager: GamificationManager
     private lateinit var firestore: FirebaseFirestore
-    private var hasNavigated = false // Prevent multiple navigation attempts
+    private var hasNavigated = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,14 +33,7 @@ class MainActivity : AppCompatActivity() {
         gamificationManager = GamificationManager(this)
 
         // Setup language dropdown
-        val languages = listOf(
-            "isiZulu", "isiXhosa", "Afrikaans", "English",
-            "Sepedi", "Setswana", "Sesotho", "Xitsonga",
-            "Tshivenda", "isiNdebele", "Other"
-        )
-        val langAdapter =
-            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, languages)
-        (binding.tilHomeLang.editText as AutoCompleteTextView).setAdapter(langAdapter)
+        setupLanguageDropdown()
 
         // Handle Sign Up button
         binding.btnSignUp.setOnClickListener {
@@ -57,6 +50,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupLanguageDropdown() {
+        // Get language list from string resources
+        val languages = resources.getStringArray(R.array.signup_languages).toList()
+
+        val langAdapter =
+            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, languages)
+        (binding.tilHomeLang.editText as AutoCompleteTextView).setAdapter(langAdapter)
+    }
+
     private fun validateInput(
         name: String,
         email: String,
@@ -66,44 +68,44 @@ class MainActivity : AppCompatActivity() {
     ): Boolean {
         when {
             name.isBlank() -> {
-                binding.etFullName.error = "Full name is required"
+                binding.etFullName.error = getString(R.string.error_full_name_required)
                 binding.etFullName.requestFocus()
                 return false
             }
 
             email.isBlank() -> {
-                binding.etEmail.error = "Email is required"
+                binding.etEmail.error = getString(R.string.error_email_required)
                 binding.etEmail.requestFocus()
                 return false
             }
 
             !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                binding.etEmail.error = "Please enter a valid email address"
+                binding.etEmail.error = getString(R.string.error_valid_email)
                 binding.etEmail.requestFocus()
                 return false
             }
 
             user.isBlank() -> {
-                binding.etUsername.error = "Username is required"
+                binding.etUsername.error = getString(R.string.error_username_required)
                 binding.etUsername.requestFocus()
                 return false
             }
 
             pass.isBlank() -> {
-                binding.etPassword.error = "Password is required"
+                binding.etPassword.error = getString(R.string.error_password_required)
                 binding.etPassword.requestFocus()
                 return false
             }
 
             pass.length < 6 -> {
-                binding.etPassword.error = "Password must be at least 6 characters"
+                binding.etPassword.error = getString(R.string.error_password_length)
                 binding.etPassword.requestFocus()
                 return false
             }
 
             homeLang.isBlank() -> {
                 (binding.tilHomeLang.editText as AutoCompleteTextView).error =
-                    "Please select your home language"
+                    getString(R.string.error_select_home_language)
                 (binding.tilHomeLang.editText as AutoCompleteTextView).requestFocus()
                 return false
             }
@@ -127,18 +129,17 @@ class MainActivity : AppCompatActivity() {
         pass: String,
         homeLang: String
     ) {
-        if (hasNavigated) return // Prevent multiple attempts
+        if (hasNavigated) return
 
         binding.btnSignUp.isEnabled = false
-        binding.btnSignUp.text = "Creating Account..."
+        binding.btnSignUp.text = getString(R.string.btn_creating_account)
 
         Log.d("MainActivity", "Creating account for email: $email")
 
-        // Create user in Firebase Authentication
         auth.createUserWithEmailAndPassword(email, pass)
             .addOnCompleteListener { task ->
                 binding.btnSignUp.isEnabled = true
-                binding.btnSignUp.text = "Sign Up"
+                binding.btnSignUp.text = getString(R.string.btn_sign_up)
 
                 if (task.isSuccessful) {
                     Log.d("MainActivity", "✅ Account created successfully")
@@ -149,39 +150,39 @@ class MainActivity : AppCompatActivity() {
                         Log.e("MainActivity", "❌ Error: Unable to get user ID")
                         Toast.makeText(
                             this,
-                            "Error: Unable to get user ID",
+                            getString(R.string.error_unable_get_user_id),
                             Toast.LENGTH_SHORT
                         ).show()
                         navigateToHomeActivity()
                     }
                 } else {
-                    val errorMessage = task.exception?.message ?: "Sign Up failed"
+                    val errorMessage = task.exception?.message ?: getString(R.string.error_signup_failed)
                     Log.e("MainActivity", "❌ Account creation failed: $errorMessage", task.exception)
 
                     when {
                         errorMessage.contains("email address is already in use", ignoreCase = true) -> {
-                            binding.etEmail.error = "This email is already registered"
+                            binding.etEmail.error = getString(R.string.error_email_already_registered)
                             Toast.makeText(
                                 this,
-                                "Email already registered. Try logging in instead.",
+                                getString(R.string.error_email_already_registered_long),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
 
                         errorMessage.contains("email address is badly formatted", ignoreCase = true) -> {
-                            binding.etEmail.error = "Invalid email format"
+                            binding.etEmail.error = getString(R.string.error_invalid_email_format)
                             Toast.makeText(
                                 this,
-                                "Please enter a valid email address",
+                                getString(R.string.error_valid_email),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
 
                         errorMessage.contains("weak password", ignoreCase = true) -> {
-                            binding.etPassword.error = "Password is too weak"
+                            binding.etPassword.error = getString(R.string.error_weak_password)
                             Toast.makeText(
                                 this,
-                                "Please choose a stronger password",
+                                getString(R.string.error_weak_password_long),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -189,7 +190,7 @@ class MainActivity : AppCompatActivity() {
                         else -> {
                             Toast.makeText(
                                 this,
-                                "Sign Up failed: $errorMessage",
+                                getString(R.string.error_signup_failed_with_message, errorMessage),
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -198,11 +199,11 @@ class MainActivity : AppCompatActivity() {
             }
             .addOnFailureListener { exception ->
                 binding.btnSignUp.isEnabled = true
-                binding.btnSignUp.text = "Sign Up"
+                binding.btnSignUp.text = getString(R.string.btn_sign_up)
                 Log.e("MainActivity", "❌ Sign up failure listener triggered", exception)
                 Toast.makeText(
                     this,
-                    "Sign up failed: ${exception.message}",
+                    getString(R.string.error_signup_failed_with_message, exception.message ?: ""),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -232,7 +233,7 @@ class MainActivity : AppCompatActivity() {
             .set(firestoreUserData)
             .addOnSuccessListener {
                 Log.d("MainActivity", "✅ User saved to Firestore successfully")
-                Toast.makeText(this, "Account created successfully!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.msg_account_created_success), Toast.LENGTH_SHORT).show()
 
                 clearForm()
                 initializeNewUserGamification()
@@ -241,7 +242,7 @@ class MainActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Log.e("MainActivity", "❌ Failed to save user to Firestore", e)
-                Toast.makeText(this, "Account created, but Firestore failed", Toast.LENGTH_LONG)
+                Toast.makeText(this, getString(R.string.error_firestore_save_failed), Toast.LENGTH_LONG)
                     .show()
 
                 clearForm()
@@ -307,7 +308,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("MainActivity", "Initializing gamification for new user")
 
             val timeoutJob = lifecycleScope.launch {
-                delay(10000) // 10 second timeout
+                delay(10000)
                 if (!hasNavigated) {
                     Log.w("MainActivity", "⚠️ Gamification timeout, navigating anyway")
                     navigateToHomeActivity()
@@ -384,7 +385,7 @@ class MainActivity : AppCompatActivity() {
                 Class.forName("com.fake.mzansilingo.HomeActivity")
             } catch (e: ClassNotFoundException) {
                 Log.e("MainActivity", "❌ HomeActivity not found!", e)
-                Toast.makeText(this, "Navigation error: Home screen not found", Toast.LENGTH_LONG)
+                Toast.makeText(this, getString(R.string.error_navigate_home), Toast.LENGTH_LONG)
                     .show()
                 return
             }
@@ -402,11 +403,17 @@ class MainActivity : AppCompatActivity() {
             Log.e("MainActivity", "❌ Error navigating to HomeActivity", e)
             Toast.makeText(
                 this,
-                "Error navigating to home screen: ${e.message}",
+                getString(R.string.error_navigate_home_with_message, e.message ?: ""),
                 Toast.LENGTH_LONG
             ).show()
             hasNavigated = false
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh language dropdown when language changes
+        setupLanguageDropdown()
     }
 
     override fun onDestroy() {

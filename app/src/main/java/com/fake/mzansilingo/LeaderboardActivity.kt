@@ -1,5 +1,9 @@
 package com.fake.mzansilingo
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -7,20 +11,23 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import java.io.File
+import java.io.FileOutputStream
 
-class LeaderboardActivity : AppCompatActivity() {
+class LeaderboardActivity : BaseActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var leaderboardAdapter: LeaderboardAdapter
     private lateinit var progressBar: ProgressBar
     private lateinit var tvNoData: TextView
     private lateinit var btnBack: ImageView
+    private lateinit var btnShare: ImageView // NEW: Share button
     private lateinit var tvLanguage: TextView
     private lateinit var tvTitle: TextView
 
@@ -33,7 +40,6 @@ class LeaderboardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leaderboard)
 
-        // Get language from intent
         currentLanguage = intent.getStringExtra("LANGUAGE") ?: "afrikaans"
 
         initializeViews()
@@ -42,38 +48,160 @@ class LeaderboardActivity : AppCompatActivity() {
         loadLeaderboardData()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentHomeLanguage = prefs.getString("home_language", "English") ?: "English"
+
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentHomeLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate()
+        }
+    }
+
     private fun initializeViews() {
         recyclerView = findViewById(R.id.recycler_leaderboard)
         progressBar = findViewById(R.id.progress_bar)
         tvNoData = findViewById(R.id.tv_no_data)
         btnBack = findViewById(R.id.btn_back)
+        btnShare = findViewById(R.id.btn_share) // NEW: Initialize share button
         tvLanguage = findViewById(R.id.tv_language)
         tvTitle = findViewById(R.id.tv_title)
     }
 
     private fun setupUI() {
-        // Set up language-specific UI
-        when (currentLanguage.lowercase()) {
-            "afrikaans" -> {
-                tvLanguage.text = "AFRIKAANS"
-                tvTitle.text = "LEADERBOARD / RANGLYS"
-                tvNoData.text = "Geen data beskikbaar nie / No data available"
-            }
-            "spanish" -> {
-                tvLanguage.text = "ESPAÑOL"
-                tvTitle.text = "TABLA DE POSICIONES"
-                tvNoData.text = "No hay datos disponibles"
-            }
-            else -> {
-                tvLanguage.text = "ENGLISH"
-                tvTitle.text = "LEADERBOARD"
-                tvNoData.text = "No data available"
-            }
-        }
+        tvLanguage.text = getString(R.string.language_header_afrikaans)
+        tvTitle.text = getString(R.string.leaderboard_title)
+        tvNoData.text = getString(R.string.leaderboard_no_data)
 
-        // Back button click listener
         btnBack.setOnClickListener {
             finish()
+        }
+
+        // NEW: Share button click listener
+        btnShare.setOnClickListener {
+            captureAndShare()
+        }
+    }
+
+    // NEW: Screenshot sharing functionality
+    private fun captureAndShare() {
+        // Get the root view (the entire constraint layout)
+        val rootView = findViewById<View>(android.R.id.content)
+
+        // Temporarily hide the share button for cleaner screenshot
+        btnShare.visibility = View.GONE
+
+        // Small delay to ensure button is hidden
+        rootView.postDelayed({
+            val bitmap = captureViewAsBitmap(rootView)
+
+            // Show the button again
+            btnShare.visibility = View.VISIBLE
+
+            if (bitmap != null) {
+                val uri = saveBitmapToCache(bitmap)
+                if (uri != null) {
+                    shareImage(uri)
+                } else {
+                    Toast.makeText(this, "Failed to save screenshot", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Failed to capture screenshot", Toast.LENGTH_SHORT).show()
+            }
+        }, 100)
+    }
+
+    private fun captureViewAsBitmap(view: View): Bitmap? {
+        return try {
+            val bitmap = Bitmap.createBitmap(
+                view.width,
+                view.height,
+                Bitmap.Config.ARGB_8888
+            )
+
+            val canvas = Canvas(bitmap)
+            view.draw(canvas)
+
+            bitmap
+        } catch (e: Exception) {
+            Log.e("LeaderboardActivity", "Error capturing screenshot", e)
+            null
+        }
+    }
+
+    private fun saveBitmapToCache(bitmap: Bitmap): Uri? {
+        return try {
+            // Create cache directory
+            val imagesDir = File(cacheDir, "images")
+            imagesDir.mkdirs()
+
+            // Create file with timestamp
+            val file = File(imagesDir, "leaderboard_${System.currentTimeMillis()}.png")
+
+            // Write bitmap to file
+            FileOutputStream(file).use { out ->
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+            }
+
+            // Get URI using FileProvider
+            FileProvider.getUriForFile(
+                this,
+                "com.fake.mzansilingo.provider",
+                file
+            )
+        } catch (e: Exception) {
+            Log.e("LeaderboardActivity", "Error saving screenshot", e)
+            null
+        }
+    }
+
+    private fun shareImage(uri: Uri) {
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "image/png"
+            putExtra(Intent.EXTRA_STREAM, uri)
+            putExtra(Intent.EXTRA_TEXT, "Check out the Mzansi Lingo leaderboard! 🏆🦏")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+
+        startActivity(Intent.createChooser(shareIntent, "Share Leaderboard via"))
+    }
+
+    // Optional: Share to specific apps
+    private fun shareToWhatsApp(uri: Uri) {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "image/png"
+            putExtra(Intent.EXTRA_STREAM, uri)
+            putExtra(Intent.EXTRA_TEXT, "Check out the Mzansi Lingo leaderboard! 🏆🦏")
+            setPackage("com.whatsapp")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+
+        try {
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, "WhatsApp not installed", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun shareToInstagram(uri: Uri) {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "image/png"
+            putExtra(Intent.EXTRA_STREAM, uri)
+            setPackage("com.instagram.android")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+
+        try {
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Instagram not installed", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -89,7 +217,6 @@ class LeaderboardActivity : AppCompatActivity() {
 
         usersList.clear()
 
-        // Get all users from the users collection
         firestore.collection("users")
             .orderBy("createdAt", Query.Direction.ASCENDING)
             .get()
@@ -106,9 +233,7 @@ class LeaderboardActivity : AppCompatActivity() {
                 var processedUsers = 0
                 val totalUsers = documents.size()
 
-                // Process each user document
                 documents.forEach { userDoc ->
-                    // FIXED: Get userId correctly for both Google and email/password users
                     val firebaseAuthUid = getUserIdFromDocument(userDoc)
                     val username = getUsernameFromDocument(userDoc)
                     val email = userDoc.getString("email") ?: "unknown@app.com"
@@ -118,7 +243,6 @@ class LeaderboardActivity : AppCompatActivity() {
 
                     Log.d("LeaderboardActivity", "Processing user: $username (Doc ID: ${userDoc.id}, userId: $firebaseAuthUid, Provider: $provider, Email: $email)")
 
-                    // Use the correct userId to query test_results
                     if (firebaseAuthUid != null) {
                         getUserProgressLikeProgressActivity(firebaseAuthUid, username, email, fullName, homeLanguage) { leaderboardUser ->
                             processedUsers++
@@ -128,14 +252,12 @@ class LeaderboardActivity : AppCompatActivity() {
                                 Log.d("LeaderboardActivity", "Added user: ${leaderboardUser.username} with score ${leaderboardUser.totalScore}")
                             }
 
-                            // When all users are processed
                             if (processedUsers >= totalUsers) {
                                 finishProcessing()
                             }
                         }
                     } else {
                         Log.w("LeaderboardActivity", "No valid userId found for user: $username")
-                        // Still count this as processed even if no userId
                         processedUsers++
                         if (processedUsers >= totalUsers) {
                             finishProcessing()
@@ -147,27 +269,23 @@ class LeaderboardActivity : AppCompatActivity() {
                 Log.e("LeaderboardActivity", "Error getting users collection", exception)
                 showLoading(false)
                 showNoData(true)
-                Toast.makeText(this, "Error loading leaderboard data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.error_loading_leaderboard), Toast.LENGTH_SHORT).show()
             }
     }
 
-    // NEW METHOD: Extract userId correctly for both Google and email/password users
     private fun getUserIdFromDocument(userDoc: com.google.firebase.firestore.DocumentSnapshot): String? {
-        // For Google users, try the 'uid' field first, then document ID
         val uid = userDoc.getString("uid")
         if (!uid.isNullOrBlank()) {
             Log.d("LeaderboardActivity", "Found uid field: $uid")
             return uid
         }
 
-        // For email/password users, try 'userId' field
         val userId = userDoc.getString("userId")
         if (!userId.isNullOrBlank()) {
             Log.d("LeaderboardActivity", "Found userId field: $userId")
             return userId
         }
 
-        // Fallback to document ID (should work for Google users)
         val docId = userDoc.id
         if (docId.isNotBlank()) {
             Log.d("LeaderboardActivity", "Using document ID as userId: $docId")
@@ -178,9 +296,7 @@ class LeaderboardActivity : AppCompatActivity() {
         return null
     }
 
-    // NEW METHOD: Extract username correctly for both Google and email/password users
     private fun getUsernameFromDocument(userDoc: com.google.firebase.firestore.DocumentSnapshot): String {
-        // Try different username fields in order of preference
         val username = userDoc.getString("username")
         if (!username.isNullOrBlank()) {
             return username
@@ -198,14 +314,12 @@ class LeaderboardActivity : AppCompatActivity() {
 
         val email = userDoc.getString("email")
         if (!email.isNullOrBlank()) {
-            // Extract username from email
             return email.substringBefore("@")
         }
 
         return "Unknown User"
     }
 
-    // METHOD: Matches exactly how ProgressActivity calculates scores
     private fun getUserProgressLikeProgressActivity(
         userId: String,
         username: String,
@@ -214,9 +328,8 @@ class LeaderboardActivity : AppCompatActivity() {
         homeLanguage: String,
         callback: (LeaderboardUser?) -> Unit
     ) {
-        Log.d("LeaderboardActivity", "Getting progress for user: $username (userId: $userId) - MATCHING ProgressActivity method")
+        Log.d("LeaderboardActivity", "Getting progress for user: $username (userId: $userId)")
 
-        // Query test_results exactly like ProgressActivity does in loadTestResultsSimple()
         firestore.collection("test_results")
             .whereEqualTo("userId", userId)
             .get()
@@ -230,7 +343,7 @@ class LeaderboardActivity : AppCompatActivity() {
 
                 for (doc in documents) {
                     val testType = doc.getString("testType") ?: ""
-                    val correct = doc.getLong("correctAnswers")?.toInt() ?: 0 // Use correctAnswers, not score!
+                    val correct = doc.getLong("correctAnswers")?.toInt() ?: 0
                     val totalQuestions = doc.getLong("totalQuestions")?.toInt() ?: 0
 
                     Log.d("LeaderboardActivity", "Test result for $username: testType=$testType, correctAnswers=$correct, totalQuestions=$totalQuestions")
@@ -244,12 +357,10 @@ class LeaderboardActivity : AppCompatActivity() {
                     }
                 }
 
-                // Calculate total score exactly like ProgressActivity: wordsSpoken + phrasesSpoken
                 val totalScore = wordCount + phraseCount
 
                 Log.d("LeaderboardActivity", "FINAL CALCULATION for $username: words=$wordCount + phrases=$phraseCount = total=$totalScore")
 
-                // Also get total days practiced like ProgressActivity does
                 getDaysPracticedForUser(userId) { daysPracticed ->
                     val leaderboardUser = LeaderboardUser(
                         userId = userId,
@@ -263,7 +374,7 @@ class LeaderboardActivity : AppCompatActivity() {
                         wordsAttempted = wordsAttempted,
                         phrasesAttempted = phrasesAttempted,
                         daysPracticed = daysPracticed,
-                        rank = 0 // Will be set later when sorting
+                        rank = 0
                     )
 
                     Log.d("LeaderboardActivity", "Created LeaderboardUser for $username with total score: $totalScore")
@@ -276,13 +387,11 @@ class LeaderboardActivity : AppCompatActivity() {
             }
     }
 
-    // Get days practiced exactly like ProgressActivity
     private fun getDaysPracticedForUser(userId: String, callback: (Int) -> Unit) {
         firestore.collection("daily_logins")
             .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { documents ->
-                // Use a Set to ensure unique dates only - exactly like ProgressActivity
                 val uniqueDates = mutableSetOf<String>()
 
                 for (document in documents) {
@@ -306,19 +415,16 @@ class LeaderboardActivity : AppCompatActivity() {
         Log.d("LeaderboardActivity", "=== FINISH PROCESSING DEBUG ===")
         Log.d("LeaderboardActivity", "All users processed. Total in list: ${usersList.size}")
 
-        // Debug: Log ALL users before sorting
         Log.d("LeaderboardActivity", "Users before sorting:")
         usersList.forEachIndexed { index, user ->
             Log.d("LeaderboardActivity", "[$index] ${user.username} - Score: ${user.totalScore} (${user.wordsCorrect} words + ${user.phrasesCorrect} phrases)")
         }
 
-        // Sort by total score (highest first) and assign ranks
         usersList.sortByDescending { it.totalScore }
         usersList.forEachIndexed { index, user ->
             user.rank = index + 1
         }
 
-        // Debug: Log ALL users after sorting
         Log.d("LeaderboardActivity", "Users after sorting:")
         usersList.forEachIndexed { index, user ->
             Log.d("LeaderboardActivity", "Rank ${user.rank}: ${user.username} - Score: ${user.totalScore}")
@@ -337,7 +443,6 @@ class LeaderboardActivity : AppCompatActivity() {
                 leaderboardAdapter.notifyDataSetChanged()
                 Log.d("LeaderboardActivity", "Adapter notified of data change")
 
-                // Force a complete refresh of the adapter
                 recyclerView.adapter = leaderboardAdapter
                 Log.d("LeaderboardActivity", "Adapter re-assigned to RecyclerView")
             }
@@ -359,7 +464,6 @@ class LeaderboardActivity : AppCompatActivity() {
     }
 }
 
-// Updated data class for leaderboard users with additional fields
 data class LeaderboardUser(
     val userId: String,
     val username: String,

@@ -18,13 +18,13 @@ import java.io.IOException
 import java.net.URLEncoder
 import java.util.*
 
-class WordDetailActivity : AppCompatActivity() {
+class WordDetailActivity : BaseActivity() {
 
     // Firebase
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private var currentUserId: String? = null
-    private var userCollectionUserId: String? = null // Store user collection userId
+    private var userCollectionUserId: String? = null
 
     // TTS variables
     private var mediaPlayer: MediaPlayer? = null
@@ -45,10 +45,6 @@ class WordDetailActivity : AppCompatActivity() {
     private lateinit var btnOption4: MaterialButton
     private lateinit var btnSubmit: MaterialButton
 
-    // Legacy text input fields (for backward compatibility)
-    private var etAnswer1: EditText? = null
-    private var etAnswer2: EditText? = null
-
     // Navigation drawer items
     private lateinit var navHome: TextView
     private lateinit var navLanguage: TextView
@@ -56,7 +52,6 @@ class WordDetailActivity : AppCompatActivity() {
     private lateinit var navPhrases: TextView
     private lateinit var navQuotes: TextView
     private lateinit var navProgress: TextView
-
     private lateinit var navSettings: TextView
     private lateinit var navProfile: TextView
     private lateinit var navBack: ImageView
@@ -101,16 +96,15 @@ class WordDetailActivity : AppCompatActivity() {
         // Fetch the userId from user collection
         fetchUserCollectionUserId()
 
-        // Check if this is test mode to determine which layout to use
+        // Check if this is test mode
         isTestMode = intent.getBooleanExtra("TEST_MODE", false)
 
         if (isTestMode) {
             setContentView(R.layout.activity_word_detail)
-            // Generate unique test ID for this test session
             testId = UUID.randomUUID().toString()
             testStartTime = System.currentTimeMillis()
         } else {
-            setContentView(R.layout.activity_word_detail) // Original layout for single word mode
+            setContentView(R.layout.activity_word_detail)
         }
 
         // Get data from intent
@@ -127,10 +121,9 @@ class WordDetailActivity : AppCompatActivity() {
         }
     }
 
-    // FIXED METHOD: Fetch userId with case-insensitive email comparison
     private fun fetchUserCollectionUserId() {
         val authUserId = auth.currentUser?.uid
-        val userEmail = auth.currentUser?.email?.lowercase() // Normalize to lowercase
+        val userEmail = auth.currentUser?.email?.lowercase()
 
         if (authUserId == null || userEmail == null) {
             Log.w(TAG, "No authenticated user or email")
@@ -139,7 +132,6 @@ class WordDetailActivity : AppCompatActivity() {
 
         Log.d(TAG, "Fetching user collection userId for authUserId: $authUserId, email: $userEmail")
 
-        // First, try to find document with exact lowercase email match
         firestore.collection("users")
             .whereEqualTo("email", userEmail)
             .get()
@@ -149,19 +141,16 @@ class WordDetailActivity : AppCompatActivity() {
                     userCollectionUserId = userDoc.id
                     Log.d(TAG, "✅ Found user with exact email match: $userCollectionUserId")
                 } else {
-                    // If no exact match, try case-insensitive search by fetching all users and comparing
                     Log.d(TAG, "No exact email match found, trying case-insensitive search...")
                     findUserByCaseInsensitiveEmail(authUserId, userEmail)
                 }
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "❌ Error in initial email query", e)
-                // Fallback to case-insensitive search
                 findUserByCaseInsensitiveEmail(authUserId, userEmail)
             }
     }
 
-    // NEW METHOD: Case-insensitive email search
     private fun findUserByCaseInsensitiveEmail(authUserId: String, userEmail: String) {
         Log.d(TAG, "Performing case-insensitive email search for: $userEmail")
 
@@ -176,9 +165,6 @@ class WordDetailActivity : AppCompatActivity() {
                         userCollectionUserId = document.id
                         foundUser = true
                         Log.d(TAG, "✅ Found user with case-insensitive match: $userCollectionUserId")
-                        Log.d(TAG, "Original email in doc: ${document.getString("email")}")
-
-                        // Update the document to have lowercase email for future consistency
                         updateEmailToLowercase(document.id, userEmail)
                         break
                     }
@@ -195,7 +181,6 @@ class WordDetailActivity : AppCompatActivity() {
             }
     }
 
-    // NEW METHOD: Update existing document to have lowercase email
     private fun updateEmailToLowercase(documentId: String, lowercaseEmail: String) {
         firestore.collection("users")
             .document(documentId)
@@ -205,19 +190,16 @@ class WordDetailActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "⚠️ Could not update email to lowercase", e)
-                // This is not critical, the user is still found
             }
     }
 
-    // UPDATED METHOD: Create user document with lowercase email
     private fun createUserDocumentInFirestore(authUserId: String, userEmail: String) {
         Log.d(TAG, "Creating new user document for: $userEmail")
 
         val userData = hashMapOf(
-            "email" to userEmail.lowercase(), // Ensure lowercase
+            "email" to userEmail.lowercase(),
             "authUserId" to authUserId,
             "createdAt" to System.currentTimeMillis()
-            // Add other user fields as needed
         )
 
         firestore.collection("users")
@@ -228,8 +210,7 @@ class WordDetailActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "❌ Error creating user document", e)
-                // As absolute fallback, could use hardcoded ID but better to handle properly
-                userCollectionUserId = "wIXIVzQuLR584L1t3xQ3" // Only as last resort
+                userCollectionUserId = "wIXIVzQuLR584L1t3xQ3"
                 Log.d(TAG, "Using fallback user ID: $userCollectionUserId")
             }
     }
@@ -238,20 +219,14 @@ class WordDetailActivity : AppCompatActivity() {
         category = intent.getStringExtra("CATEGORY") ?: "Emotions"
 
         if (isTestMode) {
-            // Test mode: get word list and progress info
             wordList = intent.getSerializableExtra("WORD_LIST") as? ArrayList<WordItem>
             currentWordIndex = intent.getIntExtra("CURRENT_WORD_INDEX", 0)
             totalWords = intent.getIntExtra("TOTAL_WORDS", 0)
             correctAnswers = intent.getIntExtra("CORRECT_ANSWERS", 0)
-
-            println("Test mode activated. Total words: $totalWords, Current index: $currentWordIndex")
         } else {
-            // Single word mode: get individual word data
             englishWord = intent.getStringExtra("ENGLISH_WORD") ?: ""
             afrikaansWord = intent.getStringExtra("AFRIKAANS_WORD") ?: ""
             imageResource = intent.getIntExtra("IMAGE_RESOURCE", R.drawable.rhino_happy)
-
-            println("Single word mode: $englishWord = $afrikaansWord")
         }
     }
 
@@ -265,7 +240,7 @@ class WordDetailActivity : AppCompatActivity() {
         btnSound = findViewById(R.id.btn_sound)
         btnSubmit = findViewById(R.id.btn_submit)
 
-        // Multiple choice buttons (always present in the layout)
+        // Multiple choice buttons
         btnOption1 = findViewById(R.id.btn_option1)
         btnOption2 = findViewById(R.id.btn_option2)
         btnOption3 = findViewById(R.id.btn_option3)
@@ -277,13 +252,11 @@ class WordDetailActivity : AppCompatActivity() {
         navWords = findViewById(R.id.nav_words)
         navPhrases = findViewById(R.id.nav_phrases)
         navProgress = findViewById(R.id.nav_progress)
-
         navSettings = findViewById(R.id.nav_settings)
         navProfile = findViewById(R.id.nav_profile)
         navBack = findViewById(R.id.nav_back)
         navChat = findViewById(R.id.nav_chat)
 
-        // Optional navigation items that may not be present in all layouts
         try {
             navQuotes = findViewById(R.id.nav_quotes)
         } catch (e: Exception) {
@@ -308,20 +281,17 @@ class WordDetailActivity : AppCompatActivity() {
 
         btnSound.setOnClickListener {
             if (isTestMode) {
-                // Hide sound button in test mode to prevent giving away answers
-                Toast.makeText(this, "Sound disabled during test", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.word_sound_disabled_test), Toast.LENGTH_SHORT).show()
             } else {
-                // Only allow sound in single word mode
                 if (afrikaansWord.isNotEmpty()) {
                     speakWord(afrikaansWord)
                 } else {
-                    Toast.makeText(this, "No word to pronounce", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.word_no_pronounce), Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
         if (isTestMode) {
-            // Multiple choice click listeners
             btnOption1.setOnClickListener { selectAnswer(btnOption1.text.toString(), btnOption1) }
             btnOption2.setOnClickListener { selectAnswer(btnOption2.text.toString(), btnOption2) }
             btnOption3.setOnClickListener { selectAnswer(btnOption3.text.toString(), btnOption3) }
@@ -333,13 +303,10 @@ class WordDetailActivity : AppCompatActivity() {
         }
     }
 
-    // Method to speak Afrikaans word using Google Translate TTS API
     private fun speakWord(text: String) {
         try {
-            // Show loading indicator
-            Toast.makeText(this, "Loading pronunciation...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.word_loading_pronunciation), Toast.LENGTH_SHORT).show()
 
-            // Google Translate TTS URL
             val encodedText = URLEncoder.encode(text, "UTF-8")
             val ttsUrl = "https://translate.google.com/translate_tts?ie=UTF-8&tl=af&client=tw-ob&q=$encodedText"
 
@@ -351,7 +318,7 @@ class WordDetailActivity : AppCompatActivity() {
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     Handler(Looper.getMainLooper()).post {
-                        Toast.makeText(this@WordDetailActivity, "Pronunciation unavailable", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@WordDetailActivity, getString(R.string.word_pronunciation_unavailable), Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -359,48 +326,41 @@ class WordDetailActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         response.body?.let { body ->
                             try {
-                                // Release previous MediaPlayer if exists
                                 mediaPlayer?.release()
-
-                                // Create temporary file
                                 val tempFile = createTempFile("tts_audio", ".mp3", cacheDir)
                                 tempFile.writeBytes(body.bytes())
 
                                 Handler(Looper.getMainLooper()).post {
                                     playAudioFile(tempFile.absolutePath)
                                 }
-
                             } catch (e: Exception) {
                                 Handler(Looper.getMainLooper()).post {
-                                    Toast.makeText(this@WordDetailActivity, "Audio playback error", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this@WordDetailActivity, getString(R.string.word_audio_playback_error), Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
                     } else {
                         Handler(Looper.getMainLooper()).post {
-                            Toast.makeText(this@WordDetailActivity, "Pronunciation service unavailable", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@WordDetailActivity, getString(R.string.word_pronunciation_service_unavailable), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             })
-
         } catch (e: Exception) {
-            Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.word_media_player_error, e.message), Toast.LENGTH_SHORT).show()
         }
     }
 
-    // Method to play the downloaded audio file
     private fun playAudioFile(filePath: String) {
         try {
             mediaPlayer = MediaPlayer().apply {
                 setDataSource(filePath)
                 setOnPreparedListener { mp ->
                     mp.start()
-                    Toast.makeText(this@WordDetailActivity, "Playing pronunciation", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@WordDetailActivity, getString(R.string.word_playing_pronunciation), Toast.LENGTH_SHORT).show()
                 }
                 setOnCompletionListener { mp ->
                     mp.release()
-                    // Clean up temp file
                     try {
                         java.io.File(filePath).delete()
                     } catch (e: Exception) {
@@ -409,18 +369,17 @@ class WordDetailActivity : AppCompatActivity() {
                 }
                 setOnErrorListener { mp, what, extra ->
                     mp.release()
-                    Toast.makeText(this@WordDetailActivity, "Audio playback failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@WordDetailActivity, getString(R.string.word_audio_playback_failed), Toast.LENGTH_SHORT).show()
                     true
                 }
                 prepareAsync()
             }
         } catch (e: Exception) {
-            Toast.makeText(this, "Media player error: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.word_media_player_error, e.message), Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun setupNavigationDrawer() {
-        // Navigation drawer item listeners - matching HomeActivity functionality
         navHome.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToHome()
@@ -446,8 +405,6 @@ class WordDetailActivity : AppCompatActivity() {
             navigateToProgressActivity()
         }
 
-
-
         navSettings.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToSettings()
@@ -458,7 +415,6 @@ class WordDetailActivity : AppCompatActivity() {
             navigateToProfile()
         }
 
-        // Bottom navigation icons
         navBack.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             onBackPressed()
@@ -469,14 +425,13 @@ class WordDetailActivity : AppCompatActivity() {
             navigateToAiChatActivity()
         }
 
-        // Optional navigation items (if present)
         try {
             navQuotes.setOnClickListener {
                 drawerLayout.closeDrawer(GravityCompat.END)
                 navigateToQuotes()
             }
         } catch (e: Exception) {
-            Log.d(TAG, "nav_quotes click listener not set - view not found")
+            Log.d(TAG, "nav_quotes click listener not set")
         }
 
         try {
@@ -485,11 +440,10 @@ class WordDetailActivity : AppCompatActivity() {
                 navigateToOfflineQuiz()
             }
         } catch (e: Exception) {
-            Log.d(TAG, "nav_dictionary click listener not set - view not found")
+            Log.d(TAG, "nav_dictionary click listener not set")
         }
     }
 
-    // Navigation methods matching HomeActivity functionality
     private fun navigateToHome() {
         val intent = Intent(this, HomeActivity::class.java)
         intent.putExtra("LANGUAGE", "afrikaans")
@@ -525,12 +479,6 @@ class WordDetailActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun navigateToVisibilityModes() {
-        val intent = Intent(this, VisibilityModesActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-    }
-
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
@@ -554,20 +502,16 @@ class WordDetailActivity : AppCompatActivity() {
     }
 
     private fun selectAnswer(answer: String, selectedButton: MaterialButton) {
-        if (hasAnswered) return // Prevent changing selection after answering
+        if (hasAnswered) return
 
         selectedAnswer = answer
-
-        // Reset all buttons to default state
         resetButtonStates()
 
-        // Highlight selected button
         selectedButton.backgroundTintList = android.content.res.ColorStateList.valueOf(
             resources.getColor(android.R.color.holo_blue_light, null)
         )
         selectedButton.setTextColor(resources.getColor(android.R.color.white, null))
 
-        // Show submit button
         btnSubmit.visibility = android.view.View.VISIBLE
     }
 
@@ -588,17 +532,16 @@ class WordDetailActivity : AppCompatActivity() {
 
     private fun setupTestMode() {
         if (wordList == null || wordList!!.isEmpty()) {
-            Toast.makeText(this, "Error: No words to test", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.word_test_error_no_words), Toast.LENGTH_LONG).show()
             finish()
             return
         }
 
-        tvWordsTitle.text = "TEST MODE / TOETS MODUS"
+        tvWordsTitle.text = getString(R.string.word_detail_test_mode)
         loadCurrentTestWord()
     }
 
     private fun setupSingleWordMode() {
-        // Hide multiple choice buttons for single word mode
         btnOption1.visibility = android.view.View.GONE
         btnOption2.visibility = android.view.View.GONE
         btnOption3.visibility = android.view.View.GONE
@@ -606,9 +549,8 @@ class WordDetailActivity : AppCompatActivity() {
 
         setupWordDisplay(englishWord, afrikaansWord, imageResource)
 
-        // Show submit button for single word mode
         btnSubmit.visibility = android.view.View.VISIBLE
-        btnSubmit.text = "Check Answer"
+        btnSubmit.text = getString(R.string.word_detail_check_answer)
     }
 
     private fun loadCurrentTestWord() {
@@ -621,17 +563,16 @@ class WordDetailActivity : AppCompatActivity() {
             setupWordDisplay(englishWord, afrikaansWord, imageResource)
             generateMultipleChoiceOptions()
             hasAnswered = false
-            println("Loaded word ${currentWordIndex + 1}/$totalWords: $englishWord = $afrikaansWord")
         }
     }
 
     private fun setupWordDisplay(english: String, afrikaans: String, imgRes: Int) {
         val categoryAfrikaans = when (category.lowercase()) {
-            "emotions" -> "Emosies"
-            "animals" -> "Diere"
-            "colors", "colours" -> "Kleure"
-            "food" -> "Kos"
-            else -> "Emosies"
+            "emotions" -> getString(R.string.category_emotions_af)
+            "animals" -> getString(R.string.category_animals_af)
+            "colors", "colours" -> getString(R.string.category_colors_af)
+            "food" -> getString(R.string.category_food_af)
+            else -> getString(R.string.category_emotions_af)
         }
 
         tvCategorySubtitle.text = "$category / $categoryAfrikaans"
@@ -644,9 +585,8 @@ class WordDetailActivity : AppCompatActivity() {
         if (!isTestMode || wordList == null) return
 
         multipleChoiceOptions.clear()
-        multipleChoiceOptions.add(correctAnswer) // Add correct answer
+        multipleChoiceOptions.add(correctAnswer)
 
-        // Add 3 random wrong answers from the word list
         val wrongAnswers = wordList!!
             .filter { it.afrikaans != correctAnswer }
             .map { it.afrikaans }
@@ -654,9 +594,8 @@ class WordDetailActivity : AppCompatActivity() {
             .take(3)
 
         multipleChoiceOptions.addAll(wrongAnswers)
-        multipleChoiceOptions.shuffle() // Randomize the order
+        multipleChoiceOptions.shuffle()
 
-        // Set button texts
         if (multipleChoiceOptions.size >= 4) {
             btnOption1.text = multipleChoiceOptions[0]
             btnOption2.text = multipleChoiceOptions[1]
@@ -664,7 +603,6 @@ class WordDetailActivity : AppCompatActivity() {
             btnOption4.text = multipleChoiceOptions[3]
         }
 
-        // Reset button states and hide submit button
         resetButtonStates()
         btnSubmit.visibility = android.view.View.GONE
         selectedAnswer = ""
@@ -676,15 +614,17 @@ class WordDetailActivity : AppCompatActivity() {
         hasAnswered = true
         val isCorrect = selectedAnswer == correctAnswer
 
-        // Show correct answer and user's choice
         showAnswerFeedback(isCorrect)
 
         if (isCorrect) {
             correctAnswers++
         }
 
-        // Update submit button to "Next" or "Finish"
-        btnSubmit.text = if (currentWordIndex < totalWords - 1) "Next" else "Finish Test"
+        btnSubmit.text = if (currentWordIndex < totalWords - 1) {
+            getString(R.string.word_detail_next)
+        } else {
+            getString(R.string.word_detail_finish_test)
+        }
         btnSubmit.backgroundTintList = android.content.res.ColorStateList.valueOf(
             resources.getColor(android.R.color.holo_blue_dark, null)
         )
@@ -699,30 +639,24 @@ class WordDetailActivity : AppCompatActivity() {
     }
 
     private fun checkSingleWordAnswer() {
-        // For single word mode, just show the correct answer
-        // Since we don't have text input fields in this layout
-        val message = "The answer is: $englishWord = $afrikaansWord"
+        val message = getString(R.string.word_answer_is, englishWord, afrikaansWord)
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 
-        // Track single word as spoken for progress
         ProgressActivity.updateUserProgress(this, wordsSpokenFromTest = 1, phrasesSpokenFromTest = 0)
     }
 
     private fun showAnswerFeedback(isCorrect: Boolean) {
-        // Highlight correct and incorrect answers
         val buttons = listOf(btnOption1, btnOption2, btnOption3, btnOption4)
 
         buttons.forEach { button ->
             when {
                 button.text.toString() == correctAnswer -> {
-                    // Highlight correct answer in green
                     button.backgroundTintList = android.content.res.ColorStateList.valueOf(
                         resources.getColor(android.R.color.holo_green_light, null)
                     )
                     button.setTextColor(resources.getColor(android.R.color.white, null))
                 }
                 button.text.toString() == selectedAnswer && !isCorrect -> {
-                    // Highlight incorrect selection in red
                     button.backgroundTintList = android.content.res.ColorStateList.valueOf(
                         resources.getColor(android.R.color.holo_red_light, null)
                     )
@@ -732,9 +666,9 @@ class WordDetailActivity : AppCompatActivity() {
         }
 
         val feedbackMessage = if (isCorrect) {
-            "Correct! Well done!"
+            getString(R.string.word_test_correct)
         } else {
-            "Incorrect. The correct answer is: $correctAnswer"
+            getString(R.string.word_test_incorrect, correctAnswer)
         }
 
         Toast.makeText(this, feedbackMessage, Toast.LENGTH_SHORT).show()
@@ -744,8 +678,7 @@ class WordDetailActivity : AppCompatActivity() {
         currentWordIndex++
         loadCurrentTestWord()
 
-        // Reset submit button
-        btnSubmit.text = "Submit"
+        btnSubmit.text = getString(R.string.word_detail_submit)
         btnSubmit.backgroundTintList = android.content.res.ColorStateList.valueOf(
             resources.getColor(android.R.color.holo_green_light, null)
         )
@@ -753,29 +686,21 @@ class WordDetailActivity : AppCompatActivity() {
     }
 
     private fun finishTest() {
-        // Show final score
         val percentage = (correctAnswers.toFloat() / totalWords * 100).toInt()
-        val scoreMessage = "Test Complete!\nScore: $correctAnswers/$totalWords ($percentage%)"
+        val scoreMessage = getString(R.string.word_test_complete, correctAnswers, totalWords, percentage)
 
         Toast.makeText(this, scoreMessage, Toast.LENGTH_LONG).show()
 
-        // Save test results to Firebase
         saveTestResultsToFirebase()
-
-        // Update progress with the number of words completed in the test
-        // Only count correct answers as "words spoken"
         ProgressActivity.updateUserProgress(this, wordsSpokenFromTest = correctAnswers, phrasesSpokenFromTest = 0)
 
-        // Navigate to home page
         val intent = Intent(this, HomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
         finish()
     }
 
-    // IMPROVED METHOD: Save test results with proper userId handling
     private fun saveTestResultsToFirebase() {
-        // Wait for userCollectionUserId to be fetched before saving
         if (userCollectionUserId == null) {
             Log.w(TAG, "⚠️ userCollectionUserId not ready, retrying in 1 second...")
             Handler(Looper.getMainLooper()).postDelayed({
@@ -789,8 +714,8 @@ class WordDetailActivity : AppCompatActivity() {
 
         val testResultData = hashMapOf(
             "testId" to testId,
-            "userId" to userCollectionUserId!!, // Use the Firestore users collection document ID
-            "authUserId" to currentUserId, // Also store the Firebase Auth ID for reference
+            "userId" to userCollectionUserId!!,
+            "authUserId" to currentUserId,
             "testType" to "WORD_TEST",
             "category" to category,
             "totalQuestions" to totalWords,
@@ -803,33 +728,33 @@ class WordDetailActivity : AppCompatActivity() {
             "timestamp" to System.currentTimeMillis()
         )
 
-        Log.d(TAG, "💾 Saving test result with:")
-        Log.d(TAG, "- Firestore users collection ID (userId): $userCollectionUserId")
-        Log.d(TAG, "- Firebase Auth ID (authUserId): $currentUserId")
-
         firestore.collection("test_results")
             .document(testId)
             .set(testResultData)
             .addOnSuccessListener {
                 Log.d(TAG, "✅ Test results saved successfully!")
-                Log.d(TAG, "Score: $correctAnswers/$totalWords correct")
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "❌ Error saving test results", e)
             }
     }
 
-    // Deprecated method - replaced by specific navigation methods
-    @Deprecated("Use specific navigation methods instead")
-    private fun navigateToActivity(activityClass: Class<*>) {
-        val intent = Intent(this, activityClass)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-        closeDrawer()
-    }
+    override fun onResume() {
+        super.onResume()
+        // Refresh the activity if language changed
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentLanguage = prefs.getString("home_language", "English") ?: "English"
 
-    private fun closeDrawer() {
-        drawerLayout.closeDrawer(GravityCompat.END)
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate()
+        }
     }
 
     override fun onBackPressed() {
@@ -847,7 +772,6 @@ class WordDetailActivity : AppCompatActivity() {
     }
 }
 
-// Data class for word items (if not already defined elsewhere)
 data class WordItem(
     val english: String,
     val afrikaans: String,

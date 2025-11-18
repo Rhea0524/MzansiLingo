@@ -2,7 +2,6 @@ package com.fake.mzansilingo
 
 import android.os.Bundle
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
@@ -13,7 +12,7 @@ import android.net.ConnectivityManager
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 
-class AiChatActivity : AppCompatActivity() {
+class AiChatActivity : BaseActivity() {  // Changed from AppCompatActivity to BaseActivity
 
     private lateinit var chatContainer: LinearLayout
     private lateinit var messageInput: EditText
@@ -31,6 +30,25 @@ class AiChatActivity : AppCompatActivity() {
         testApiConnection()
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Refresh the activity if language changed
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentLanguage = prefs.getString("home_language", "English") ?: "English"
+
+        // Check if the locale matches the saved language
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate() // Recreate activity to apply new language
+        }
+    }
+
     private fun initializeViews() {
         chatContainer = findViewById(R.id.chatContainer)
         messageInput = findViewById(R.id.messageInput)
@@ -40,17 +58,7 @@ class AiChatActivity : AppCompatActivity() {
     }
 
     private fun addWelcomeMessage() {
-        val welcomeText = """
-            🦏 Hello! I am your Mzansi Lingo Afrikaans Assistant!
-
-            🗣️ You can ask me in English:
-            • "How do I say hello in Afrikaans?"
-            • "What is thank you in Afrikaans?"
-            • "How do I say numbers in Afrikaans?"
-            
-            💡 All my answers will be in Afrikaans.
-        """.trimIndent()
-
+        val welcomeText = getString(R.string.ai_chat_welcome_message)
         addMessageToChat(welcomeText, isUser = false)
     }
 
@@ -61,7 +69,7 @@ class AiChatActivity : AppCompatActivity() {
                 result.onSuccess { message ->
                     addMessageToChat("✅ $message", isUser = false)
                 }.onFailure { error ->
-                    addMessageToChat("⚠️ API connection failed: ${error.message}", isUser = false)
+                    addMessageToChat("${getString(R.string.api_connection_failed)} ${error.message}", isUser = false)
                 }
                 scrollToBottom()
             }
@@ -96,12 +104,12 @@ class AiChatActivity : AppCompatActivity() {
         messageInput.text.clear()
 
         if (!isNetworkAvailable()) {
-            addMessageToChat("⚠️ No internet connection available.", isUser = false)
+            addMessageToChat(getString(R.string.no_internet_connection), isUser = false)
             scrollToBottom()
             return
         }
 
-        val loadingMessage = addMessageToChat("🦏 Thinking...", isUser = false)
+        val loadingMessage = addMessageToChat(getString(R.string.ai_thinking), isUser = false)
 
         lifecycleScope.launch {
             try {
@@ -113,14 +121,14 @@ class AiChatActivity : AppCompatActivity() {
                     result.onSuccess { response ->
                         addMessageToChat(response, isUser = false)
                     }.onFailure { error ->
-                        addMessageToChat("⚠️ Error: ${error.message}", isUser = false)
+                        addMessageToChat("${getString(R.string.error_prefix)} ${error.message}", isUser = false)
                     }
                     scrollToBottom()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     chatContainer.removeView(loadingMessage)
-                    addMessageToChat("⚠️ Network error: ${e.message}", isUser = false)
+                    addMessageToChat("${getString(R.string.network_error)} ${e.message}", isUser = false)
                     scrollToBottom()
                 }
             }

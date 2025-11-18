@@ -7,7 +7,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.button.MaterialButton
@@ -18,13 +17,13 @@ import java.io.IOException
 import java.net.URLEncoder
 import java.util.*
 
-class PhrasesDetailActivity : AppCompatActivity() {
+class PhrasesDetailActivity : BaseActivity() {
 
     // Firebase
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private var currentUserId: String? = null
-    private var userCollectionUserId: String? = null // Store user collection userId
+    private var userCollectionUserId: String? = null
 
     // TTS variables
     private var mediaPlayer: MediaPlayer? = null
@@ -51,7 +50,6 @@ class PhrasesDetailActivity : AppCompatActivity() {
     private lateinit var navWords: TextView
     private lateinit var navPhrases: TextView
     private lateinit var navProgress: TextView
-
     private lateinit var navSettings: TextView
     private lateinit var navProfile: TextView
     private lateinit var navBack: ImageView
@@ -99,18 +97,15 @@ class PhrasesDetailActivity : AppCompatActivity() {
         isTestMode = intent.getBooleanExtra("TEST_MODE", false)
 
         if (isTestMode) {
-            // Generate unique test ID for this test session
             testId = UUID.randomUUID().toString()
             testStartTime = System.currentTimeMillis()
         }
 
-        // Use the same layout but modify behavior based on mode
         setContentView(R.layout.activity_phrase_detail)
 
-        // Get data from intent
         extractIntentData()
-
         initializeViews()
+        setupUI()
         setupDrawer()
         setupClickListeners()
 
@@ -121,10 +116,9 @@ class PhrasesDetailActivity : AppCompatActivity() {
         }
     }
 
-    // FIXED METHOD: Fetch userId with case-insensitive email comparison
     private fun fetchUserCollectionUserId() {
         val authUserId = auth.currentUser?.uid
-        val userEmail = auth.currentUser?.email?.lowercase() // Normalize to lowercase
+        val userEmail = auth.currentUser?.email?.lowercase()
 
         if (authUserId == null || userEmail == null) {
             Log.w(TAG, "No authenticated user or email")
@@ -133,7 +127,6 @@ class PhrasesDetailActivity : AppCompatActivity() {
 
         Log.d(TAG, "Fetching user collection userId for authUserId: $authUserId, email: $userEmail")
 
-        // First, try to find document with exact lowercase email match
         firestore.collection("users")
             .whereEqualTo("email", userEmail)
             .get()
@@ -143,19 +136,16 @@ class PhrasesDetailActivity : AppCompatActivity() {
                     userCollectionUserId = userDoc.id
                     Log.d(TAG, "✅ Found user with exact email match: $userCollectionUserId")
                 } else {
-                    // If no exact match, try case-insensitive search by fetching all users and comparing
                     Log.d(TAG, "No exact email match found, trying case-insensitive search...")
                     findUserByCaseInsensitiveEmail(authUserId, userEmail)
                 }
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "❌ Error in initial email query", e)
-                // Fallback to case-insensitive search
                 findUserByCaseInsensitiveEmail(authUserId, userEmail)
             }
     }
 
-    // NEW METHOD: Case-insensitive email search
     private fun findUserByCaseInsensitiveEmail(authUserId: String, userEmail: String) {
         Log.d(TAG, "Performing case-insensitive email search for: $userEmail")
 
@@ -170,9 +160,6 @@ class PhrasesDetailActivity : AppCompatActivity() {
                         userCollectionUserId = document.id
                         foundUser = true
                         Log.d(TAG, "✅ Found user with case-insensitive match: $userCollectionUserId")
-                        Log.d(TAG, "Original email in doc: ${document.getString("email")}")
-
-                        // Update the document to have lowercase email for future consistency
                         updateEmailToLowercase(document.id, userEmail)
                         break
                     }
@@ -189,7 +176,6 @@ class PhrasesDetailActivity : AppCompatActivity() {
             }
     }
 
-    // NEW METHOD: Update existing document to have lowercase email
     private fun updateEmailToLowercase(documentId: String, lowercaseEmail: String) {
         firestore.collection("users")
             .document(documentId)
@@ -199,19 +185,16 @@ class PhrasesDetailActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "⚠️ Could not update email to lowercase", e)
-                // This is not critical, the user is still found
             }
     }
 
-    // UPDATED METHOD: Create user document with lowercase email
     private fun createUserDocumentInFirestore(authUserId: String, userEmail: String) {
         Log.d(TAG, "Creating new user document for: $userEmail")
 
         val userData = hashMapOf(
-            "email" to userEmail.lowercase(), // Ensure lowercase
+            "email" to userEmail.lowercase(),
             "authUserId" to authUserId,
             "createdAt" to System.currentTimeMillis()
-            // Add other user fields as needed
         )
 
         firestore.collection("users")
@@ -222,8 +205,7 @@ class PhrasesDetailActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "❌ Error creating user document", e)
-                // As absolute fallback, could use hardcoded ID but better to handle properly
-                userCollectionUserId = "wIXIVzQuLR584L1t3xQ3" // Only as last resort
+                userCollectionUserId = "wIXIVzQuLR584L1t3xQ3"
                 Log.d(TAG, "Using fallback user ID: $userCollectionUserId")
             }
     }
@@ -232,7 +214,6 @@ class PhrasesDetailActivity : AppCompatActivity() {
         category = intent.getStringExtra("CATEGORY") ?: "Communication"
 
         if (isTestMode) {
-            // Test mode: get phrase list and progress info
             phraseList = intent.getSerializableExtra("PHRASE_LIST") as? ArrayList<PhraseItem>
             currentPhraseIndex = intent.getIntExtra("CURRENT_PHRASE_INDEX", 0)
             totalPhrases = intent.getIntExtra("TOTAL_PHRASES", 0)
@@ -240,7 +221,6 @@ class PhrasesDetailActivity : AppCompatActivity() {
 
             Log.d(TAG, "Test mode activated. Total phrases: $totalPhrases, Current index: $currentPhraseIndex")
         } else {
-            // Single phrase mode: get individual phrase data
             englishPhrase = intent.getStringExtra("ENGLISH_PHRASE") ?: ""
             afrikaansPhrase = intent.getStringExtra("AFRIKAANS_PHRASE") ?: ""
 
@@ -257,20 +237,17 @@ class PhrasesDetailActivity : AppCompatActivity() {
         tvPhraseAfrikaans = findViewById(R.id.tv_phrase_afrikaans)
         btnSound = findViewById(R.id.btn_sound)
 
-        // Multiple choice buttons (only visible in test mode)
         btnOption1 = findViewById(R.id.btn_option1)
         btnOption2 = findViewById(R.id.btn_option2)
         btnOption3 = findViewById(R.id.btn_option3)
         btnOption4 = findViewById(R.id.btn_option4)
         btnSubmit = findViewById(R.id.btn_submit)
 
-        // Navigation drawer items
         navHome = findViewById(R.id.nav_home)
         navLanguage = findViewById(R.id.nav_language)
         navWords = findViewById(R.id.nav_words)
         navPhrases = findViewById(R.id.nav_phrases)
         navProgress = findViewById(R.id.nav_progress)
-
         navSettings = findViewById(R.id.nav_settings)
         navProfile = findViewById(R.id.nav_profile)
         navBack = findViewById(R.id.nav_back)
@@ -278,8 +255,25 @@ class PhrasesDetailActivity : AppCompatActivity() {
         navDictionary = findViewById(R.id.nav_dictionary)
     }
 
+    private fun setupUI() {
+        // Set title using string resources
+        if (isTestMode) {
+            tvPhrasesTitle.text = getString(R.string.phrase_test_title)
+        } else {
+            tvPhrasesTitle.text = getString(R.string.phrases_title)
+        }
+
+        // Set navigation drawer texts using string resources
+        navHome.text = getString(R.string.nav_home).uppercase()
+        navLanguage.text = getString(R.string.nav_language).uppercase()
+        navWords.text = getString(R.string.nav_words).uppercase()
+        navPhrases.text = getString(R.string.nav_phrases).uppercase()
+        navProgress.text = getString(R.string.nav_progress).uppercase()
+        navSettings.text = getString(R.string.nav_settings).uppercase()
+        navProfile.text = getString(R.string.nav_profile).uppercase()
+    }
+
     private fun setupDrawer() {
-        // Menu button to open/close drawer
         btnMenu.setOnClickListener {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 drawerLayout.closeDrawer(GravityCompat.END)
@@ -288,7 +282,6 @@ class PhrasesDetailActivity : AppCompatActivity() {
             }
         }
 
-        // Navigation drawer item listeners
         navHome.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToActivity(HomeActivity::class.java)
@@ -313,7 +306,6 @@ class PhrasesDetailActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.END)
             navigateToProgressActivity()
         }
-
 
         navSettings.setOnClickListener {
             drawerLayout.closeDrawer(GravityCompat.END)
@@ -343,20 +335,17 @@ class PhrasesDetailActivity : AppCompatActivity() {
     private fun setupClickListeners() {
         btnSound.setOnClickListener {
             if (isTestMode) {
-                // Hide sound button in test mode to prevent giving away answers
-                Toast.makeText(this, "Sound disabled during test", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.sound_disabled_test), Toast.LENGTH_SHORT).show()
             } else {
-                // Only allow sound in single phrase mode
                 if (afrikaansPhrase.isNotEmpty()) {
                     speakPhrase(afrikaansPhrase)
                 } else {
-                    Toast.makeText(this, "No phrase to pronounce", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.no_phrase_pronounce), Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
         if (isTestMode) {
-            // Multiple choice click listeners
             btnOption1.setOnClickListener { selectAnswer(btnOption1.text.toString(), btnOption1) }
             btnOption2.setOnClickListener { selectAnswer(btnOption2.text.toString(), btnOption2) }
             btnOption3.setOnClickListener { selectAnswer(btnOption3.text.toString(), btnOption3) }
@@ -368,13 +357,10 @@ class PhrasesDetailActivity : AppCompatActivity() {
         }
     }
 
-    // Method to speak Afrikaans phrase using Google Translate TTS API
     private fun speakPhrase(text: String) {
         try {
-            // Show loading indicator
-            Toast.makeText(this, "Loading pronunciation...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.loading_pronunciation), Toast.LENGTH_SHORT).show()
 
-            // Google Translate TTS URL
             val encodedText = URLEncoder.encode(text, "UTF-8")
             val ttsUrl = "https://translate.google.com/translate_tts?ie=UTF-8&tl=af&client=tw-ob&q=$encodedText"
 
@@ -386,7 +372,7 @@ class PhrasesDetailActivity : AppCompatActivity() {
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     Handler(Looper.getMainLooper()).post {
-                        Toast.makeText(this@PhrasesDetailActivity, "Pronunciation unavailable", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@PhrasesDetailActivity, getString(R.string.pronunciation_unavailable), Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -394,10 +380,8 @@ class PhrasesDetailActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         response.body?.let { body ->
                             try {
-                                // Release previous MediaPlayer if exists
                                 mediaPlayer?.release()
 
-                                // Create temporary file
                                 val tempFile = createTempFile("tts_audio", ".mp3", cacheDir)
                                 tempFile.writeBytes(body.bytes())
 
@@ -407,35 +391,33 @@ class PhrasesDetailActivity : AppCompatActivity() {
 
                             } catch (e: Exception) {
                                 Handler(Looper.getMainLooper()).post {
-                                    Toast.makeText(this@PhrasesDetailActivity, "Audio playback error", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this@PhrasesDetailActivity, getString(R.string.audio_playback_error), Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
                     } else {
                         Handler(Looper.getMainLooper()).post {
-                            Toast.makeText(this@PhrasesDetailActivity, "Pronunciation service unavailable", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@PhrasesDetailActivity, getString(R.string.pronunciation_service_unavailable), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             })
 
         } catch (e: Exception) {
-            Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.media_player_error, e.message), Toast.LENGTH_SHORT).show()
         }
     }
 
-    // Method to play the downloaded audio file
     private fun playAudioFile(filePath: String) {
         try {
             mediaPlayer = MediaPlayer().apply {
                 setDataSource(filePath)
                 setOnPreparedListener { mp ->
                     mp.start()
-                    Toast.makeText(this@PhrasesDetailActivity, "Playing pronunciation", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@PhrasesDetailActivity, getString(R.string.playing_pronunciation), Toast.LENGTH_SHORT).show()
                 }
                 setOnCompletionListener { mp ->
                     mp.release()
-                    // Clean up temp file
                     try {
                         java.io.File(filePath).delete()
                     } catch (e: Exception) {
@@ -444,31 +426,28 @@ class PhrasesDetailActivity : AppCompatActivity() {
                 }
                 setOnErrorListener { mp, what, extra ->
                     mp.release()
-                    Toast.makeText(this@PhrasesDetailActivity, "Audio playback failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@PhrasesDetailActivity, getString(R.string.audio_playback_failed), Toast.LENGTH_SHORT).show()
                     true
                 }
                 prepareAsync()
             }
         } catch (e: Exception) {
-            Toast.makeText(this, "Media player error: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.media_player_error, e.message), Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun selectAnswer(answer: String, selectedButton: MaterialButton) {
-        if (hasAnswered) return // Prevent changing selection after answering
+        if (hasAnswered) return
 
         selectedAnswer = answer
 
-        // Reset all buttons to default state
         resetButtonStates()
 
-        // Highlight selected button
         selectedButton.backgroundTintList = android.content.res.ColorStateList.valueOf(
             resources.getColor(android.R.color.holo_blue_light, null)
         )
         selectedButton.setTextColor(resources.getColor(android.R.color.white, null))
 
-        // Show submit button
         btnSubmit.visibility = android.view.View.VISIBLE
     }
 
@@ -489,14 +468,11 @@ class PhrasesDetailActivity : AppCompatActivity() {
 
     private fun setupTestMode() {
         if (phraseList == null || phraseList!!.isEmpty()) {
-            Toast.makeText(this, "Error: No phrases to test", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.error_no_phrases), Toast.LENGTH_LONG).show()
             finish()
             return
         }
 
-        tvPhrasesTitle.text = "PHRASE TEST / FRASE TOETS"
-
-        // Show multiple choice buttons for test mode
         btnOption1.visibility = android.view.View.VISIBLE
         btnOption2.visibility = android.view.View.VISIBLE
         btnOption3.visibility = android.view.View.VISIBLE
@@ -506,7 +482,6 @@ class PhrasesDetailActivity : AppCompatActivity() {
     }
 
     private fun setupSinglePhraseMode() {
-        // Hide multiple choice buttons for single phrase mode
         btnOption1.visibility = android.view.View.GONE
         btnOption2.visibility = android.view.View.GONE
         btnOption3.visibility = android.view.View.GONE
@@ -514,9 +489,8 @@ class PhrasesDetailActivity : AppCompatActivity() {
 
         setupPhraseDisplay(englishPhrase, afrikaansPhrase)
 
-        // Show submit button for single phrase mode with different text
         btnSubmit.visibility = android.view.View.VISIBLE
-        btnSubmit.text = "Practice Phrase"
+        btnSubmit.text = getString(R.string.practice_phrase)
     }
 
     private fun loadCurrentTestPhrase() {
@@ -542,13 +516,14 @@ class PhrasesDetailActivity : AppCompatActivity() {
         }
 
         tvCategorySubtitle.text = "$category / $categoryAfrikaans"
-        tvPhraseEnglish.text = english
+
+        // Get the localized version of the phrase based on user's home language
+        val localizedPhrase = getLocalizedPhrase(english)
+        tvPhraseEnglish.text = localizedPhrase
 
         if (isTestMode) {
-            // In test mode, hide the Afrikaans translation initially
             tvPhraseAfrikaans.visibility = android.view.View.GONE
         } else {
-            // In single phrase mode, show both languages
             tvPhraseAfrikaans.text = afrikaans
             tvPhraseAfrikaans.visibility = android.view.View.VISIBLE
         }
@@ -556,13 +531,44 @@ class PhrasesDetailActivity : AppCompatActivity() {
         correctAnswer = afrikaans
     }
 
+    // Helper method to get the localized phrase based on user's home language
+    private fun getLocalizedPhrase(englishPhrase: String): String {
+        // Map English phrases to their string resource keys
+        return when (englishPhrase) {
+            "Please" -> getString(R.string.phrase_please_en)
+            "Thank you" -> getString(R.string.phrase_thank_you_en)
+            "Excuse me" -> getString(R.string.phrase_excuse_me_en)
+            "I'm sorry" -> getString(R.string.phrase_sorry_en)
+            "You're welcome" -> getString(R.string.phrase_welcome_en)
+            "May I have..." -> getString(R.string.phrase_may_i_have_en)
+            "I need help. Can you help me?" -> getString(R.string.phrase_need_help_en)
+            "I don't understand" -> getString(R.string.phrase_dont_understand_en)
+            "What time is it?" -> getString(R.string.phrase_what_time_en)
+            "How much does this cost?" -> getString(R.string.phrase_how_much_cost_en)
+            "Where is the bathroom?" -> getString(R.string.phrase_bathroom_en)
+            "Can you speak English?" -> getString(R.string.phrase_speak_english_en)
+            "My name is..." -> getString(R.string.phrase_my_name_en)
+            "I am from..." -> getString(R.string.phrase_i_am_from_en)
+            "How old are you?" -> getString(R.string.phrase_how_old_en)
+            "Where do you live?" -> getString(R.string.phrase_where_live_en)
+            "What is your phone number?" -> getString(R.string.phrase_phone_number_en)
+            "What do you do for work?" -> getString(R.string.phrase_what_work_en)
+            "Where is the train station?" -> getString(R.string.phrase_train_station_en)
+            "I need a taxi" -> getString(R.string.phrase_need_taxi_en)
+            "Where can I buy food?" -> getString(R.string.phrase_buy_food_en)
+            "Is there a hospital nearby?" -> getString(R.string.phrase_hospital_nearby_en)
+            "Where is the nearest ATM?" -> getString(R.string.phrase_nearest_atm_en)
+            "I am lost. Can you help me?" -> getString(R.string.phrase_i_am_lost_en)
+            else -> englishPhrase // Fallback to original if not found
+        }
+    }
+
     private fun generateMultipleChoiceOptions() {
         if (!isTestMode || phraseList == null) return
 
         multipleChoiceOptions.clear()
-        multipleChoiceOptions.add(correctAnswer) // Add correct answer
+        multipleChoiceOptions.add(correctAnswer)
 
-        // Add 3 random wrong answers from the phrase list
         val wrongAnswers = phraseList!!
             .filter { it.afrikaans != correctAnswer }
             .map { it.afrikaans }
@@ -570,9 +576,8 @@ class PhrasesDetailActivity : AppCompatActivity() {
             .take(3)
 
         multipleChoiceOptions.addAll(wrongAnswers)
-        multipleChoiceOptions.shuffle() // Randomize the order
+        multipleChoiceOptions.shuffle()
 
-        // Set button texts
         if (multipleChoiceOptions.size >= 4) {
             btnOption1.text = multipleChoiceOptions[0]
             btnOption2.text = multipleChoiceOptions[1]
@@ -580,7 +585,6 @@ class PhrasesDetailActivity : AppCompatActivity() {
             btnOption4.text = multipleChoiceOptions[3]
         }
 
-        // Reset button states and hide submit button
         resetButtonStates()
         btnSubmit.visibility = android.view.View.GONE
         selectedAnswer = ""
@@ -592,19 +596,16 @@ class PhrasesDetailActivity : AppCompatActivity() {
         hasAnswered = true
         val isCorrect = selectedAnswer == correctAnswer
 
-        // Show the correct Afrikaans translation
         tvPhraseAfrikaans.text = correctAnswer
         tvPhraseAfrikaans.visibility = android.view.View.VISIBLE
 
-        // Show answer feedback
         showAnswerFeedback(isCorrect)
 
         if (isCorrect) {
             correctAnswers++
         }
 
-        // Update submit button to "Next" or "Finish"
-        btnSubmit.text = if (currentPhraseIndex < totalPhrases - 1) "Next" else "Finish Test"
+        btnSubmit.text = if (currentPhraseIndex < totalPhrases - 1) getString(R.string.btn_next) else getString(R.string.btn_finish_test)
         btnSubmit.backgroundTintList = android.content.res.ColorStateList.valueOf(
             resources.getColor(android.R.color.holo_blue_dark, null)
         )
@@ -619,29 +620,24 @@ class PhrasesDetailActivity : AppCompatActivity() {
     }
 
     private fun checkSinglePhraseAnswer() {
-        // For single phrase mode, mark phrase as practiced
-        val message = "Great! You practiced: $englishPhrase = $afrikaansPhrase"
+        val message = getString(R.string.phrase_practiced, englishPhrase, afrikaansPhrase)
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 
-        // Track single phrase as spoken for progress
         ProgressActivity.updateUserProgress(this, wordsSpokenFromTest = 0, phrasesSpokenFromTest = 1)
     }
 
     private fun showAnswerFeedback(isCorrect: Boolean) {
-        // Highlight correct and incorrect answers
         val buttons = listOf(btnOption1, btnOption2, btnOption3, btnOption4)
 
         buttons.forEach { button ->
             when {
                 button.text.toString() == correctAnswer -> {
-                    // Highlight correct answer in green
                     button.backgroundTintList = android.content.res.ColorStateList.valueOf(
                         resources.getColor(android.R.color.holo_green_light, null)
                     )
                     button.setTextColor(resources.getColor(android.R.color.white, null))
                 }
                 button.text.toString() == selectedAnswer && !isCorrect -> {
-                    // Highlight incorrect selection in red
                     button.backgroundTintList = android.content.res.ColorStateList.valueOf(
                         resources.getColor(android.R.color.holo_red_light, null)
                     )
@@ -651,9 +647,9 @@ class PhrasesDetailActivity : AppCompatActivity() {
         }
 
         val feedbackMessage = if (isCorrect) {
-            "Correct! Well done!"
+            getString(R.string.correct_well_done)
         } else {
-            "Incorrect. The correct answer is: $correctAnswer"
+            getString(R.string.incorrect_answer, correctAnswer)
         }
 
         Toast.makeText(this, feedbackMessage, Toast.LENGTH_SHORT).show()
@@ -663,8 +659,7 @@ class PhrasesDetailActivity : AppCompatActivity() {
         currentPhraseIndex++
         loadCurrentTestPhrase()
 
-        // Reset submit button
-        btnSubmit.text = "Submit"
+        btnSubmit.text = getString(R.string.btn_submit)
         btnSubmit.backgroundTintList = android.content.res.ColorStateList.valueOf(
             resources.getColor(android.R.color.holo_green_light, null)
         )
@@ -672,29 +667,22 @@ class PhrasesDetailActivity : AppCompatActivity() {
     }
 
     private fun finishTest() {
-        // Show final score
         val percentage = (correctAnswers.toFloat() / totalPhrases * 100).toInt()
-        val scoreMessage = "Phrase Test Complete!\nScore: $correctAnswers/$totalPhrases ($percentage%)"
+        val scoreMessage = getString(R.string.phrase_test_complete, correctAnswers, totalPhrases, percentage)
 
         Toast.makeText(this, scoreMessage, Toast.LENGTH_LONG).show()
 
-        // Save test results to Firebase
         saveTestResultsToFirebase()
 
-        // Update progress with the number of phrases completed in the test
-        // Only count correct answers as "phrases spoken"
         ProgressActivity.updateUserProgress(this, wordsSpokenFromTest = 0, phrasesSpokenFromTest = correctAnswers)
 
-        // Navigate to home page
         val intent = Intent(this, HomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
         finish()
     }
 
-    // IMPROVED METHOD: Save test results with proper userId handling
     private fun saveTestResultsToFirebase() {
-        // Wait for userCollectionUserId to be fetched before saving
         if (userCollectionUserId == null) {
             Log.w(TAG, "⚠️ userCollectionUserId not ready, retrying in 1 second...")
             Handler(Looper.getMainLooper()).postDelayed({
@@ -708,15 +696,15 @@ class PhrasesDetailActivity : AppCompatActivity() {
 
         val testResultData = hashMapOf(
             "testId" to testId,
-            "userId" to userCollectionUserId!!, // Use the Firestore users collection document ID
-            "authUserId" to currentUserId, // Also store the Firebase Auth ID for reference
+            "userId" to userCollectionUserId!!,
+            "authUserId" to currentUserId,
             "testType" to "PHRASE_TEST",
             "category" to category,
             "totalQuestions" to totalPhrases,
             "correctAnswers" to correctAnswers,
             "incorrectAnswers" to (totalPhrases - correctAnswers),
             "scorePercentage" to ((correctAnswers.toFloat() / totalPhrases * 100).toInt()),
-            "testDuration" to testDuration, // Duration in milliseconds
+            "testDuration" to testDuration,
             "startTime" to testStartTime,
             "endTime" to testEndTime,
             "timestamp" to System.currentTimeMillis()
@@ -735,11 +723,9 @@ class PhrasesDetailActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "❌ Error saving phrase test results", e)
-                // Don't show error to user as they've already seen their score
             }
     }
 
-    // Navigation methods - similar to HomeActivity
     private fun navigateToActivity(activityClass: Class<*>) {
         val intent = Intent(this, activityClass)
         startActivity(intent)
@@ -774,12 +760,6 @@ class PhrasesDetailActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun navigateToVisibilityModes() {
-        val intent = Intent(this, VisibilityModesActivity::class.java)
-        intent.putExtra("LANGUAGE", "afrikaans")
-        startActivity(intent)
-    }
-
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
@@ -796,8 +776,22 @@ class PhrasesDetailActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun closeDrawer() {
-        drawerLayout.closeDrawer(GravityCompat.END)
+    override fun onResume() {
+        super.onResume()
+        // Refresh the activity if language changed
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentLanguage = prefs.getString("home_language", "English") ?: "English"
+
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate()
+        }
     }
 
     override fun onBackPressed() {

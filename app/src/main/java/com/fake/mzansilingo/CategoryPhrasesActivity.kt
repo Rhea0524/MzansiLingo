@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.button.MaterialButton
@@ -15,7 +14,7 @@ data class PhraseItem(
     val afrikaans: String
 ) : Serializable
 
-class CategoryPhrasesActivity : AppCompatActivity() {
+class CategoryPhrasesActivity : BaseActivity() {  // Changed from AppCompatActivity to BaseActivity
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var btnMenu: ImageView
     private lateinit var tvPhrasesTitle: TextView
@@ -29,7 +28,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
     private lateinit var navWords: TextView
     private lateinit var navPhrases: TextView
     private lateinit var navProgress: TextView
-
     private lateinit var navSettings: TextView
     private lateinit var navProfile: TextView
     private lateinit var navBack: ImageView
@@ -89,10 +87,62 @@ class CategoryPhrasesActivity : AppCompatActivity() {
             setupCommonClickListeners()
             setupPhraseButtonClickListeners()
             setupTestButtonClickListener()
+            updateUIWithStrings()  // New method to update UI with string resources
         } catch (e: Exception) {
             Log.e("CategoryPhrases", "Error initializing views: ${e.message}")
             e.printStackTrace()
             Toast.makeText(this, "Error loading activity: ${e.message}", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh UI when returning to this activity
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentLanguage = prefs.getString("home_language", "English") ?: "English"
+
+        // Check if the locale matches the saved language
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate() // Recreate activity to apply new language
+        }
+    }
+
+    private fun updateUIWithStrings() {
+        // Update the title and subtitle with string resources
+        tvPhrasesTitle.text = getString(R.string.phrases_title)
+
+        // Update category subtitle based on current category
+        tvCategorySubtitle.text = when (currentCategory.lowercase().replace(" ", "").replace("&", "")) {
+            "communicationandinformation", "communicationinformation", "communication" ->
+                getString(R.string.category_communication)
+            "personalinformation", "personal" ->
+                getString(R.string.category_personal)
+            "traveldailyneeds", "travel", "travelanddailyneeds" ->
+                getString(R.string.category_travel)
+            else -> getString(R.string.category_polite)
+        }
+
+        // Update test button text
+        btnTestYourself.text = getString(R.string.btn_test_yourself)
+
+        // Update navigation drawer items with string resources
+        try {
+            navHome.text = getString(R.string.nav_home)
+            navLanguage.text = getString(R.string.nav_language)
+            navWords.text = getString(R.string.nav_words)
+            navPhrases.text = getString(R.string.nav_phrases)
+            navProgress.text = getString(R.string.nav_progress)
+            navSettings.text = getString(R.string.nav_settings)
+            navProfile.text = getString(R.string.nav_profile)
+        } catch (e: Exception) {
+            Log.w("CategoryPhrases", "Error updating navigation strings: ${e.message}")
         }
     }
 
@@ -125,7 +175,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
     }
 
     private fun initializeCommonViews() {
-        // Check if views exist before initializing
         try {
             drawerLayout = findViewById(R.id.drawer_layout)
             btnMenu = findViewById(R.id.btn_menu)
@@ -133,32 +182,18 @@ class CategoryPhrasesActivity : AppCompatActivity() {
             tvCategorySubtitle = findViewById(R.id.tv_category_subtitle)
             btnTestYourself = findViewById(R.id.btnTestYourself)
 
-            // Navigation drawer items - check if they exist
             try {
                 navHome = findViewById(R.id.nav_home)
                 navLanguage = findViewById(R.id.nav_language)
                 navWords = findViewById(R.id.nav_words)
                 navPhrases = findViewById(R.id.nav_phrases)
                 navProgress = findViewById(R.id.nav_progress)
-
                 navSettings = findViewById(R.id.nav_settings)
                 navProfile = findViewById(R.id.nav_profile)
                 navBack = findViewById(R.id.nav_back)
                 navChat = findViewById(R.id.nav_chat)
             } catch (e: Exception) {
                 Log.w("CategoryPhrases", "Some navigation views not found: ${e.message}")
-                // Continue without navigation drawer if views don't exist
-            }
-
-            // Update category subtitle based on current category
-            tvCategorySubtitle.text = when (currentCategory.lowercase().replace(" ", "").replace("&", "")) {
-                "communicationandinformation", "communicationinformation", "communication" ->
-                    "Communication & Information/\nKommunikasie & Inligting"
-                "personalinformation", "personal" ->
-                    "Personal Information/\nPersoonlike Inligting"
-                "traveldailyneeds", "travel", "travelanddailyneeds" ->
-                    "Travel & Daily Needs/\nReis & Daaglikse Behoeftes"
-                else -> currentCategory
             }
 
             Log.d("CategoryPhrases", "Views initialized successfully")
@@ -178,18 +213,16 @@ class CategoryPhrasesActivity : AppCompatActivity() {
             }
         }
 
-        // Only set up navigation listeners if the views exist
         try {
             navHome.setOnClickListener { navigateToActivity(HomeActivity::class.java) }
-            navLanguage.setOnClickListener { closeDrawer() }
+            navLanguage.setOnClickListener { navigateToLanguageSelection() }
             navWords.setOnClickListener { navigateToActivity(WordsActivity::class.java) }
             navPhrases.setOnClickListener { closeDrawer() }
-            navProgress.setOnClickListener { closeDrawer() }
-
-            navSettings.setOnClickListener { closeDrawer() }
-            navProfile.setOnClickListener { closeDrawer() }
+            navProgress.setOnClickListener { navigateToProgressActivity() }
+            navSettings.setOnClickListener { navigateToSettings() }
+            navProfile.setOnClickListener { navigateToProfile() }
             navBack.setOnClickListener { onBackPressed() }
-            navChat.setOnClickListener { closeDrawer() }
+            navChat.setOnClickListener { navigateToAiChatActivity() }
         } catch (e: Exception) {
             Log.w("CategoryPhrases", "Navigation drawer not fully set up: ${e.message}")
         }
@@ -230,7 +263,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("I don't understand", "Ek verstaan nie")
             }
 
-            // What time buttons
             findViewById<MaterialButton>(R.id.btn_what_time_en)?.setOnClickListener {
                 navigateToPhraseDetail("What time is it?", "Hoe laat is dit?")
             }
@@ -238,7 +270,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("What time is it?", "Hoe laat is dit?")
             }
 
-            // How much cost buttons
             findViewById<MaterialButton>(R.id.btn_how_much_cost_en)?.setOnClickListener {
                 navigateToPhraseDetail("How much does this cost?", "Hoeveel kos dit?")
             }
@@ -246,7 +277,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("How much does this cost?", "Hoeveel kos dit?")
             }
 
-            // Bathroom buttons
             findViewById<MaterialButton>(R.id.btn_bathroom_en)?.setOnClickListener {
                 navigateToPhraseDetail("Where is the bathroom?", "Waar is die badkamer?")
             }
@@ -254,7 +284,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("Where is the bathroom?", "Waar is die badkamer?")
             }
 
-            // Speak English buttons
             findViewById<MaterialButton>(R.id.btn_speak_english_en)?.setOnClickListener {
                 navigateToPhraseDetail("Can you speak English?", "Kan jy Engels praat?")
             }
@@ -269,7 +298,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
 
     private fun setupPersonalButtonClickListeners() {
         try {
-            // My name buttons
             findViewById<MaterialButton>(R.id.btn_my_name_en)?.setOnClickListener {
                 navigateToPhraseDetail("My name is...", "My naam is...")
             }
@@ -277,7 +305,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("My name is...", "My naam is...")
             }
 
-            // I am from buttons
             findViewById<MaterialButton>(R.id.btn_i_am_from_en)?.setOnClickListener {
                 navigateToPhraseDetail("I am from...", "Ek kom van...")
             }
@@ -285,7 +312,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("I am from...", "Ek kom van...")
             }
 
-            // How old buttons
             findViewById<MaterialButton>(R.id.btn_how_old_en)?.setOnClickListener {
                 navigateToPhraseDetail("How old are you?", "Hoe oud is jy?")
             }
@@ -293,7 +319,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("How old are you?", "Hoe oud is jy?")
             }
 
-            // Where live buttons
             findViewById<MaterialButton>(R.id.btn_where_live_en)?.setOnClickListener {
                 navigateToPhraseDetail("Where do you live?", "Waar bly jy?")
             }
@@ -301,7 +326,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("Where do you live?", "Waar bly jy?")
             }
 
-            // Phone number buttons
             findViewById<MaterialButton>(R.id.btn_phone_number_en)?.setOnClickListener {
                 navigateToPhraseDetail("What is your phone number?", "Wat is jou foonnommer?")
             }
@@ -309,7 +333,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("What is your phone number?", "Wat is jou foonnommer?")
             }
 
-            // What work buttons
             findViewById<MaterialButton>(R.id.btn_what_work_en)?.setOnClickListener {
                 navigateToPhraseDetail("What do you do for work?", "Wat doen jy vir werk?")
             }
@@ -324,7 +347,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
 
     private fun setupTravelButtonClickListeners() {
         try {
-            // Train station buttons
             findViewById<MaterialButton>(R.id.btn_train_station_en)?.setOnClickListener {
                 navigateToPhraseDetail("Where is the train station?", "Waar is die treinstasie?")
             }
@@ -332,7 +354,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("Where is the train station?", "Waar is die treinstasie?")
             }
 
-            // Need taxi buttons
             findViewById<MaterialButton>(R.id.btn_need_taxi_en)?.setOnClickListener {
                 navigateToPhraseDetail("I need a taxi", "Ek het 'n taxi nodig")
             }
@@ -340,7 +361,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("I need a taxi", "Ek het 'n taxi nodig")
             }
 
-            // Buy food buttons
             findViewById<MaterialButton>(R.id.btn_buy_food_en)?.setOnClickListener {
                 navigateToPhraseDetail("Where can I buy food?", "Waar kan ek kos koop?")
             }
@@ -348,7 +368,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("Where can I buy food?", "Waar kan ek kos koop?")
             }
 
-            // Hospital nearby buttons
             findViewById<MaterialButton>(R.id.btn_hospital_nearby_en)?.setOnClickListener {
                 navigateToPhraseDetail("Is there a hospital nearby?", "Is daar 'n hospitaal naby?")
             }
@@ -356,7 +375,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("Is there a hospital nearby?", "Is daar 'n hospitaal naby?")
             }
 
-            // Nearest ATM buttons
             findViewById<MaterialButton>(R.id.btn_nearest_atm_en)?.setOnClickListener {
                 navigateToPhraseDetail("Where is the nearest ATM?", "Waar is die naaste OTM?")
             }
@@ -364,7 +382,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("Where is the nearest ATM?", "Waar is die naaste OTM?")
             }
 
-            // I am lost buttons
             findViewById<MaterialButton>(R.id.btn_i_am_lost_en)?.setOnClickListener {
                 navigateToPhraseDetail("I am lost. Can you help me?", "Ek is verlore. Kan jy my help?")
             }
@@ -379,7 +396,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
 
     private fun setupPolitenessButtonClickListeners() {
         try {
-            // Please buttons
             findViewById<MaterialButton>(R.id.btn_please_en)?.setOnClickListener {
                 navigateToPhraseDetail("Please", "Asseblief")
             }
@@ -387,7 +403,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("Please", "Asseblief")
             }
 
-            // Thank you buttons
             findViewById<MaterialButton>(R.id.btn_thank_you_en)?.setOnClickListener {
                 navigateToPhraseDetail("Thank you", "Dankie")
             }
@@ -395,7 +410,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("Thank you", "Dankie")
             }
 
-            // Excuse me buttons
             findViewById<MaterialButton>(R.id.btn_excuse_me_en)?.setOnClickListener {
                 navigateToPhraseDetail("Excuse me", "Verskoon my")
             }
@@ -403,7 +417,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("Excuse me", "Verskoon my")
             }
 
-            // I'm sorry buttons
             findViewById<MaterialButton>(R.id.btn_sorry_en)?.setOnClickListener {
                 navigateToPhraseDetail("I'm sorry", "Ek is jammer")
             }
@@ -411,7 +424,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("I'm sorry", "Ek is jammer")
             }
 
-            // You're welcome buttons
             findViewById<MaterialButton>(R.id.btn_welcome_en)?.setOnClickListener {
                 navigateToPhraseDetail("You're welcome", "Dis 'n plesier")
             }
@@ -419,7 +431,6 @@ class CategoryPhrasesActivity : AppCompatActivity() {
                 navigateToPhraseDetail("You're welcome", "Dis 'n plesier")
             }
 
-            // May I have buttons
             findViewById<MaterialButton>(R.id.btn_may_i_have_en)?.setOnClickListener {
                 navigateToPhraseDetail("May I have...", "Mag ek asseblief he...")
             }
@@ -449,7 +460,7 @@ class CategoryPhrasesActivity : AppCompatActivity() {
 
     private fun setupTestButtonClickListener() {
         btnTestYourself.setOnClickListener {
-            Toast.makeText(this, "Starting test for category: $currentCategory", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.starting_test_for) + " $currentCategory", Toast.LENGTH_SHORT).show()
             navigateToTestActivity()
         }
     }
@@ -481,6 +492,39 @@ class CategoryPhrasesActivity : AppCompatActivity() {
 
     private fun navigateToActivity(activityClass: Class<*>) {
         val intent = Intent(this, activityClass)
+        intent.putExtra("LANGUAGE", "afrikaans")
+        startActivity(intent)
+        closeDrawer()
+    }
+
+    private fun navigateToLanguageSelection() {
+        val intent = Intent(this, LanguageSelectionActivity::class.java)
+        startActivity(intent)
+        closeDrawer()
+    }
+
+    private fun navigateToProgressActivity() {
+        val intent = Intent(this, ProgressActivity::class.java)
+        intent.putExtra("LANGUAGE", "afrikaans")
+        startActivity(intent)
+        closeDrawer()
+    }
+
+    private fun navigateToSettings() {
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
+        closeDrawer()
+    }
+
+    private fun navigateToProfile() {
+        val intent = Intent(this, ProfileActivity::class.java)
+        startActivity(intent)
+        closeDrawer()
+    }
+
+    private fun navigateToAiChatActivity() {
+        val intent = Intent(this, AiChatActivity::class.java)
+        intent.putExtra("LANGUAGE", "afrikaans")
         startActivity(intent)
         closeDrawer()
     }

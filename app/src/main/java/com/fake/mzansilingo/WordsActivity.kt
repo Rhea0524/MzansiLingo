@@ -10,7 +10,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 
-class WordsActivity : AppCompatActivity() {
+class WordsActivity : BaseActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var btnMenu: ImageView
@@ -116,8 +116,6 @@ class WordsActivity : AppCompatActivity() {
             navigateToProgressActivity()
         }
 
-
-
         navSettings.setOnClickListener {
             navigateToSettings()
         }
@@ -180,8 +178,6 @@ class WordsActivity : AppCompatActivity() {
         closeDrawer()
     }
 
-
-
     private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
@@ -204,6 +200,25 @@ class WordsActivity : AppCompatActivity() {
     private fun closeDrawer() {
         if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh the activity if language changed
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentLanguage = prefs.getString("home_language", "English") ?: "English"
+
+        // Check if the locale matches the saved language
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate() // Recreate activity to apply new language
         }
     }
 

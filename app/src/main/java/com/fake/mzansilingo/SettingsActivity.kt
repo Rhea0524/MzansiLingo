@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : BaseActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
 
@@ -30,7 +30,6 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var navBack: ImageView
     private lateinit var navChat: ImageView
     private lateinit var navDictionary: ImageView
-
 
     companion object {
         private const val TAG = "SettingsActivity"
@@ -88,7 +87,6 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(Intent(this, HelpSupportActivity::class.java))
         }
 
-
         findViewById<MaterialButton>(R.id.btn_about).setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
         }
@@ -99,7 +97,6 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         findViewById<MaterialButton>(R.id.btn_log_out).setOnClickListener {
-            // Handle logout
             handleLogout()
         }
     }
@@ -130,7 +127,6 @@ class SettingsActivity : AppCompatActivity() {
             closeDrawer()
             navigateToProgressActivity()
         }
-
 
         navSettings.setOnClickListener {
             // Already in Settings, just close drawer
@@ -194,8 +190,6 @@ class SettingsActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-
-
     private fun navigateToProfile() {
         val intent = Intent(this, ProfileActivity::class.java)
         startActivity(intent)
@@ -221,9 +215,9 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun handleLogout() {
         androidx.appcompat.app.AlertDialog.Builder(this)
-            .setTitle("Log Out")
-            .setMessage("Are you sure you want to log out?")
-            .setPositiveButton("Log Out") { _, _ ->
+            .setTitle(getString(R.string.logout_dialog_title))
+            .setMessage(getString(R.string.logout_dialog_message))
+            .setPositiveButton(getString(R.string.logout_dialog_confirm)) { _, _ ->
                 try {
                     // Sign out from Firebase
                     FirebaseAuth.getInstance().signOut()
@@ -251,11 +245,30 @@ class SettingsActivity : AppCompatActivity() {
 
                 } catch (e: Exception) {
                     Log.e(TAG, "Error during logout", e)
-                    Toast.makeText(this, "Error during logout: ${e.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, getString(R.string.logout_error, e.message), Toast.LENGTH_LONG).show()
                 }
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton(getString(R.string.logout_dialog_cancel), null)
             .show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh the activity if language changed
+        val prefs = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val currentLanguage = prefs.getString("home_language", "English") ?: "English"
+
+        // Check if the locale matches the saved language
+        val currentLocale = resources.configuration.locales[0].language
+        val expectedLocale = when (currentLanguage) {
+            "English" -> "en"
+            "isiZulu" -> "zu"
+            else -> "en"
+        }
+
+        if (currentLocale != expectedLocale) {
+            recreate() // Recreate activity to apply new language
+        }
     }
 
     override fun onBackPressed() {
