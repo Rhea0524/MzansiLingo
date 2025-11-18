@@ -102,21 +102,21 @@ Code Attribution / References
 ## Application Screenshots
 
 ### Login & Authentication
-![Login Screen](./images/image1.jpg)
-![Biometric Authentication](./images/image2.jpg)
+![Login Screen](./images/image1.png)
+![Biometric Authentication](./images/image2.png)
 
 ### Offline Quiz Feature
-![Offline Quiz](./images/image3.jpg)
-![Offline Quiz 2](./images/image4.jpg)
+![Offline Quiz](./images/image3.png)
+![Offline Quiz 2](./images/image4.png)
 
 ### Multi-Language Support
-![Multi-Language Feature](./images/image5.jpg)
+![Multi-Language Feature](./images/image5.png)
 
 ### AI Chatbot
-![AI Chatbot](./images/image6.jpg)
+![AI Chatbot](./images/image6.png)
 
 ### Leaderboard
-![Leaderboard](./images/image7.jpg)
+![Leaderboard](./images/image7.png)
 
 
 Contact
