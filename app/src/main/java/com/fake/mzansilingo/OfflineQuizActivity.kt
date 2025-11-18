@@ -10,6 +10,7 @@ import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
@@ -90,6 +91,17 @@ class OfflineQuizActivity : BaseActivity() {
         loadQuestions()
         displayQuestion()
         setupClickListeners()
+
+        // Modern back press handler
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                    drawerLayout.closeDrawer(GravityCompat.END)
+                } else {
+                    showExitDialog()
+                }
+            }
+        })
 
         // Register network receiver
         val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
@@ -609,19 +621,10 @@ class OfflineQuizActivity : BaseActivity() {
             .setTitle(getString(R.string.exit_quiz))
             .setMessage(getString(R.string.exit_quiz_message))
             .setPositiveButton(getString(R.string.yes)) { _, _ ->
-                super.onBackPressed() // Changed from finish()
+                finish()
             }
             .setNegativeButton(getString(R.string.no), null)
             .show()
-    }
-
-    @Suppress("DEPRECATION")
-    override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-            drawerLayout.closeDrawer(GravityCompat.END)
-        } else {
-            showExitDialog()
-        }
     }
 
     override fun onResume() {
