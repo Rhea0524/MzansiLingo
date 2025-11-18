@@ -608,11 +608,14 @@ class OfflineQuizActivity : BaseActivity() {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.exit_quiz))
             .setMessage(getString(R.string.exit_quiz_message))
-            .setPositiveButton(getString(R.string.yes)) { _, _ -> finish() }
+            .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                super.onBackPressed() // Changed from finish()
+            }
             .setNegativeButton(getString(R.string.no), null)
             .show()
     }
 
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END)
