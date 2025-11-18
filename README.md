@@ -147,16 +147,15 @@ git clone https://github.com/Rhea0524/MzansiLingo.git
 
 ## Screenshots & YouTube Demo
 
-### Home Screen
-![Home Screen](Images/home.png)
 
-### AI Chat
 ![AI Chat](Images/ai_chat.png)
+![Leaderboard](Images/leaderboard.png)
 
 ### Leaderboard
 ![Leaderboard](Images/leaderboard.png)
 
-**Full Demo**: [Watch on YouTube](https://youtu.be/your-demo-link)  
+### Full Demo
+Watch the full demo [here](https://youtu.be/your-demo-link).
 
 ---
 
