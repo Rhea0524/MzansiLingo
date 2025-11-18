@@ -1,6 +1,7 @@
 **🌍 Mzansi Lingo**
 
 Mzansi Lingo is an Android-based language learning app designed to help South Africans improve their language vocabulary, phrases, and pronunciation through interactive lessons, daily goals, AI chat support, and progress tracking.
+
 GitHub link: https://github.com/Rhea0524/MzansiLingo 
 Full Demo: https://youtu.be/85hXIaZRtzs 
 
