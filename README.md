@@ -99,24 +99,24 @@ Code Attribution / References
 •	Kotlin Coroutines Guide
 •	Stack Overflow and YouTube tutorials for Android development
 
-## 📸 Application Screenshots
+## Application Screenshots
 
 ### Login & Authentication
-![Login Screen](./images/image 1.jpg)
-![Biometric Authentication](.images/image 2.jpg)
+![Login Screen](./images/image1.jpg)
+![Biometric Authentication](./images/image2.jpg)
 
 ### Offline Quiz Feature
-![Offline Quiz](./images/image 3.jpg)
-![Offline Quiz 2](./images/image 4.jpg)
+![Offline Quiz](./images/image3.jpg)
+![Offline Quiz 2](./images/image4.jpg)
 
 ### Multi-Language Support
-![Multi-Language Feature](./images/image 5.jpg)
+![Multi-Language Feature](./images/image5.jpg)
 
 ### AI Chatbot
-![AI Chatbot](./images/image 6.jpg)
+![AI Chatbot](./images/image6.jpg)
 
 ### Leaderboard
-![Leaderboard](./images/image 7.jpg)
+![Leaderboard](./images/image7.jpg)
 
 
 Contact
