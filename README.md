@@ -1,6 +1,6 @@
 # 🌍 Mzansi Lingo
 
-Mzansi Lingo is an Android-based language learning app designed to help South Africans improve their *language vocabulary, phrases, and pronunciation through interactive lessons, daily goals, AI chat support, and progress tracking.
+**Mzansi Lingo** is an Android-based language learning app designed to help **South Africans** improve their **Afrikaans vocabulary, phrases, and pronunciation** through interactive lessons, daily goals, AI chat support, and progress tracking.
 
 ---
 
@@ -103,84 +103,85 @@ The app emphasizes **consistency, pronunciation accuracy, and interactive learni
 1. **Clone the Repository**  
 ```bash
 git clone https://github.com/Rhea0524/MzansiLingo.git
+Open in Android Studio
 
-## Setup Instructions
+Launch Android Studio
 
-### Open in Android Studio
-1. Launch Android Studio  
-2. Select **Open an existing project** and choose the cloned folder  
+Select Open an existing project and choose the cloned folder
 
-### Configure API Key
-- Add your AI chatbot API key in `ApiKeyManager.kt` (or use an environment variable)  
+Configure API Key
 
-### Run the Application
-1. Connect an Android device or emulator  
-2. Click **Run** (green play button) in Android Studio  
+Add your AI chatbot API key in ApiKeyManager.kt (or use an environment variable)
 
----
+Run the Application
 
-## Architecture
+Connect an Android device or emulator
 
-### App Structure
+Click Run (green play button) in Android Studio
 
-| Component                | Description                                      |
-|--------------------------|--------------------------------------------------|
-| HomeActivity             | Displays daily goals, progress, and navigation  |
-| WordsActivity            | List of Afrikaans words                          |
-| PhrasesActivity          | List of Afrikaans phrases                        |
-| AiChatActivity           | AI chatbot interactions                          |
-| LeaderboardActivity      | User rankings                                   |
-| SettingsActivity         | Language selection, notifications, preferences  |
-| ProfileActivity          | Displays progress and user details              |
-| BiometricAuthActivity    | Manages biometric authentication                |
-| OfflineManager           | Local content caching                            |
-| NotificationService      | Sends reminders and updates                     |
+Architecture
+App Structure
+Component	Description
+HomeActivity	Displays daily goals, progress, and navigation
+WordsActivity	List of Afrikaans words
+PhrasesActivity	List of Afrikaans phrases
+AiChatActivity	AI chatbot interactions
+LeaderboardActivity	User rankings
+SettingsActivity	Language selection, notifications, preferences
+ProfileActivity	Displays progress and user details
+BiometricAuthActivity	Manages biometric authentication
+OfflineManager	Local content caching
+NotificationService	Sends reminders and updates
 
-### Data Flow
-- User actions update the **Room database** and UI in real time  
-- AI chatbot communication via **Retrofit** to REST API  
-- Offline content stored locally, syncing when online  
-- Notifications sent through **Firebase Cloud Messaging**  
-- **BiometricPrompt** handles secure user authentication  
+Data Flow
+User actions update the Room database and UI in real time
 
----
+AI chatbot communication via Retrofit to REST API
 
-## Screenshots & YouTube Demo
+Offline content stored locally, syncing when online
+
+Notifications sent through Firebase Cloud Messaging
+
+BiometricPrompt handles secure user authentication
+
+Screenshots & YouTube Demo
+Home Screen
 
 
-![AI Chat](Images/ai_chat.png)
-![Leaderboard](Images/leaderboard.png)
+AI Chat
 
-### Leaderboard
-![Leaderboard](Images/leaderboard.png)
 
-### Full Demo
-Watch the full demo [here](https://youtu.be/your-demo-link).
+Leaderboard
 
----
 
-## Code Attribution / References
+Full Demo: Watch on YouTube
 
-- [Android Developer Documentation](https://developer.android.com/docs)  
-- [Kotlin Language Reference](https://kotlinlang.org/docs/reference/)  
-- [Material Design Guidelines](https://material.io/design)  
-- [Retrofit Library](https://square.github.io/retrofit/)  
-- [Firebase Documentation](https://firebase.google.com/docs)  
-- [OpenAI / AI Chatbot Integration](https://platform.openai.com/docs)  
-- [RecyclerView Guide](https://developer.android.com/guide/topics/ui/layout/recyclerview)  
-- [Glide Image Loading Library](https://github.com/bumptech/glide)  
-- [Kotlin Coroutines Guide](https://kotlinlang.org/docs/coroutines-overview.html)  
-- Stack Overflow and YouTube tutorials for Android development  
+Code Attribution / References
+Android Developer Documentation
 
----
+Kotlin Language Reference
 
-## Contact
+Material Design Guidelines
 
-For questions, feedback, or collaboration:  
+Retrofit Library
 
-**Mzansi Lingo**  
-📧 Email: [mzansilingo@gmail.com](mailto:mzansilingo@gmail.com)  ration opportunities, you can reach out to:
+Firebase Documentation
 
-**Mzansi Lingo**  
-Email: [mzansilingo@gmail.com](mailto:mzansilingo@gmail.com)  
+OpenAI / AI Chatbot Integration
 
+RecyclerView Guide
+
+Glide Image Loading Library
+
+Kotlin Coroutines Guide
+
+Stack Overflow and YouTube tutorials for Android development
+
+Contact
+For questions, feedback, or collaboration:
+
+Mzansi Lingo
+📧 Email: mzansilingo@gmail.com
+
+yaml
+Copy code
