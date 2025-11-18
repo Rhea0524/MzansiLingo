@@ -7,19 +7,22 @@ Full Demo: https://youtu.be/85hXIaZRtzs
 
 
 📑 Table of Contents
-•	Overview
-•	Technologies Used
-•	Latest Features (2025 Update)
-•	System Functionalities & User Roles
-•	Installation & Setup Instructions
-•	Architecture
-•	Screenshots & YouTube Demo
-•	Code Attribution
-•	Application Screenshots
-•	Contact
+
+-	Overview
+-	Technologies Used
+-	Latest Features (2025 Update)
+-System Functionalities & User Roles
+-Installation & Setup Instructions
+-	Architecture
+-	Screenshots & YouTube Demo
+-	Code Attribution
+-	Application Screenshots
+-	Contact
 
 Overview
+
 Mzansi Lingo provides an immersive platform for learning Afrikaans. Users can learn words, phrases, and quotes, track progress, and practice pronunciation.
+
 Key features: 
 - Daily Goals: Complete daily word and phrase goals with gamified pop-ups for motivation. 
 - Audio-Based Learning: Hear correct pronunciation for words, phrases, and quotes. 
